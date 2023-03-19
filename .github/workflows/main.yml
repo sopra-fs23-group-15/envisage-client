@@ -1,7 +1,7 @@
 name: Deploy Project to App Engine
-env: 
-  CI: false
-  
+# env: 
+#   CI: false
+
 on:
   push:
     branches:
