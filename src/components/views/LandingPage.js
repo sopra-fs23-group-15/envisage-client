@@ -71,6 +71,9 @@ const LandingPage = props => {
             >
                 Continue
             </button>
+            <button>
+                Create a lobby and invite friends
+            </button>
         </div>
     }
 }
