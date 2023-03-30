@@ -1,4 +1,4 @@
-
+//lobby page
 const Lobby = props => {
 
     return{
