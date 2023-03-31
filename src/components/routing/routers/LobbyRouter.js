@@ -1,4 +1,4 @@
-import Route from "react-router-dom";
+import {Route} from "react-router-dom";
 import Lobby from "components/views/Lobby";
 import PropTypes from 'prop-types';
 
