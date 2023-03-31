@@ -44,7 +44,8 @@ const LandingPage = props => {
     const addUser = async() => {
         try{
             const requestBody = JSON.stringify({username});
-            const response = api.post('/lobbies/' + lobbyID, requestBody);
+            const response = api.post('/users', requestBody);
+            const response2 = api.post('/lobbies/' + lobbyID, requestBody);
 
             history.push('/lobby/' + lobbyID);
         }
@@ -53,7 +54,7 @@ const LandingPage = props => {
         }
     }
 
-    return{
+    return(
         <div className='login container'>
             <FormField
                 label="LobbyID"
@@ -75,7 +76,7 @@ const LandingPage = props => {
                 Create a lobby and invite friends
             </button>
         </div>
-    }
+    )
 }
 
 export default LandingPage;

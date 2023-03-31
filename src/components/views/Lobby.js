@@ -1,11 +1,11 @@
 //lobby page
 const Lobby = props => {
 
-    return{
+    return(
         <p>
             lobby
         </p>
-    }
+    )
 }
 
 export default Lobby;

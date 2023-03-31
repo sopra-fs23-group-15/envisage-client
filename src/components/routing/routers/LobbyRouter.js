@@ -1,5 +1,5 @@
 import {Redirect, Route} from "react-router-dom";
-import Game from "components/views/Lobby";
+import Lobby from "components/views/Lobby";
 import PropTypes from 'prop-types';
 
 const LobbyRouter = props => {
@@ -18,7 +18,7 @@ const LobbyRouter = props => {
 * Don't forget to export your component!
  */
 
-GameRouter.propTypes = {
+LobbyRouter.propTypes = {
   base: PropTypes.string
 }
 
