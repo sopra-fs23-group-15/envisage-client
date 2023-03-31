@@ -33,7 +33,7 @@ const LandingPage = props => {
 
     const joinLobby = async () => {
         try{
-            const response = api.get('/lobbies/' + lobbyID);
+            api.get('/lobbies/' + lobbyID);
             addUser();
         }
         catch(error){
@@ -44,8 +44,8 @@ const LandingPage = props => {
     const addUser = async() => {
         try{
             const requestBody = JSON.stringify({username});
-            const response = api.post('/users', requestBody);
-            const response2 = api.post('/lobbies/' + lobbyID, requestBody);
+            api.post('/users', requestBody);
+            api.post('/lobbies/' + lobbyID, requestBody);
 
             history.push('/lobby/' + lobbyID);
         }
