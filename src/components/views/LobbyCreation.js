@@ -6,7 +6,7 @@ import BaseContainer from "components/ui/BaseContainer";
 import { Button } from "components/ui/Button";
 import Slider from "components/ui/Slider";
 import "styles/views/Login.scss";
-
+import User from "models/User";
 
 const FormField = (props) => {
   return (
@@ -28,14 +28,16 @@ FormField.propTypes = {
   onChange: PropTypes.func,
 };
 
-const LobbyCreation = (props) => {
-  const [lobbyCreator, setLobbyCreator] = useState(null);
+const LobbyCreation = () => {
+  const [username, setUsername] = useState(null);
   const history = useHistory();
 
   const createLobby = async () => {
     try {
-      api.get("/lobbies/" + lobbyID);
-      addUser();
+      const response = await api.post("/lobbies/");
+      const lobbyId = response.data;
+
+      addUser(lobbyId);
     } catch (error) {
       alert(
         `Something went wrong when joining the lobby: \n${handleError(error)}`
@@ -43,13 +45,16 @@ const LobbyCreation = (props) => {
     }
   };
 
-  const addUser = async () => {
+  const addUser = async (lobbyID) => {
     try {
       const requestBody = JSON.stringify({ username });
-      api.post("/users", requestBody);
-      api.post("/lobbies/" + lobbyID, requestBody);
+      const response = await api.post("/lobbies/" + lobbyID, requestBody);
 
-      history.push("/lobby/" + lobbyID);
+      const user = new User(response.data);
+
+      localStorage.setItem("token", user.token);
+
+      history.push("/lobbies" + lobbyID);
     } catch (error) {
       alert(
         `Something went wrong when joining the lobby: \n${handleError(error)}`
@@ -65,21 +70,20 @@ const LobbyCreation = (props) => {
         <div className="login form-container">
           <FormField
             label="please enter lobby creator's name"
-            value={lobbyCreator}
+            value={username}
             placeholder="lobby creator"
-            onChange={(lc) => setLobbyCreator(lc)}
+            onChange={(un) => setUsername(un)}
           />
         </div>
         <div className="login button-container">
           <Button>Configure your lobby</Button>
-          <Button
-            disabled={!username || !lobbyID}
-            onClick={() => createLobby()}
-          >
+          <Button disabled={!username} onClick={() => createLobby()}>
             Start a default game
           </Button>
           <div className="login label">or</div>
-          <Button>Go back to join a game</Button>
+          <Button onClick={() => history.push(`/landingPage`)}>
+            Go back to join a game
+          </Button>
         </div>
       </div>
       <Slider />

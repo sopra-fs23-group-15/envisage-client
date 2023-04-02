@@ -3,8 +3,6 @@
 .base-container {
   display: flex;
   flex-direction: column;
-  // grid-template-columns: repeat(12, 1fr);
-  // grid-template-rows: repeat(6, 1fr);
   position:fixed;
   width: 100%;
   min-height:100%;
@@ -23,5 +21,6 @@
   }
   @include xl {
     background-image: url(../../img/lg.png);
+    background-size: 1920px;
   }
 }

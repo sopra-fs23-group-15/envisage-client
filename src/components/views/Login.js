@@ -33,7 +33,7 @@ FormField.propTypes = {
   onChange: PropTypes.func,
 };
 
-const Login = (props) => {
+const Login = () => {
   const history = useHistory();
   const [name, setName] = useState(null);
   const [username, setUsername] = useState(null);

@@ -38,11 +38,11 @@ $borderRadius: 1em;
 
 // view port control
 $breakpoints: (
-  "xs": 0,
-  "sm": 480px,
-  "md": 960px,
-  "lg": 1440px,
-  "xl": 1920px,
+  "xs": 1,
+  "sm": 481px,
+  "md": 961px,
+  "lg": 1441px,
+  "xl": 1921px,
 );
 
 @mixin sm {

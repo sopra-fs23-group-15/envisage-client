@@ -4,23 +4,24 @@
   &.container {
     display: flex;
     flex-direction: column;
-    margin-left: 100px;
-    width: 40%;
+    width: 30%;
     min-height: 500px;
-    margin-top: 5.5rem;
+    margin-left: 75px;
+    margin-top: 150px;
     /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
     @include center;
     background-color: rgba(255, 255, 255, 0.15);
-    // border: 10px solid;
-    // border: linear-gradient(135deg, $primary 100%, $secondary 50%);
-    // border-radius: 2.5rem;
+    border: 7.5px solid;
+    border-image: url(../../img/border.png);
+    border-image-slice: 30;
+    border-image-repeat:stretch;
     box-shadow: $dropShadow;
     z-index: 1;
   }
   &.manifesto {
     margin-top: 50px;
-    @include md {font-size: 22px; font-weight: 900; margin-top: 66px; padding-right: 22px;}
-    @include lg {font-size: 30px; font-weight: 700; margin-top: 90px; padding-right: 30px;}
+    @include md {font-size: 22px; font-weight: 900; margin-top: 30px; padding-right: 22px;}
+    @include lg {font-size: 30px; font-weight: 700; margin-top: 30px; padding-right: 30px;}
     color: white;
     z-index: 1;
     text-align: right;

@@ -7,7 +7,6 @@ import { Button } from "components/ui/Button";
 import Slider from "components/ui/Slider";
 import "styles/views/Login.scss";
 
-
 const FormField = (props) => {
   return (
     <div className="login field">
@@ -50,7 +49,7 @@ const LandingPage = (props) => {
       api.post("/users", requestBody);
       api.post("/lobbies/" + lobbyID, requestBody);
 
-      history.push("/lobby/" + lobbyID);
+      history.push("/lobbies" + lobbyID);
     } catch (error) {
       alert(
         `Something went wrong when joining the lobby: \n${handleError(error)}`
@@ -82,7 +81,9 @@ const LandingPage = (props) => {
             Continue
           </Button>
           <div className="login label">or</div>
-          <Button>Create a lobby and invite friends</Button>
+          <Button onClick={() => history.push(`/lobbyCreation`)}>
+            Create a lobby and invite friends
+          </Button>
         </div>
       </div>
       <Slider />
