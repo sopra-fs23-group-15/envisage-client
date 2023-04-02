@@ -1,37 +1,32 @@
 /*
   This file contains the most basic variables that control how your application will look.
- */
-
-/* Theme Colors
-
-   these values control the colors of your application.
-   feel free to play around with these and see what other look you can come up with! :D
 */
 
-$accent: #97ABFF;
-$accentDark: #123597;
-$textColor: white;
-$background: #262632;
+// theme colors
+$primary: #430D5C;
+$secondary: #5CFFF5;
 
-/* some constants */
+@for $i from 1 through 4 {
+  .text-grey-#{$i * 25} {
+      color: mix(black, white, $i * 25)
+  }
+}
 
-$DESKTOP_WIDTH: 1160px;
-$SMALL_LAPTOPS_WIDTH: 970px;
-$TABLETS_WIDTH: 750px;
-$SMALL_WIDTH: 768px;
+// spacing
+$base-padding: 0.75rem;
+$base-margin: 0.75rem;
 
-/* some standard elements */
-/* fonts */
-$fontDefault: "M PLUS Rounded 1c", sans-serif;
-$fontMono: "Roboto Mono", monospace;
+// borders
+$base-border-thickness: 1px;
+$base-border-radius: 5px;
 
-/* a standard drop shadow */
-$dropShadow: 0 0.25em 0.25em rgba(0, 0, 0, 0.25);
+// decoration
+$dropShadow: -0.5em 0.5em 0.25em rgba(0, 0, 0, 0.25);
+$innerSHadow: inset -.25em .25em 0.25em rgba(0, 0, 0, 0.25);
+$borderRadius: 1em;
 
-$borderRadius: 0.75em;
 
 /* mixins
-
   these allow you to create small snippets that you can insert with a one-liner in other stylesheets
   for an example, see styles/views/Login.scss
 */
@@ -39,4 +34,34 @@ $borderRadius: 0.75em;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+// view port control
+$breakpoints: (
+  "xs": 0,
+  "sm": 480px,
+  "md": 960px,
+  "lg": 1440px,
+  "xl": 1920px,
+);
+
+@mixin sm {
+  @media (min-width: map-get($breakpoints, "xs")) {
+    @content;
+  }
+}
+@mixin md {
+  @media (min-width: map-get($breakpoints, "sm")) {
+    @content;
+  }
+}
+@mixin lg {
+  @media (min-width: map-get($breakpoints, "md")) {
+    @content;
+  }
+}
+@mixin xl {
+  @media (min-width: map-get($breakpoints, "lg")) {
+    @content;
+  }
 }

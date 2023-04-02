@@ -1,10 +1,27 @@
 @import 'styles/theme';
 
 .base-container {
-  margin-left: auto;
-  padding-left: 15px;
-  margin-right: auto;
-  padding-right: 15px;
-  max-width: $DESKTOP_WIDTH;
-  color: $textColor;
+  display: flex;
+  flex-direction: column;
+  // grid-template-columns: repeat(12, 1fr);
+  // grid-template-rows: repeat(6, 1fr);
+  position:fixed;
+  width: 100%;
+  min-height:100%;
+  left: 0;
+  top: 0;
+  background-repeat: no-repeat;
+  @include sm {
+    background-image: url(../../img/sm.png);
+  }
+  @include md {
+    background-image: url(../../img/md.png);
+  }
+  @include lg {
+    background-image: url(../../img/lg.png);
+    background-size: 1440px;
+  }
+  @include xl {
+    background-image: url(../../img/lg.png);
+  }
 }

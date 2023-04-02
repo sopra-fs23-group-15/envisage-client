@@ -1,6 +1,6 @@
-import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import LandingPage from "components/views/LandingPage";
-import LobbyRouter from "components/routing/routers/LobbyRouter"
+import LobbyRouter from "components/routing/routers/LobbyRouter";
 
 /**
  * Main router of your application.
@@ -16,13 +16,13 @@ const AppRouter = () => {
     <BrowserRouter>
       <Switch>
         <Route path="/lobby">
-            <LobbyRouter base="/lobby"/>
+          <LobbyRouter base="/lobby" />
         </Route>
         <Route exact path="/landingPage">
-            <LandingPage/>
+          <LandingPage />
         </Route>
         <Route exact path="/">
-          <Redirect to="/landingPage"/>
+          <Redirect to="/landingPage" />
         </Route>
       </Switch>
     </BrowserRouter>
@@ -30,6 +30,6 @@ const AppRouter = () => {
 };
 
 /*
-* Don't forget to export your component!
+ * Don't forget to export your component!
  */
 export default AppRouter;
