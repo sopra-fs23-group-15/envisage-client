@@ -46,7 +46,6 @@ const LandingPage = (props) => {
   const addUser = async () => {
     try {
       const requestBody = JSON.stringify({ username });
-      api.post("/users", requestBody);
       api.post("/lobbies/" + lobbyID, requestBody);
 
       history.push("/lobbies" + lobbyID);
