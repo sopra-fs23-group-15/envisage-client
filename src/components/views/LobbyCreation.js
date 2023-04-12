@@ -7,6 +7,8 @@ import { Button } from "components/ui/Button";
 import Slider from "components/ui/Slider";
 import "styles/views/Login.scss";
 import User from "models/User";
+import Lobby from "../../models/Lobby";
+import {connect} from "../../helpers/stomp";
 
 const FormField = (props) => {
   return (
@@ -29,15 +31,19 @@ FormField.propTypes = {
 };
 
 const LobbyCreation = () => {
-  const [username, setUsername] = useState(null);
+  const [userName, setUsername] = useState(null);
   const history = useHistory();
 
   const createLobby = async () => {
     try {
-      const response = await api.post("/lobbies/");
-      const lobbyId = response.data;
+      const response = await api.post('/lobbies');
+      console.log(response.data)
+      const lobby = new Lobby (response.data);
+      const lobbyId = lobby.pin;
+      console.log(lobbyId)
 
       addUser(lobbyId);
+      connect(lobbyId);
     } catch (error) {
       alert(
         `Something went wrong when joining the lobby: \n${handleError(error)}`
@@ -45,16 +51,17 @@ const LobbyCreation = () => {
     }
   };
 
-  const addUser = async (lobbyID) => {
+  const addUser = async (lobbyId) => {
     try {
-      const requestBody = JSON.stringify({ username });
-      const response = await api.post("/lobbies/" + lobbyID, requestBody);
+      console.log(lobbyId)
+      const requestBody = JSON.stringify({ userName });
+      const response = await api.post(`/lobbies/${lobbyId}`, requestBody);
 
       const user = new User(response.data);
 
       localStorage.setItem("token", user.token);
 
-      history.push("/lobbies" + lobbyID);
+      history.push(`/lobbies/${lobbyId}`);
     } catch (error) {
       alert(
         `Something went wrong when joining the lobby: \n${handleError(error)}`
@@ -70,14 +77,14 @@ const LobbyCreation = () => {
         <div className="login form-container">
           <FormField
             label="please enter lobby creator's name"
-            value={username}
+            value={userName}
             placeholder="lobby creator"
             onChange={(un) => setUsername(un)}
           />
         </div>
         <div className="login button-container">
           <Button>Configure your lobby</Button>
-          <Button disabled={!username} onClick={() => createLobby()}>
+          <Button disabled={!userName} onClick={() => createLobby()}>
             Start a default game
           </Button>
           <div className="login label">or</div>

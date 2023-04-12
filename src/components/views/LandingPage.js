@@ -6,6 +6,7 @@ import BaseContainer from "components/ui/BaseContainer";
 import { Button } from "components/ui/Button";
 import Slider from "components/ui/Slider";
 import "styles/views/Login.scss";
+import {connect} from "../../helpers/stomp";
 
 const FormField = (props) => {
   return (
@@ -15,6 +16,7 @@ const FormField = (props) => {
         className="login input"
         placeholder={props.placeholder}
         value={props.value}
+        type={props.type}
         onChange={(e) => props.onChange(e.target.value)}
       />
     </div>
@@ -28,28 +30,18 @@ FormField.propTypes = {
 };
 
 const LandingPage = (props) => {
-  const [username, setUsername] = useState(null);
-  const [lobbyID, setLobbyID] = useState(null);
+  const [userName, setUsername] = useState(null);
+  const [lobbyId, setLobbyId] = useState(null);
   const history = useHistory();
 
-  const joinLobby = async () => {
-    try {
-      api.get("/lobbies/" + lobbyID);
-      addUser();
-    } catch (error) {
-      alert(
-        `Something went wrong when joining the lobby: \n${handleError(error)}`
-      );
-    }
-  };
 
   const addUser = async () => {
     try {
-      const requestBody = JSON.stringify({ username });
-      api.post("/users", requestBody);
-      api.post("/lobbies/" + lobbyID, requestBody);
-
-      history.push("/lobbies" + lobbyID);
+      const requestBody = JSON.stringify({ userName });
+      const response = await api.post(`/lobbies/${lobbyId}`, requestBody);
+      console.log(response.data);
+      connect(lobbyId);
+      history.push(`/lobbies/${lobbyId}`);
     } catch (error) {
       alert(
         `Something went wrong when joining the lobby: \n${handleError(error)}`
@@ -65,19 +57,20 @@ const LandingPage = (props) => {
         <div className="login form-container">
           <FormField
             label="please enter a game pin"
-            value={lobbyID}
+            value={lobbyId}
             placeholder="game pin"
-            onChange={(id) => setLobbyID(id)}
+            onChange={(id) => setLobbyId(id)}
           />
           <FormField
             label="please enter a username"
-            value={username}
+            value={userName}
             placeholder="username"
+            type = "text"
             onChange={(un) => setUsername(un)}
           />
         </div>
         <div className="login button-container">
-          <Button disabled={!username || !lobbyID} onClick={() => joinLobby()}>
+          <Button disabled={!userName || !lobbyId} onClick={() => addUser()}>
             Continue
           </Button>
           <div className="login label">or</div>
