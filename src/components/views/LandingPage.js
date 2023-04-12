@@ -52,7 +52,7 @@ const LandingPage = (props) => {
 
       localStorage.setItem("token", user.token);
 
-      history.push("/lobbies/" + lobbyID);
+      history.push({pathname: "/lobbies/" + lobbyID, state: {lobby: lobbyID}});
     } catch (error) {
       alert(
         `Something went wrong when joining the lobby: \n${handleError(error)}`
