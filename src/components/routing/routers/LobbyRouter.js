@@ -1,5 +1,5 @@
 import { Route } from "react-router-dom";
-import Lobby from "components/views/Lobby";
+import LobbyPage from "components/views/LobbyPage";
 import PropTypes from "prop-types";
 
 const LobbyRouter = (props) => {
@@ -9,7 +9,7 @@ const LobbyRouter = (props) => {
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <Route exact path={`${props.base}/:id`}>
-        <Lobby />
+        <LobbyPage />
       </Route>
     </div>
   );
