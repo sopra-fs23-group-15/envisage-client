@@ -15,6 +15,7 @@ const FormField = (props) => {
         className="login input"
         placeholder={props.placeholder}
         value={props.value}
+        type={props.type}
         onChange={(e) => props.onChange(e.target.value)}
       />
     </div>
@@ -32,24 +33,13 @@ const LandingPage = (props) => {
   const [lobbyId, setLobbyId] = useState(null);
   const history = useHistory();
 
-  // I don't think we need that
-  const joinLobby = async () => {
-    try {
-      api.get(`lobbies/${lobbyId}`);
-      addUser();
-    } catch (error) {
-      alert(
-        `Something went wrong when joining the lobby: \n${handleError(error)}`
-      );
-    }
-  };
 
   const addUser = async () => {
     try {
       const requestBody = JSON.stringify({ userName });
-      const response = await api.post(`lobbies/${lobbyId}`, requestBody);
+      const response = await api.post(`/lobbies/${lobbyId}`, requestBody);
       console.log(response.data);
-      history.push(`lobbies/${lobbyId}`);
+      history.push(`/lobbies/${lobbyId}`);
     } catch (error) {
       alert(
         `Something went wrong when joining the lobby: \n${handleError(error)}`
@@ -73,6 +63,7 @@ const LandingPage = (props) => {
             label="please enter a username"
             value={userName}
             placeholder="username"
+            type = "text"
             onChange={(un) => setUsername(un)}
           />
         </div>

@@ -53,13 +53,13 @@ const LobbyCreation = () => {
     try {
       console.log(lobbyId)
       const requestBody = JSON.stringify({ userName });
-      const response = await api.post(`lobbies/${lobbyId}`, requestBody);
+      const response = await api.post(`/lobbies/${lobbyId}`, requestBody);
 
       const user = new User(response.data);
 
       localStorage.setItem("token", user.token);
 
-      history.push(`lobbies/${lobbyId}`);
+      history.push(`/lobbies/${lobbyId}`);
     } catch (error) {
       alert(
         `Something went wrong when joining the lobby: \n${handleError(error)}`
