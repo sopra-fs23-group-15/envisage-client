@@ -3,7 +3,7 @@ import SockJS from "sockjs-client";
 import {getDomain} from "./getDomain";
 
 var stompClient = null;
-var connected = false;
+//var connected = false;
 
 
 
@@ -13,7 +13,7 @@ export let connect = (lobbyId) => {
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
-        connected = true;
+        //connected = true;
         stompClient.subscribe(`/topic/${lobbyId}`, function(response){
             console.log("Subscribed: " + response)
         })
@@ -21,7 +21,9 @@ export let connect = (lobbyId) => {
 
 }
 
-
+export let subscribe = (mapping, callback) => {
+    stompClient.subscribe(mapping, data => callback(data))
+}
 
 
 export let disconnect = () => {
@@ -30,7 +32,7 @@ export let disconnect = () => {
             console.log("Client disconnected");
         });
         stompClient = null;
-        connected = false;
+        //connected = false;
     }
 }
 
