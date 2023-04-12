@@ -6,6 +6,7 @@ import BaseContainer from "components/ui/BaseContainer";
 import { Button } from "components/ui/Button";
 import Slider from "components/ui/Slider";
 import "styles/views/Login.scss";
+import {connect} from "../../helpers/stomp";
 
 const FormField = (props) => {
   return (
@@ -39,6 +40,7 @@ const LandingPage = (props) => {
       const requestBody = JSON.stringify({ userName });
       const response = await api.post(`/lobbies/${lobbyId}`, requestBody);
       console.log(response.data);
+      connect(lobbyId);
       history.push(`/lobbies/${lobbyId}`);
     } catch (error) {
       alert(

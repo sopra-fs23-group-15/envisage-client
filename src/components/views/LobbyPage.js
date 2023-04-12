@@ -1,6 +1,11 @@
 //lobby page
+import {useParams} from "react-router-dom";
+
+
 const LobbyPage = (props) => {
-    return <p>lobby</p>;
+    const {id} = useParams();
+
+    return <p>lobby, {id}</p>;
 };
 
 export default LobbyPage;
