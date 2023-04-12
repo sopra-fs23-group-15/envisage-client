@@ -28,13 +28,14 @@ FormField.propTypes = {
 };
 
 const LandingPage = (props) => {
-  const [username, setUsername] = useState(null);
-  const [lobbyID, setLobbyID] = useState(null);
+  const [userName, setUsername] = useState(null);
+  const [lobbyId, setLobbyId] = useState(null);
   const history = useHistory();
 
+  // I don't think we need that
   const joinLobby = async () => {
     try {
-      api.get("/lobbies/" + lobbyID);
+      api.get(`lobbies/${lobbyId}`);
       addUser();
     } catch (error) {
       alert(
@@ -45,10 +46,10 @@ const LandingPage = (props) => {
 
   const addUser = async () => {
     try {
-      const requestBody = JSON.stringify({ username });
-      api.post("/lobbies/" + lobbyID, requestBody);
-
-      history.push("/lobbies" + lobbyID);
+      const requestBody = JSON.stringify({ userName });
+      const response = await api.post(`lobbies/${lobbyId}`, requestBody);
+      console.log(response.data);
+      history.push(`lobbies/${lobbyId}`);
     } catch (error) {
       alert(
         `Something went wrong when joining the lobby: \n${handleError(error)}`
@@ -64,19 +65,19 @@ const LandingPage = (props) => {
         <div className="login form-container">
           <FormField
             label="please enter a game pin"
-            value={lobbyID}
+            value={lobbyId}
             placeholder="game pin"
-            onChange={(id) => setLobbyID(id)}
+            onChange={(id) => setLobbyId(id)}
           />
           <FormField
             label="please enter a username"
-            value={username}
+            value={userName}
             placeholder="username"
             onChange={(un) => setUsername(un)}
           />
         </div>
         <div className="login button-container">
-          <Button disabled={!username || !lobbyID} onClick={() => joinLobby()}>
+          <Button disabled={!userName || !lobbyId} onClick={() => addUser()}>
             Continue
           </Button>
           <div className="login label">or</div>

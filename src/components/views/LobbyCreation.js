@@ -44,7 +44,7 @@ const LobbyCreation = () => {
       addUser(lobbyId);
     } catch (error) {
       alert(
-        `Something went wrong when joining the lobby2: \n${handleError(error)}`
+        `Something went wrong when joining the lobby: \n${handleError(error)}`
       );
     }
   };
