@@ -6,6 +6,7 @@ import BaseContainer from "components/ui/BaseContainer";
 import { Button } from "components/ui/Button";
 import Slider from "components/ui/Slider";
 import "styles/views/Login.scss";
+import User from "models/User";
 
 const FormField = (props) => {
   return (
@@ -34,7 +35,7 @@ const LandingPage = (props) => {
 
   const joinLobby = async () => {
     try {
-      api.get("/lobbies/" + lobbyID);
+      await api.get("/lobbies/" + lobbyID);
       addUser();
     } catch (error) {
       alert(
@@ -46,10 +47,12 @@ const LandingPage = (props) => {
   const addUser = async () => {
     try {
       const requestBody = JSON.stringify({ username });
-      api.post("/users", requestBody);
-      api.post("/lobbies/" + lobbyID, requestBody);
+      const response = await api.post("/lobbies/" + lobbyID, requestBody);
+      const user = new User(response.data);
 
-      history.push("/lobbies" + lobbyID);
+      localStorage.setItem("token", user.token);
+
+      history.push("/lobbies/" + lobbyID);
     } catch (error) {
       alert(
         `Something went wrong when joining the lobby: \n${handleError(error)}`
