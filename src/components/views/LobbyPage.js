@@ -22,10 +22,10 @@ const LobbyPage = (props) => {
             setUsers(lobby.players);
         }, 8000);
         return () => clearInterval(timer);
-    }, []);
+    });
 
     const startGame = async () => {
-        const response = await api.post("/lobbies/" + id + "/games");
+        await api.post("/lobbies/" + id + "/games");
         history.push("/gamePage")
     }
 
