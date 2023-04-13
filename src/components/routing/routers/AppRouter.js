@@ -2,6 +2,7 @@ import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import LandingPage from "components/views/LandingPage";
 import LobbyRouter from "components/routing/routers/LobbyRouter";
 import LobbyCreation from "components/views/LobbyCreation";
+import GamePage from "components/views/GamePage";
 
 /**
  * Main router of your application.
@@ -27,6 +28,9 @@ const AppRouter = () => {
         </Route>
         <Route path="/lobbies">
           <LobbyRouter base="/lobbies" />
+        </Route>
+        <Route path="/gamePage">
+          <GamePage />
         </Route>
       </Switch>
     </BrowserRouter>

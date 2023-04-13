@@ -60,6 +60,7 @@ const LobbyCreation = () => {
       const user = new User(response.data);
 
       localStorage.setItem("token", user.token);
+      localStorage.setItem("creator", 'true');
 
       history.push(`/lobbies/${lobbyId}`);
     } catch (error) {
