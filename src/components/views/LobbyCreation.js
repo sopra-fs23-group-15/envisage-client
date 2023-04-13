@@ -53,8 +53,9 @@ const LobbyCreation = () => {
       const user = new User(response.data);
 
       localStorage.setItem("token", user.token);
+      localStorage.setItem("creator", 'true');
 
-      history.push("/lobbies" + lobbyID);
+      history.push("/lobbies/" + lobbyID);
     } catch (error) {
       alert(
         `Something went wrong when joining the lobby: \n${handleError(error)}`

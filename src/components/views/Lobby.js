@@ -24,6 +24,11 @@ const Lobby = (props) => {
         return () => clearInterval(timer);
     }, []);
 
+    const startGame = async () => {
+        const response = await api.post("/lobbies/" + location.state.lobby + "/games");
+        history.push("/gamePage")
+    }
+
     let content = <div>no users</div>
     let content2 = <div></div>
 
@@ -37,15 +42,15 @@ const Lobby = (props) => {
                     </ul>)
     }
 
-    if (localStorage.getItem('creator') == 'true'){
+    if (localStorage.getItem('creator')){
         content2 = (
-            <Button disabled={users.length < 3}>
+            <Button disabled={users.length < 3} onClick={() => startGame()}>
                 Start the game
             </Button>
         )
     }
 
-    return <p>{content}{content2}</p>;
+    return (<p>{content}{content2}</p>);
 };
 
 export default Lobby;
