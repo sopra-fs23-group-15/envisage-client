@@ -7,34 +7,32 @@ import {useParams} from "react-router-dom";
 
 const LobbyPage = (props) => {
     const history = useHistory();
-    const [lobby, setLobby] = useState(null);
-    const [users, setUsers] = useState(null);
+    const [players, setPlayers] = useState(null);
     const {id} = useParams();
 
     useEffect(() => {
-        const response = api.get("/lobbies/" + id);
-        setLobby(response.data);
-        setUsers(lobby.players);
-
+        async function fetchData(){
+            const response = await api.get("/lobbies/" + id);
+            console.log(response)
+            setPlayers(response.data.players);
+        }
         const timer = setInterval(() => {
-            const response = api.get("/lobbies/" + id);
-            setLobby(response.data);
-            setUsers(lobby.players);
-        }, 8000);
+            fetchData();
+        }, 2000);
         return () => clearInterval(timer);
-    }, [id, lobby.players]);
+    }, [id]);
 
     const startGame = async () => {
         await api.post("/lobbies/" + id + "/games");
         history.push("/gamePage")
     }
 
-    let content = <div>no users</div>
-    let content2 = <div></div>
+    let playerList = <div>no users</div>
+    let startButton = <div></div>
 
-    if (users) {
-        content = (<ul className="game user-list">
-                    {users.map(user => (
+    if (players) {
+        playerList = (<ul className="game user-list">
+                    {players.map(user => (
                         <div className="player container">
                             <div className="player username">{user.userName}</div>
                         </div>
@@ -42,15 +40,15 @@ const LobbyPage = (props) => {
                     </ul>)
     }
 
-    if (localStorage.getItem('creator')){
-        content2 = (
-            <Button disabled={users.length < 3} onClick={() => startGame()}>
+    if (localStorage.getItem('creator') && players){
+        startButton = (
+            <Button disabled={players.length < 3} onClick={() => startGame()}>
                 Start the game
             </Button>
         )
     }
 
-    return (<p>{content}{content2}</p>);
+    return (<p>{playerList}{startButton}</p>);
 };
 
 export default LobbyPage;
