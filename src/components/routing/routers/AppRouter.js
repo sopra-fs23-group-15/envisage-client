@@ -3,7 +3,7 @@ import LandingPage from "components/views/LandingPage";
 import LobbyRouter from "components/routing/routers/LobbyRouter";
 import LobbyCreation from "components/views/LobbyCreation";
 import GamePage from "components/views/GamePage";
-
+import ImageComponent from "components/views/Image";
 /**
  * Main router of your application.
  * In the following class, different routes are rendered. In our case, there is a Login Route with matches the path "/login"
@@ -31,6 +31,9 @@ const AppRouter = () => {
         </Route>
         <Route path="/gamePage">
           <GamePage />
+        </Route>
+        <Route path="/image">
+          <ImageComponent />
         </Route>
       </Switch>
     </BrowserRouter>
