@@ -72,11 +72,11 @@ const LobbyCreation = () => {
   return (
     <BaseContainer>
       <div className="login container">
-        <div className="login label">Welcome to Envisage</div>
-        <div className="login label">Join a game now</div>
-        <div className="login form-container">
+        <div>Welcome to Envisage</div>
+        <div>Join a game now</div>
+        <div>
           <FormField
-            label="please enter lobby creator's name"
+            label="please enter a username"
             value={userName}
             placeholder="lobby creator"
             onChange={(un) => setUsername(un)}
