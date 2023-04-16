@@ -3,11 +3,12 @@ const b64Data = "iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAIAAADTED8xAAAAaGVYSWZNTQAqAAA
 
 const imageURL = 'https://home.adelphi.edu/~ap21473/Cute%20otter.jpg'
 
-const ImageComponent = () => {
+const ImageComponent = ({url, image, onClick, selected }) => {
     return (
-        <div>
-            {true ? <img src={`data:image/jpeg;base64,${b64Data}`} /> : <img src={imageURL} width={100} />}
-            {false ? <img src={`data:image/jpeg;base64,${b64Data}`} /> : <img src={imageURL} width={300} />}
+        <div className={`image-component ${selected ? 'selected' : ''}`}
+            onClick={onClick}>
+            {url ? <img src={image} width={100} /> : <img src={`data:image/jpeg;base64,${image}`} />}
+            {/* {url ? <img src={`data:image/jpeg;base64,${image}`} /> : <img src={image} width={300} />} */}
         </div>
         
     )
