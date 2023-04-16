@@ -40,6 +40,8 @@ const LandingPage = (props) => {
       const response = await api.post(`/lobbies/${lobbyId}`, requestBody);
       console.log(response.data);
       connect(lobbyId);
+      localStorage.setItem("player", userName);
+      localStorage.setItem("lobbyId", parseInt(lobbyId));
       history.push(`/lobbies/${lobbyId}`);
     } catch (error) {
       alert(

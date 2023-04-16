@@ -41,7 +41,7 @@ const LobbyCreation = () => {
       const lobby = new Lobby(response.data);
       const lobbyId = lobby.pin;
       console.log(lobbyId);
-
+      localStorage.setItem("lobbyId", parseInt(lobbyId));
       addPlayer(lobbyId);
       connect(lobbyId);
     } catch (error) {
@@ -60,6 +60,7 @@ const LobbyCreation = () => {
       const player = new Player(response.data);
 
       localStorage.setItem("creator", player.lobbyCreator);
+      localStorage.setItem("player", userName);
 
       history.push(`/lobbies/${lobbyId}`);
     } catch (error) {

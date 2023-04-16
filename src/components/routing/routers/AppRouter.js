@@ -37,7 +37,7 @@ const AppRouter = () => {
           <GamePage />
         </Route>
         <Route path="/vote">
-          <VotePage images={[{url: true, image: imageURL},{url: false, image: b64Data}]}/>
+          <VotePage images={[{url: true, image: imageURL},{url: false, image: b64Data}, {url: true, image: imageURL},{url: false, image: b64Data},{url: true, image: imageURL}]}/>
         </Route>
       </Switch>
     </BrowserRouter>
