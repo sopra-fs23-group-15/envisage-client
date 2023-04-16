@@ -7,61 +7,44 @@ $primary: #430D5C;
 $secondary: #5CFFF5;
 
 @for $i from 1 through 4 {
-  .text-grey-#{$i * 25} {
+  .color-grey-#{$i * 25} {
       color: mix(black, white, $i * 25)
+  }
+}
+@for $i from 1 through 20 {
+  .color-purple-#{$i * 5} {
+      color: mix($primary, white, $i * 5)
   }
 }
 
 // spacing
-$base-padding: 0.75rem;
-$base-margin: 0.75rem;
-
-// borders
-$base-border-thickness: 1px;
-$base-border-radius: 5px;
+$base-padding: 0.75em;
+$base-margin: 0.75em;
 
 // decoration
 $dropShadow: -0.5em 0.5em 0.25em rgba(0, 0, 0, 0.25);
-$innerSHadow: inset -.25em .25em 0.25em rgba(0, 0, 0, 0.25);
+$innerShadow: inset -.25em .25em 0.25em rgba(0, 0, 0, 0.25);
 $borderRadius: 1em;
-
-
-/* mixins
-  these allow you to create small snippets that you can insert with a one-liner in other stylesheets
-  for an example, see styles/views/Login.scss
-*/
-@mixin center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
 // view port control
 $breakpoints: (
-  "xs": 1,
-  "sm": 481px,
-  "md": 961px,
-  "lg": 1441px,
-  "xl": 1921px,
+  "sm": 480px,
+  "md": 1280px,
+  "lg": 1440px,
 );
 
 @mixin sm {
-  @media (min-width: map-get($breakpoints, "xs")) {
+  @media (min-width: 480px) {
     @content;
   }
 }
 @mixin md {
-  @media (min-width: map-get($breakpoints, "sm")) {
+  @media (min-width: 1280px) {
     @content;
   }
 }
-@mixin lg {
-  @media (min-width: map-get($breakpoints, "md")) {
-    @content;
-  }
-}
-@mixin xl {
-  @media (min-width: map-get($breakpoints, "lg")) {
+@mixin landscape {
+  @media (max-aspect-ratio: 1920/1283) {
     @content;
   }
 }

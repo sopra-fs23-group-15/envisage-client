@@ -1,66 +1,65 @@
 @import 'styles/theme';
 
 .slider {
-    width: 429px;
-    height: 552px;
-    @include md {
-        position: absolute;
-        margin-top: 55px;
-        margin-left: 151px;
-        }
-
-    @include lg {
-        position: absolute;
-        margin-top: 56px;
-        margin-left: 274px;
+    aspect-ratio: 100/128;
+    position: absolute;
+    left: 19.05vw;
+    margin-top: 3.925vw;
+    width: 29.85vw;
+    font-size: 1.25vw;
+    text-align: right;
+    color: white;
+    @include landscape {
+        left: 28.5vh;
+        bottom: 15.5vh;
+        width: 44.75vh;
+        font-size: 1.875vh;
     }
-    
     &.inner {
-        position: absolute;
         width: 100%;
         height: 100%;
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
-        opacity: 0.8;
-        // box-shadow: $dropShadow;
+        opacity: 0.75;
     }
     &.label {
-        position: absolute;
-        width: 100%;
-        height: 10%;
-        top: 80%;
-        padding: 10px;
-        font-size: 18px;
         font-style: italic;
-        text-align: right;
-        color: white;
+        height: 4em;
+        padding: 1em;
+        margin-top: 29.75em;
         background-color: $primary;
         z-index: 1;
-        opacity: 0.8;
-        // box-shadow: $innerSHadow;
+        opacity: 0.75;
+        @include landscape {
+            bottom: 15.35vh;
+        }
     }
     &.left-arrow{
+        font-size: 3.75vw;
+        text-align:left;
+        padding-top: 15vw;
         &:hover {color: mix($primary, white, 90);}
         &:active {transform: translateY(2px);}
-        position: absolute;
-        top: 45%;
-        left: 5%;
-        font-size: 45px;
         color: $primary;
         z-index: 1;
         cursor: pointer;
+        @include landscape {
+            font-size: 5.625vh;
+            padding-top: 22.5vh;
+        }
     }
     &.right-arrow{
+        font-size: 3.75vw;
+        padding-top: 15vw;
         &:hover {color: mix($primary, white, 90);}
         &:active {transform: translateY(2px);}
-        position: absolute;
-        top: 45%;
-        left: 90%;
-        transform: translateY(-2px);
-        font-size: 45px;
         color: $primary;
         z-index: 1;
         cursor: pointer;
+        @include landscape {
+            font-size: 5.625vh;
+            padding-top: 22.5vh;
+        }
     }
   }

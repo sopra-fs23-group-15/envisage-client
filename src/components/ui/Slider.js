@@ -35,13 +35,13 @@ const Slider = () => {
       <div className="slider left-arrow" onClick={goToLeft}>
         ❮
       </div>
+      <div className="slider right-arrow" onClick={goToRight}>
+        ❯
+      </div>
       <div
         className="slider inner"
         style={{ backgroundImage: `url(${images[currentImg].img})` }}
       ></div>
-      <div className="slider right-arrow" onClick={goToRight}>
-        ❯
-      </div>
     </div>
   );
 };
