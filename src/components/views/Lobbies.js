@@ -8,7 +8,7 @@ import "styles/views/Player.scss";
 
 const Lobbies = () => {
   const history = useHistory();
-  const [lobby, setLobby] = useState(null);
+  // const [lobby, setLobby] = useState(null);
   const [players, setPlayers] = useState(null);
   const [game, setGame] = useState(null);
   const { id } = useParams();
@@ -21,7 +21,7 @@ const Lobbies = () => {
 
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
-        setLobby(response.data);
+        // setLobby(response.data);
         setPlayers(response.data.players);
         setGame(response.data.game);
       } catch (error) {
