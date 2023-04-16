@@ -6,9 +6,9 @@ import BaseContainer from "components/ui/BaseContainer";
 import { Button } from "components/ui/Button";
 import Slider from "components/ui/Slider";
 import "styles/views/Login.scss";
-import User from "models/User";
-import Lobby from "../../models/Lobby";
-import {connect} from "../../helpers/stomp";
+import Player from "models/Player";
+import Lobby from "models/Lobby";
+import { connect } from "helpers/stomp";
 
 const FormField = (props) => {
   return (
@@ -36,13 +36,13 @@ const LobbyCreation = () => {
 
   const createLobby = async () => {
     try {
-      const response = await api.post('/lobbies');
-      console.log(response.data)
-      const lobby = new Lobby (response.data);
+      const response = await api.post("/lobbies");
+      console.log(response.data);
+      const lobby = new Lobby(response.data);
       const lobbyId = lobby.pin;
-      console.log(lobbyId)
+      console.log(lobbyId);
 
-      addUser(lobbyId);
+      addPlayer(lobbyId);
       connect(lobbyId);
     } catch (error) {
       alert(
@@ -51,16 +51,15 @@ const LobbyCreation = () => {
     }
   };
 
-  const addUser = async (lobbyId) => {
+  const addPlayer = async (lobbyId) => {
     try {
-      console.log(lobbyId)
+      console.log(lobbyId);
       const requestBody = JSON.stringify({ userName });
       const response = await api.post(`/lobbies/${lobbyId}`, requestBody);
 
-      const user = new User(response.data);
+      const player = new Player(response.data);
 
-      localStorage.setItem("token", user.token);
-      localStorage.setItem("creator", 'true');
+      localStorage.setItem("creator", player.lobbyCreator);
 
       history.push(`/lobbies/${lobbyId}`);
     } catch (error) {

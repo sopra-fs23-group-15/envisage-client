@@ -6,7 +6,7 @@ import BaseContainer from "components/ui/BaseContainer";
 import { Button } from "components/ui/Button";
 import Slider from "components/ui/Slider";
 import "styles/views/Login.scss";
-import {connect} from "../../helpers/stomp";
+import { connect } from "../../helpers/stomp";
 
 const FormField = (props) => {
   return (
@@ -34,7 +34,6 @@ const LandingPage = (props) => {
   const [lobbyId, setLobbyId] = useState(null);
   const history = useHistory();
 
-
   const addUser = async () => {
     try {
       const requestBody = JSON.stringify({ userName });
@@ -51,9 +50,10 @@ const LandingPage = (props) => {
 
   return (
     <BaseContainer>
+      <Slider />
       <div className="login container">
-        <div className="login label">Welcome to Envisage</div>
-        <div className="login label">Join a game now</div>
+        <div>Welcome to Envisage</div>
+        <div>Join a game now</div>
         <div className="login form-container">
           <FormField
             label="please enter a game pin"
@@ -65,7 +65,7 @@ const LandingPage = (props) => {
             label="please enter a username"
             value={userName}
             placeholder="username"
-            type = "text"
+            type="text"
             onChange={(un) => setUsername(un)}
           />
         </div>
@@ -79,7 +79,6 @@ const LandingPage = (props) => {
           </Button>
         </div>
       </div>
-      <Slider />
       <div className="login manifesto">
         Compete with friends your AI generated masterpieces
       </div>

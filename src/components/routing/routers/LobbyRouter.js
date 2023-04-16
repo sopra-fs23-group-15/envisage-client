@@ -1,15 +1,15 @@
 import { Route } from "react-router-dom";
-import LobbyPage from "components/views/LobbyPage";
+import Lobbies from "components/views/Lobbies";
 import PropTypes from "prop-types";
 
 const LobbyRouter = (props) => {
   /**
-   * "this.props.base" is "/lobby" because as been passed as a prop in the parent of GameRouter, i.e., App.js
+   * "this.props.base" is "/lobbies" because as been passed as a prop in the parent of GameRouter, i.e., App.js
    */
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <Route exact path={`${props.base}/:id`}>
-        <LobbyPage />
+        <Lobbies />
       </Route>
     </div>
   );

@@ -1,7 +1,5 @@
-
-
 const GamePage = (props) => {
-    return (<p>GamePage</p>);
-}
+  return <p>GamePage</p>;
+};
 
 export default GamePage;
