@@ -6,8 +6,10 @@ var stompClient = null;
 //var connected = false;
 
 export let connect = (lobbyId) => {
-  var socket = new SockJS(getDomain() + `/envisage-ws`);
-  stompClient = Stomp.over(socket);
+  var url = (getDomain() + `/envisage-ws`);
+  stompClient = Stomp.over(function(){
+    return new SockJS(url);
+  });
   stompClient.connect({}, function (frame) {
     console.log("Connected: " + frame);
     //connected = true;
