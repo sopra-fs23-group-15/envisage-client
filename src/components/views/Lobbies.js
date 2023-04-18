@@ -5,6 +5,7 @@ import { Button } from "components/ui/Button";
 import { useParams } from "react-router-dom";
 import LobbyContainer from "components/ui/LobbyContainer";
 import "styles/views/Player.scss";
+import {connect, isConnected} from "../../helpers/stomp";
 
 const Lobbies = () => {
   const history = useHistory();
@@ -14,6 +15,11 @@ const Lobbies = () => {
   const { id } = useParams();
 
   useEffect(() => {
+    console.log("Connected Lobbies:" + isConnected())
+    if (!isConnected()){
+      connect(id);
+    }
+
     async function fetchLobby() {
       try {
         const response = await api.get("/lobbies/" + id);
@@ -67,7 +73,7 @@ const Lobbies = () => {
             You are in the <span>{id}</span> museum space
           </h3>
           <h3>
-            You exibition curator is: <span>{players[0].userName}</span>
+            You exhibition curator is: <span>{players[0].userName}</span>
           </h3>
           <h5 style={players.length > 2? {visibility: "hidden"} : {visibility: "visible"}}>
             Please wait for <span>{3 - players.length}</span> more players to

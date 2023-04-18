@@ -3,9 +3,10 @@ import SockJS from "sockjs-client";
 import { getDomain } from "./getDomain";
 
 var stompClient = null;
-//var connected = false;
+let connected;
+connected = false;
 
-export let connect = () => {
+export let connect = (lobbyId) => {
   var url = (getDomain() + `/envisage-ws`);
   // over(ws) creates a WebSocket client that is connected to the STOMP server located at the url
   stompClient = Stomp.over(function(){
@@ -13,25 +14,42 @@ export let connect = () => {
   });
   // automatic reconnect (delay in milli seconds)
   stompClient.reconnect_delay = 5000;
+  //~ (void) connect(login, passcode, connectCallback, errorCallback)
+  // function frame is called on successful connect or reconnect
   stompClient.connect({}, function (frame) {
     console.log("Connected: " + frame);
-    //connected = true;
-    stompClient.subscribe(`/topic/hallo`, function (response) {
-      console.log("Subscribed: " + response);
+    connected = true;
+    // # (Object) subscribe(destination, callback, headers = {})
+    stompClient.subscribe(`/topic/lobbies/${lobbyId}`, function (frame) {
+      console.log("Subscribed: " + frame);
+    },
+    // function frame is called when an error occurred
+    function (frame){
+      console.log("Error: " + frame)
     });
   });
 };
 
 export let subscribe = (mapping, callback) => {
+  // # (Object) subscribe(destination, callback, headers = {})
   stompClient.subscribe(mapping, (data) => callback(data));
 };
 
 export let disconnect = () => {
   if (stompClient !== null) {
+    // # (void) disconnect(disconnectCallback, headers = {})
     stompClient.disconnect(function () {
       console.log("Client disconnected");
     });
     stompClient = null;
-    //connected = false;
+    connected = false;
   }
 };
+
+export let isConnected = () => connected;
+
+export let getPlayers = (lobbyId) => {
+  // # (void) send(destination, headers = {}, body = '')
+  // body must be a STRING
+  stompClient.send(`/app/topic/lobbies/${lobbyId}/join`)
+}
