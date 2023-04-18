@@ -30,7 +30,7 @@ FormField.propTypes = {
 };
 
 const LobbyCreation = () => {
-  const [userName, setUsername] = useState(null);
+  const [userName, setUsername] = useState("");
   const history = useHistory();
 
   const createLobby = async () => {

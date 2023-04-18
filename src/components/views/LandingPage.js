@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import { api, handleError } from "helpers/api";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -6,6 +6,7 @@ import BaseContainer from "components/ui/BaseContainer";
 import { Button } from "components/ui/Button";
 import Slider from "components/ui/Slider";
 import "styles/views/Login.scss";
+import {isConnected} from "../../helpers/stomp";
 
 const FormField = (props) => {
   return (
@@ -29,15 +30,17 @@ FormField.propTypes = {
 };
 
 const LandingPage = (props) => {
-  const [userName, setUsername] = useState(null);
-  const [lobbyId, setLobbyId] = useState(null);
+  const [userName, setUsername] = useState("");
+  const [lobbyId, setLobbyId] = useState("");
   const history = useHistory();
+
 
   const addUser = async () => {
     try {
       const requestBody = JSON.stringify({ userName });
       const response = await api.post(`/lobbies/${lobbyId}`, requestBody);
       console.log(response.data);
+      console.log("Connected Lobbies: " + isConnected())
       history.push(`/lobbies/${lobbyId}`);
     } catch (error) {
       alert(
