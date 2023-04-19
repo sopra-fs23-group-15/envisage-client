@@ -32,6 +32,9 @@ const AppRouter = () => {
         <Route path="/gamePage">
           <GamePage />
         </Route>
+        <Route path="*">
+          <Redirect to="/landingPage"/>
+        </Route>
       </Switch>
     </BrowserRouter>
   );
