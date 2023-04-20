@@ -3,11 +3,10 @@
  */
 class Game {
     constructor(data = {}) {
-      this.id = null;
       this.rounds = null;
       this.playerScores = null;
-      this.lobby = null;
-      this.status = READY;
+      this.lobbyPin = null;
+      this.status = null;
       Object.assign(this, data);
     }
   }
