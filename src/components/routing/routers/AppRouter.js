@@ -1,8 +1,8 @@
-import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import LandingPage from "components/views/LandingPage";
-import LobbyRouter from "components/routing/routers/LobbyRouter";
 import LobbyCreation from "components/views/LobbyCreation";
-import GamePage from "components/views/GamePage";
+import Lobbies from "components/views/Lobbies";
+import Games from "components/views/Games";
 import ImageComponent from "components/views/Image";
 /**
  * Main router of your application.
@@ -16,26 +16,14 @@ import ImageComponent from "components/views/Image";
 const AppRouter = () => {
   return (
     <BrowserRouter>
-      <Switch>
-        <Route exact path="/">
-          <Redirect to="/landingPage" />
-        </Route>
-        <Route path="/landingPage">
-          <LandingPage />
-        </Route>
-        <Route path="/lobbyCreation">
-          <LobbyCreation />
-        </Route>
-        <Route path="/lobbies">
-          <LobbyRouter base="/lobbies" />
-        </Route>
-        <Route path="/gamePage">
-          <GamePage />
-        </Route>
-        <Route path="/image">
-          <ImageComponent />
-        </Route>
-      </Switch>
+      <Routes>
+        <Route path="/" element={<Navigate replace to="/landingPage" />} />
+        <Route path="landingPage" element={<LandingPage />} />
+        <Route path="lobbyCreation" element={<LobbyCreation />} />
+        <Route path="lobbies/:lobbyId" element={<Lobbies />} />
+        <Route path="lobbies/:lobbyId/games/:roundId" element={<Games />} />
+        <Route path="image" element={<ImageComponent />} />
+      </Routes>
     </BrowserRouter>
   );
 };
