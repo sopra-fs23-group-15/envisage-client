@@ -5,7 +5,7 @@ import { Button } from "components/ui/Button";
 import { useParams } from "react-router-dom";
 import LobbyContainer from "components/ui/LobbyContainer";
 import "styles/views/Player.scss";
-import {connect, isConnected} from "../../helpers/stomp";
+import {connect, getPlayers, isConnected, subscribe} from "../../helpers/stomp";
 
 const Lobbies = () => {
   const history = useHistory();
@@ -14,36 +14,54 @@ const Lobbies = () => {
   const [game, setGame] = useState(null);
   const { id } = useParams();
 
+
   useEffect(() => {
-    console.log("Connected Lobbies:" + isConnected())
+    console.log("Connected Lobbies: " + isConnected())
     if (!isConnected()){
       connect(id);
+      new Promise((resolve) => setTimeout(resolve, 1000)).then(r =>subscribeLobby())
+      new Promise((resolve) => setTimeout(resolve, 1000)).then(r =>getPlayers(id))
+
+    }
+    else{
+      subscribeLobby()
+      getPlayers(id)
+
     }
 
-    async function fetchLobby() {
+    function subscribeLobby(){
+      subscribe(`/topic/lobbies/${id}`, fetchlobby()
+       );
+
+
+    }
+    async function fetchlobby() {
       try {
         const response = await api.get("/lobbies/" + id);
         console.log(response);
 
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
-        // setLobby(response.data);
+        //setlobby(response.data);
         setPlayers(response.data.players);
         setGame(response.data.game);
       } catch (error) {
         // console.error(
-        //   `Something went wrong while fetching the users: \n${handleError(
+        //   `something went wrong while fetching the users: \n${handleerror(
         //     error
         //   )}`
         // );
-        console.error("Details:", error);
+        console.error("details:", error);
         alert(
-          "Something went wrong while fetching the users! See the console for details."
+            "something went wrong while fetching the users! see the console for details."
         );
       }
     }
-    fetchLobby();
+    fetchlobby();
+
   }, [id]);
+
+
 
   const startGame = async () => {
     await api.post("/lobbies/" + id + "/games");
