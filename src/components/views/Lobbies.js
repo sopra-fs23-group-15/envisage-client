@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { api } from "helpers/api";
-import { useHistory } from "react-router-dom";
+import { api, handleError } from "helpers/api";
+import { useNavigate } from "react-router-dom";
 import { Button } from "components/ui/Button";
 import { useParams } from "react-router-dom";
 import LobbyContainer from "components/ui/LobbyContainer";
+import LobbyBanner from "components/ui/LobbyBanner";
 import "styles/views/Player.scss";
 import {connect, getPlayers, isConnected, subscribe} from "../../helpers/stomp";
+import Round from "models/Round";
+import Game from "models/Game";
+
 
 const Lobbies = () => {
-  const history = useHistory();
-  // const [lobby, setLobby] = useState(null);
+  const navigate = useNavigate();
   const [players, setPlayers] = useState(null);
-  const [game, setGame] = useState(null);
-  const { id } = useParams();
+  const { lobbyId, roundId } = useParams();
 
 
   useEffect(() => {
@@ -25,7 +27,7 @@ const Lobbies = () => {
     }
     else{
       subscribeLobby()
-      getPlayers(id)
+      getPlayers(lobbyId)
 
     }
 
@@ -37,14 +39,9 @@ const Lobbies = () => {
     }
     async function fetchlobby() {
       try {
-        const response = await api.get("/lobbies/" + id);
-        console.log(response);
 
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-
-        //setlobby(response.data);
+        const response = await api.get("/lobbies/" + lobbyId);
         setPlayers(response.data.players);
-        setGame(response.data.game);
       } catch (error) {
         // console.error(
         //   `something went wrong while fetching the users: \n${handleerror(
@@ -52,6 +49,7 @@ const Lobbies = () => {
         //   )}`
         // );
         console.error("details:", error);
+
         alert(
             "something went wrong while fetching the users! see the console for details."
         );
@@ -59,13 +57,26 @@ const Lobbies = () => {
     }
     fetchlobby();
 
-  }, [id]);
+  }, [lobbyId]);
+
 
 
 
   const startGame = async () => {
-    await api.post("/lobbies/" + id + "/games");
-    history.push("/gamePage");
+    try {
+      const response = await api.post("/lobbies/" + lobbyId + "/games");
+      const game = new Game(response.data);
+      const roundId = game.rounds.length;
+      navigate(`/lobbies/${lobbyId}/games/${roundId}`)
+    } catch (error) {
+      console.error(
+        `Something went wrong while fetching the users: \n${handleError(error)}`
+      );
+      console.error("Details:", error);
+      alert(
+        "Something went wrong while fetching the users! See the console for details."
+      );
+    }
   };
 
   let playersList = <LobbyContainer />;
@@ -86,31 +97,15 @@ const Lobbies = () => {
 
     playersList = (
       <div>
-        <div className="player up">
-          <h3>
-            You are in the <span>{id}</span> museum space
-          </h3>
-          <h3>
-            You exhibition curator is: <span>{players[0].userName}</span>
-          </h3>
-          <h5 style={players.length > 2? {visibility: "hidden"} : {visibility: "visible"}}>
-            Please wait for <span>{3 - players.length}</span> more players to
-            join
-          </h5>
-          <h5>
-            How to play: <span>icon</span>
-          </h5>
-        </div>
 
+        <LobbyBanner players={players} />
         <div className="player down">
-          <div className="player round">Round {game? "#" : 0}</div>
+          <div className="player round">Round 0</div>
           <div className="player left">
             {players.map((player) => (
               <div className="player row">
-                <div key={player.id}>{player.userName}</div>
-                <div key={player.id}>
-                  {game ? game.playerScores[player.userName] : 0}
-                </div>
+                <div>{player.userName}</div>
+                <div>0</div>
               </div>
             ))}
             {fillPlayes()}

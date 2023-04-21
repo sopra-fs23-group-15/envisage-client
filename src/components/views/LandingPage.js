@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { api, handleError } from "helpers/api";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import BaseContainer from "components/ui/BaseContainer";
 import { Button } from "components/ui/Button";
@@ -29,10 +29,11 @@ FormField.propTypes = {
   onChange: PropTypes.func,
 };
 
-const LandingPage = (props) => {
+
+const LandingPage = () => {
   const [userName, setUsername] = useState("");
   const [lobbyId, setLobbyId] = useState("");
-  const history = useHistory();
+  const navigate = useNavigate();
 
 
   const addUser = async () => {
@@ -41,7 +42,7 @@ const LandingPage = (props) => {
       const response = await api.post(`/lobbies/${lobbyId}`, requestBody);
       console.log(response.data);
       console.log("Connected Lobbies: " + isConnected())
-      history.push(`/lobbies/${lobbyId}`);
+      navigate(`/lobbies/${lobbyId}`);
     } catch (error) {
       alert(
         `Something went wrong when joining the lobby: \n${handleError(error)}`
@@ -75,7 +76,7 @@ const LandingPage = (props) => {
             Continue
           </Button>
           <div className="login label">or</div>
-          <Button onClick={() => history.push(`/lobbyCreation`)}>
+          <Button onClick={() => navigate(`/lobbyCreation`)}>
             Create a lobby and invite friends
           </Button>
         </div>

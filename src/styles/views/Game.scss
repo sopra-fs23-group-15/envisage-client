@@ -1,0 +1,55 @@
+@import 'styles/theme';
+
+.game {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: mix($primary, white, 30);
+    &.image {
+        width: 65vw;
+        height: 100vh;
+        object-fit: cover;
+    }
+    &.input {
+        margin-top: 5vw;
+        margin-left: 5vw;
+        flex-direction: column;
+        width: 25vw;
+    }
+    &.input-style {
+        font-size: 1.5rem;
+        font-weight: bold;
+        font-style: italic;
+        color: white;
+        text-align: center;
+        justify-content: center;
+        margin-top: 2em;
+        margin-bottom: 8em;
+        padding: 0.75em;
+        background-color: mix($primary, white, 80);
+        border-radius: 1em;
+    }
+    &.input-label {
+        font-weight: bold;
+        color: $primary;
+    }
+    &.input-field {
+        height: 30vh;
+        border: none;
+        border-radius: $borderRadius;
+        box-shadow: $innerShadow;
+        padding: 0.5em;
+        background: white;
+    }
+    &.timer {
+        font-size: 3rem;
+        font-weight: bold;
+        color: $secondary;
+    }
+}
+
+.primary-button {
+    margin-top: 1em;
+    margin-left: 70%;
+    width: 30%;
+} 

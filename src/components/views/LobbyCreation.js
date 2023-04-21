@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { api, handleError } from "helpers/api";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import BaseContainer from "components/ui/BaseContainer";
 import { Button } from "components/ui/Button";
@@ -31,15 +31,13 @@ FormField.propTypes = {
 
 const LobbyCreation = () => {
   const [userName, setUsername] = useState("");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const createLobby = async () => {
     try {
       const response = await api.post("/lobbies");
-      console.log(response.data);
       const lobby = new Lobby(response.data);
       const lobbyId = lobby.pin;
-      console.log(lobbyId);
 
       addPlayer(lobbyId);
     } catch (error) {
@@ -51,7 +49,6 @@ const LobbyCreation = () => {
 
   const addPlayer = async (lobbyId) => {
     try {
-      console.log(lobbyId);
       const requestBody = JSON.stringify({ userName });
       const response = await api.post(`/lobbies/${lobbyId}`, requestBody);
 
@@ -59,7 +56,7 @@ const LobbyCreation = () => {
 
       localStorage.setItem("creator", player.lobbyCreator);
 
-      history.push(`/lobbies/${lobbyId}`);
+      navigate(`/lobbies/${lobbyId}`);
     } catch (error) {
       alert(
         `Something went wrong when joining the lobby: \n${handleError(error)}`
@@ -86,7 +83,7 @@ const LobbyCreation = () => {
             Start a default game
           </Button>
           <div className="login label">or</div>
-          <Button onClick={() => history.push(`/landingPage`)}>
+          <Button onClick={() => navigate(`/landingPage`)}>
             Go back to join a game
           </Button>
         </div>
