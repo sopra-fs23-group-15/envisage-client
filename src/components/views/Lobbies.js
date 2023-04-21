@@ -7,22 +7,21 @@ import LobbyContainer from "components/ui/LobbyContainer";
 import LobbyBanner from "components/ui/LobbyBanner";
 import "styles/views/Player.scss";
 import {connect, getPlayers, isConnected, subscribe} from "../../helpers/stomp";
-import Round from "models/Round";
 import Game from "models/Game";
 
 
 const Lobbies = () => {
   const navigate = useNavigate();
   const [players, setPlayers] = useState(null);
-  const { lobbyId, roundId } = useParams();
+  const { lobbyId} = useParams();
 
 
   useEffect(() => {
     console.log("Connected Lobbies: " + isConnected())
     if (!isConnected()){
-      connect(id);
-      new Promise((resolve) => setTimeout(resolve, 1000)).then(r =>subscribeLobby())
-      new Promise((resolve) => setTimeout(resolve, 1000)).then(r =>getPlayers(id))
+      connect(lobbyId);
+      new Promise((resolve) => setTimeout(resolve, 1000)).then(() =>subscribeLobby())
+      new Promise((resolve) => setTimeout(resolve, 1000)).then(() =>getPlayers(lobbyId))
 
     }
     else{
@@ -32,7 +31,7 @@ const Lobbies = () => {
     }
 
     function subscribeLobby(){
-      subscribe(`/topic/lobbies/${id}`, fetchlobby()
+      subscribe(`/topic/lobbies/${lobbyId}`, fetchlobby()
        );
 
 

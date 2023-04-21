@@ -6,7 +6,7 @@ var stompClient = null;
 let connected;
 connected = false;
 
-export let connect = (lobbyId) => {
+export let connect = () => {
   var url = (getDomain() + `/envisage-ws`);
   // over(ws) creates a WebSocket client that is connected to the STOMP server located at the url
   stompClient = Stomp.over(function(){
@@ -33,8 +33,8 @@ export let connect = (lobbyId) => {
 
 export let subscribe = (destination, callback) => {
   // # (Object) subscribe(destination, callback, headers = {})
-  stompClient.subscribe(destination, function(data){
-    callback(console.log(data.body))
+  stompClient.subscribe(destination, function(){
+    callback()
   });
 };
 
@@ -54,5 +54,5 @@ export let isConnected = () => connected;
 export let getPlayers = (lobbyId) => {
   // # (void) send(destination, headers = {}, body = '')
   // body must be a STRING
-  stompClient.send("/app/lobbies/" + lobbyId +"/join")
+  stompClient.send("/app/lobbies/" + lobbyId +"/lobbyJoin")
 }
