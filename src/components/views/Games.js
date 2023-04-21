@@ -55,7 +55,7 @@ const Games = () => {
       <div className="game input">
         <Timer />
         <div className="game input-style">Style Placeholder</div>
-        <label className="game input-label">Dercribe your image</label>
+        <label className="game input-label">Describe your image</label>
         <textarea
           className="game input-field"
           placeholder="tweak your keywords to make it more fun!"

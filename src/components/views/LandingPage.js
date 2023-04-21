@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { api, handleError } from "helpers/api";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -6,7 +6,7 @@ import BaseContainer from "components/ui/BaseContainer";
 import { Button } from "components/ui/Button";
 import Slider from "components/ui/Slider";
 import "styles/views/Login.scss";
-import {isConnected} from "../../helpers/stomp";
+import {disconnect, isConnected} from "../../helpers/stomp";
 
 const FormField = (props) => {
   return (
@@ -34,6 +34,14 @@ const LandingPage = () => {
   const [userName, setUsername] = useState("");
   const [lobbyId, setLobbyId] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("connected LandingPage before: " + isConnected())
+    if (isConnected()){
+    disconnect();
+    }
+    console.log("connected LandingPage after: " + isConnected())
+  })
 
 
   const addUser = async () => {

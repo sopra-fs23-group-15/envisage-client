@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import LobbyContainer from "components/ui/LobbyContainer";
 import LobbyBanner from "components/ui/LobbyBanner";
 import "styles/views/Player.scss";
-import {connect, getPlayers, isConnected, subscribe} from "../../helpers/stomp";
+import {connect, isConnected, notifyLobbyJoin, subscribe} from "../../helpers/stomp";
 import Game from "models/Game";
 
 
@@ -21,18 +21,17 @@ const Lobbies = () => {
     if (!isConnected()){
       connect(lobbyId);
       new Promise((resolve) => setTimeout(resolve, 1000)).then(() =>subscribeLobby())
-      new Promise((resolve) => setTimeout(resolve, 1000)).then(() =>getPlayers(lobbyId))
+      new Promise((resolve) => setTimeout(resolve, 1000)).then(() =>notifyLobbyJoin(lobbyId))
 
     }
     else{
       subscribeLobby()
-      getPlayers(lobbyId)
+      notifyLobbyJoin(lobbyId)
 
     }
 
     function subscribeLobby(){
-      subscribe(`/topic/lobbies/${lobbyId}`, fetchlobby()
-       );
+      subscribe(`/topic/lobbies/${lobbyId}`, fetchlobby);
 
 
     }

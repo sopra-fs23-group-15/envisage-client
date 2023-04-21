@@ -51,7 +51,7 @@ export let disconnect = () => {
 
 export let isConnected = () => connected;
 
-export let getPlayers = (lobbyId) => {
+export let notifyLobbyJoin = (lobbyId) => {
   // # (void) send(destination, headers = {}, body = '')
   // body must be a STRING
   stompClient.send("/app/lobbies/" + lobbyId +"/lobbyJoin")
