@@ -20,21 +20,21 @@ export let connect = () => {
     console.log("Connected: " + frame);
     connected = true;
     // # (Object) subscribe(destination, callback, headers = {})
-    var subscription = stompClient.subscribe(`/topic/hallo`, function (frame) {
-      console.log("Subscribed: " + frame);
-    },
-    // function frame is called when an error occurred
-    function (frame){
-      console.log("Error: " + frame)
-    });
+    const subscription = stompClient.subscribe(`/topic/hallo`, function (frame) {
+          console.log("Subscribed: " + frame);
+        },
+        // function frame is called when an error occurred
+        function (frame) {
+          console.log("Error: " + frame)
+        });
     console.log(subscription)
   });
 };
 
 export let subscribe = (destination, callback) => {
   // # (Object) subscribe(destination, callback, headers = {})
-  stompClient.subscribe(destination, function(){
-    callback()
+  stompClient.subscribe(destination, function(data){
+    callback(JSON.parse(data.body));
   });
 };
 

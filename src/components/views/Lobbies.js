@@ -22,24 +22,26 @@ const Lobbies = () => {
       connect(lobbyId);
       new Promise((resolve) => setTimeout(resolve, 1000)).then(() =>subscribeLobby())
       new Promise((resolve) => setTimeout(resolve, 1000)).then(() =>notifyLobbyJoin(lobbyId))
-
     }
     else{
       subscribeLobby()
       notifyLobbyJoin(lobbyId)
-
     }
 
     function subscribeLobby(){
-      subscribe(`/topic/lobbies/${lobbyId}`, fetchlobby);
-
+      subscribe(`/topic/lobbies/${lobbyId}`, data => {
+        let players2 = data["players"]
+        setPlayers(players2)
+        console.log(players2)
+      });
 
     }
+    /**
     async function fetchlobby() {
       try {
 
         const response = await api.get("/lobbies/" + lobbyId);
-        setPlayers(response.data.players);
+        //setPlayers(response.data.players);
       } catch (error) {
         // console.error(
         //   `something went wrong while fetching the users: \n${handleerror(
@@ -53,7 +55,7 @@ const Lobbies = () => {
         );
       }
     }
-    fetchlobby();
+    fetchlobby();**/
 
   }, [lobbyId]);
 
