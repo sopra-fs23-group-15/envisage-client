@@ -8,7 +8,6 @@ import Slider from "components/ui/Slider";
 import "styles/views/Login.scss";
 import Player from "models/Player";
 import Lobby from "models/Lobby";
-import { connect } from "helpers/stomp";
 
 const FormField = (props) => {
   return (
@@ -31,7 +30,7 @@ FormField.propTypes = {
 };
 
 const LobbyCreation = () => {
-  const [userName, setUsername] = useState(null);
+  const [userName, setUsername] = useState("");
   const navigate = useNavigate();
 
   const createLobby = async () => {
@@ -41,7 +40,6 @@ const LobbyCreation = () => {
       const lobbyId = lobby.pin;
 
       addPlayer(lobbyId);
-      connect(lobbyId);
     } catch (error) {
       alert(
         `Something went wrong when joining the lobby: \n${handleError(error)}`

@@ -6,33 +6,61 @@ import { useParams } from "react-router-dom";
 import LobbyContainer from "components/ui/LobbyContainer";
 import LobbyBanner from "components/ui/LobbyBanner";
 import "styles/views/Player.scss";
+import {connect, getPlayers, isConnected, subscribe} from "../../helpers/stomp";
 import Round from "models/Round";
 import Game from "models/Game";
+
 
 const Lobbies = () => {
   const navigate = useNavigate();
   const [players, setPlayers] = useState(null);
   const { lobbyId, roundId } = useParams();
 
+
   useEffect(() => {
-    async function fetchLobby() {
+    console.log("Connected Lobbies: " + isConnected())
+    if (!isConnected()){
+      connect(id);
+      new Promise((resolve) => setTimeout(resolve, 1000)).then(r =>subscribeLobby())
+      new Promise((resolve) => setTimeout(resolve, 1000)).then(r =>getPlayers(id))
+
+    }
+    else{
+      subscribeLobby()
+      getPlayers(lobbyId)
+
+    }
+
+    function subscribeLobby(){
+      subscribe(`/topic/lobbies/${id}`, fetchlobby()
+       );
+
+
+    }
+    async function fetchlobby() {
       try {
+
         const response = await api.get("/lobbies/" + lobbyId);
         setPlayers(response.data.players);
       } catch (error) {
-        console.error(
-          `Something went wrong while fetching the users: \n${handleError(
-            error
-          )}`
-        );
-        console.error("Details:", error);
+        // console.error(
+        //   `something went wrong while fetching the users: \n${handleerror(
+        //     error
+        //   )}`
+        // );
+        console.error("details:", error);
+
         alert(
-          "Something went wrong while fetching the users! See the console for details."
+            "something went wrong while fetching the users! see the console for details."
         );
       }
     }
-    fetchLobby();
+    fetchlobby();
+
   }, [lobbyId]);
+
+
+
 
   const startGame = async () => {
     try {
@@ -69,6 +97,7 @@ const Lobbies = () => {
 
     playersList = (
       <div>
+
         <LobbyBanner players={players} />
         <div className="player down">
           <div className="player round">Round 0</div>

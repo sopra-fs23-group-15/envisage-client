@@ -16,6 +16,7 @@ import ImageComponent from "components/views/Image";
 const AppRouter = () => {
   return (
     <BrowserRouter>
+
       <Routes>
         <Route path="/" element={<Navigate replace to="/landingPage" />} />
         <Route path="landingPage" element={<LandingPage />} />
