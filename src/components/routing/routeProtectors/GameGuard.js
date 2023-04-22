@@ -11,10 +11,10 @@ import PropTypes from "prop-types";
  * @param props
  */
 export const GameGuard = (props) => {
-  if (localStorage.getItem("token")) {
+  if (localStorage.getItem("lobbyOd")) {
     return props.children;
   }
-  return <Redirect to="/login" />;
+  return <Redirect to="/landingPage" />;
 };
 
 GameGuard.propTypes = {

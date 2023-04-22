@@ -3,11 +3,11 @@ const b64Data = "iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAIAAADTED8xAAAAaGVYSWZNTQAqAAA
 
 const imageURL = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/A_Sunday_on_La_Grande_Jatte%2C_Georges_Seurat%2C_1884.jpg/1200px-A_Sunday_on_La_Grande_Jatte%2C_Georges_Seurat%2C_1884.jpg'
 
-const ImageComponent = () => {
+const ImageComponent = ({url, image, onClick, selected}) => {
     return (
-        <div>
-            {true ? <img src={`data:image/jpeg;base64,${b64Data}`} alt=""/> : <img src={imageURL} width={100} alt=""/>}
-            {false ? <img src={`data:image/jpeg;base64,${b64Data}`} alt=""/> : <img src={imageURL} width={300} alt=""/>}
+        <div className={`image-component ${selected? "selected" : ""}`} onClick={onClick}>
+            {url ? <img src={image} width={256} alt=""/> : <img src={`data:image/jpeg;base64,${image}`} alt=""/>}
+            {/* {url ? <img src={`data:image/jpeg;base64,${image}`} /> : <img src={image} width={300} />} */}
         </div>
         
     )
