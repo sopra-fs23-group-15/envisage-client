@@ -4,6 +4,7 @@ import LobbyCreation from "components/views/LobbyCreation";
 import Lobbies from "components/views/Lobbies";
 import Games from "components/views/Games";
 import ImageComponent from "components/views/Image";
+import FinalPage from "components/views/FinalPage"
 /**
  * Main router of your application.
  * In the following class, different routes are rendered. In our case, there is a Login Route with matches the path "/login"
@@ -22,6 +23,7 @@ const AppRouter = () => {
         <Route path="landingPage" element={<LandingPage />} />
         <Route path="lobbyCreation" element={<LobbyCreation />} />
         <Route path="lobbies/:lobbyId" element={<Lobbies />} />
+        <Route path="lobbies/:lobbyId/finalPage" element={<FinalPage />} />
         <Route path="lobbies/:lobbyId/games/:roundId" element={<Games />} />
         <Route path="image" element={<ImageComponent />} />
       </Routes>
