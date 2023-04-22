@@ -6,7 +6,7 @@ var stompClient = null;
 let connected;
 connected = false;
 
-export let connect = () => {
+export let connect = (callback) => {
   var url = (getDomain() + `/envisage-ws`);
   // over(ws) creates a WebSocket client that is connected to the STOMP server located at the url
   stompClient = Stomp.over(function(){
@@ -19,6 +19,7 @@ export let connect = () => {
   stompClient.connect({}, function (frame) {
     console.log("Connected: " + frame);
     connected = true;
+    callback();
     // # (Object) subscribe(destination, callback, headers = {})
     const subscription = stompClient.subscribe(`/topic/hallo`, function (frame) {
           console.log("Subscribed: " + frame);
@@ -28,7 +29,8 @@ export let connect = () => {
           console.log("Error: " + frame)
         });
     console.log(subscription)
-  });
+  })
+
 };
 
 export let subscribe = (destination, callback) => {

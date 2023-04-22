@@ -19,15 +19,11 @@ const Lobbies = () => {
   useEffect(() => {
     console.log("Connected Lobbies: " + isConnected());
     if (!isConnected()) {
-      connect(lobbyId);
-      new Promise((resolve) => setTimeout(resolve, 1000)).then(() =>subscribeLobby());
-      new Promise((resolve) => setTimeout(resolve, 1000)).then(() => subscribeChallenge());
-      new Promise((resolve) => setTimeout(resolve, 1000)).then(() =>notifyLobbyJoin(lobbyId));
+      connect(subscribeLobby);
+      //new Promise((resolve) => setTimeout(resolve, 1000)).then(() =>subscribeLobby());
     }
     else{
       subscribeLobby();
-      subscribeChallenge();
-      notifyLobbyJoin(lobbyId);
     }
 
     function subscribeLobby(){
@@ -36,6 +32,8 @@ const Lobbies = () => {
         setPlayers(players2)
         console.log(players2)
       });
+      notifyLobbyJoin(lobbyId);
+      subscribeChallenge();
 
     }
 
