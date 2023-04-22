@@ -9,8 +9,8 @@ import "styles/views/Game.scss";
 const Games = () => {
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
-  const [keywords, setKeywords] = useState(null);
-  const { lobbyId, roundId } = useParams();
+  // const [keywords, setKeywords] = useState(null);
+  const { lobbyId } = useParams();
 
   useEffect(() => {
     async function fetchImage() {
@@ -48,20 +48,22 @@ const Games = () => {
       );
     }
   };
-  
+
   return (
     <div className="game">
-      <img className="game image" src={image} />
+      <img className="game image" src={image} alt=""/>
       <div className="game input">
-        <Timer />
+        <Timer func={submitPrompt} />
         <div className="game input-style">Style Placeholder</div>
-        <label className="game input-label">Dercribe your image</label>
+        <label className="game input-label">Describe your image</label>
         <textarea
           className="game input-field"
           placeholder="tweak your keywords to make it more fun!"
-          onChange={(kw) => setKeywords(kw)}
+          // onChange={(kw) => setKeywords(kw)}
         />
-        <Button onClick={() => submitPrompt()}>Submit</Button>
+        <Button className="G" onClick={() => submitPrompt()}>
+          Submit
+        </Button>
       </div>
     </div>
   );
