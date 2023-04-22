@@ -6,8 +6,8 @@ const imageURL = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/A_Su
 const ImageComponent = () => {
     return (
         <div>
-            {true ? <img src={`data:image/jpeg;base64,${b64Data}`} /> : <img src={imageURL} width={100} />}
-            {false ? <img src={`data:image/jpeg;base64,${b64Data}`} /> : <img src={imageURL} width={300} />}
+            {true ? <img src={`data:image/jpeg;base64,${b64Data}`} alt=""/> : <img src={imageURL} width={100} alt=""/>}
+            {false ? <img src={`data:image/jpeg;base64,${b64Data}`} alt=""/> : <img src={imageURL} width={300} alt=""/>}
         </div>
         
     )

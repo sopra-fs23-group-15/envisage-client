@@ -6,67 +6,63 @@ import { useParams } from "react-router-dom";
 import LobbyContainer from "components/ui/LobbyContainer";
 import LobbyBanner from "components/ui/LobbyBanner";
 import "styles/views/Player.scss";
-import {connect, getPlayers, isConnected, subscribe} from "../../helpers/stomp";
+import {
+  connect,
+  getPlayers,
+  isConnected,
+  subscribe,
+} from "../../helpers/stomp";
 import Game from "models/Game";
-
 
 const Lobbies = () => {
   const navigate = useNavigate();
   const [players, setPlayers] = useState(null);
-  const { lobbyId} = useParams();
-
+  const { lobbyId } = useParams();
 
   useEffect(() => {
-    console.log("Connected Lobbies: " + isConnected())
-    if (!isConnected()){
+    console.log("Connected Lobbies: " + isConnected());
+    if (!isConnected()) {
       connect(lobbyId);
-      new Promise((resolve) => setTimeout(resolve, 1000)).then(() =>subscribeLobby())
-      new Promise((resolve) => setTimeout(resolve, 1000)).then(() =>getPlayers(lobbyId))
-
+      new Promise((resolve) => setTimeout(resolve, 1000)).then(() =>
+        subscribeLobby()
+      );
+      new Promise((resolve) => setTimeout(resolve, 1000)).then(() =>
+        getPlayers(lobbyId)
+      );
+    } else {
+      subscribeLobby();
+      getPlayers(lobbyId);
     }
-    else{
-      subscribeLobby()
-      getPlayers(lobbyId)
 
-    }
-
-    function subscribeLobby(){
-      subscribe(`/topic/lobbies/${lobbyId}`, fetchlobby()
-       );
-
-
+    function subscribeLobby() {
+      subscribe(`/topic/lobbies/${lobbyId}`, fetchlobby());
     }
     async function fetchlobby() {
       try {
-
         const response = await api.get("/lobbies/" + lobbyId);
         setPlayers(response.data.players);
       } catch (error) {
-        // console.error(
-        //   `something went wrong while fetching the users: \n${handleerror(
-        //     error
-        //   )}`
-        // );
+        console.error(
+          `something went wrong while fetching the users: \n${handleError(
+            error
+          )}`
+        );
         console.error("details:", error);
 
         alert(
-            "something went wrong while fetching the users! see the console for details."
+          "something went wrong while fetching the users! see the console for details."
         );
       }
     }
     fetchlobby();
-
   }, [lobbyId]);
-
-
-
 
   const startGame = async () => {
     try {
       const response = await api.post("/lobbies/" + lobbyId + "/games");
       const game = new Game(response.data);
       const roundId = game.rounds.length;
-      navigate(`/lobbies/${lobbyId}/games/${roundId}`)
+      navigate(`/lobbies/${lobbyId}/games/${roundId}`);
     } catch (error) {
       console.error(
         `Something went wrong while fetching the users: \n${handleError(error)}`
@@ -96,7 +92,6 @@ const Lobbies = () => {
 
     playersList = (
       <div>
-
         <LobbyBanner players={players} />
         <div className="player down">
           <div className="player round">Round 0</div>
