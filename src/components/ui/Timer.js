@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-export const Timer = () => {
+export const Timer = (props) => {
   const [minutes, setMinutes] = useState(1);
   const [seconds, setSeconds] = useState(0);
 
@@ -14,8 +14,12 @@ export const Timer = () => {
         setSeconds(59);
       }
     }, 1000);
-    return () => clearInterval(interval);
-  }, [seconds, minutes]);
+    if (minutes === 0 && seconds === 1) {
+      return () => props.func();
+    } else {
+      return () => clearInterval(interval);
+    }
+  }, [seconds, minutes, props]);
 
   return (
     <div className="game timer">

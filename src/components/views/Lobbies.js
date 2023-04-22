@@ -7,20 +7,19 @@ import LobbyContainer from "components/ui/LobbyContainer";
 import LobbyBanner from "components/ui/LobbyBanner";
 import "styles/views/Player.scss";
 import {connect, getChallengeForRound, isConnected, notifyLobbyJoin, subscribe} from "../../helpers/stomp";
+
 import Game from "models/Game";
 import Challenge from "../../models/Challenge";
 import ImagePrompt from "../../models/ImagePrompt";
 
-
 const Lobbies = () => {
   const navigate = useNavigate();
   const [players, setPlayers] = useState(null);
-  const { lobbyId} = useParams();
-
+  const { lobbyId } = useParams();
 
   useEffect(() => {
-    console.log("Connected Lobbies: " + isConnected())
-    if (!isConnected()){
+    console.log("Connected Lobbies: " + isConnected());
+    if (!isConnected()) {
       connect(lobbyId);
       new Promise((resolve) => setTimeout(resolve, 1000)).then(() =>subscribeLobby());
       new Promise((resolve) => setTimeout(resolve, 1000)).then(() => subscribeChallenge());
@@ -56,31 +55,29 @@ const Lobbies = () => {
         navigate(`/lobbies/${lobbyId}/games/${roundId}`)
 
       });
+
     }
     /**
     async function fetchlobby() {
       try {
-
         const response = await api.get("/lobbies/" + lobbyId);
         //setPlayers(response.data.players);
       } catch (error) {
-        // console.error(
-        //   `something went wrong while fetching the users: \n${handleerror(
-        //     error
-        //   )}`
-        // );
+        console.error(
+          `something went wrong while fetching the users: \n${handleError(
+            error
+          )}`
+        );
         console.error("details:", error);
 
         alert(
-            "something went wrong while fetching the users! see the console for details."
+          "something went wrong while fetching the users! see the console for details."
         );
       }
     }
     fetchlobby();**/
 
   }, [lobbyId, navigate]);
-
-
 
 
   const startGame = async () => {
@@ -90,6 +87,7 @@ const Lobbies = () => {
       console.log(game)
       //const roundId = game.rounds.length;
       getChallengeForRound(lobbyId, 1)
+
     } catch (error) {
       console.error(
         `Something went wrong while fetching the users: \n${handleError(error)}`
@@ -119,7 +117,6 @@ const Lobbies = () => {
 
     playersList = (
       <div>
-
         <LobbyBanner players={players} />
         <div className="player down">
           <div className="player round">Round 0</div>
