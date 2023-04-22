@@ -20,23 +20,28 @@ export let connect = () => {
     console.log("Connected: " + frame);
     connected = true;
     // # (Object) subscribe(destination, callback, headers = {})
-    var subscription = stompClient.subscribe(`/topic/hallo`, function (frame) {
-      console.log("Subscribed: " + frame);
-    },
-    // function frame is called when an error occurred
-    function (frame){
-      console.log("Error: " + frame)
-    });
+    const subscription = stompClient.subscribe(`/topic/hallo`, function (frame) {
+          console.log("Subscribed: " + frame);
+        },
+        // function frame is called when an error occurred
+        function (frame) {
+          console.log("Error: " + frame)
+        });
     console.log(subscription)
   });
 };
 
 export let subscribe = (destination, callback) => {
   // # (Object) subscribe(destination, callback, headers = {})
-  stompClient.subscribe(destination, function(){
-    callback()
+  stompClient.subscribe(destination, function(data){
+    callback(JSON.parse(data.body));
   });
 };
+
+export let unsubscribe = () =>{
+  // # (void) unsubscribe(id, headers = {})
+  stompClient.unsubscribe();
+}
 
 export let disconnect = () => {
   if (stompClient !== null) {
@@ -51,8 +56,12 @@ export let disconnect = () => {
 
 export let isConnected = () => connected;
 
-export let getPlayers = (lobbyId) => {
+export let notifyLobbyJoin = (lobbyId) => {
   // # (void) send(destination, headers = {}, body = '')
   // body must be a STRING
   stompClient.send("/app/lobbies/" + lobbyId +"/lobbyJoin")
-}
+};
+
+export let getChallengeForRound = (lobbyId, roundId) => {
+  stompClient.send("/app/lobbies/" + lobbyId +"/challengeForRounds/" + roundId)
+};

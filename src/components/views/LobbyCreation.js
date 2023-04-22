@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { api, handleError } from "helpers/api";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -8,6 +8,7 @@ import Slider from "components/ui/Slider";
 import "styles/views/Login.scss";
 import Player from "models/Player";
 import Lobby from "models/Lobby";
+import {disconnect, isConnected} from "../../helpers/stomp";
 
 const FormField = (props) => {
   return (
@@ -32,6 +33,14 @@ FormField.propTypes = {
 const LobbyCreation = () => {
   const [userName, setUsername] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("connected LandingPage before: " + isConnected())
+    if (isConnected()){
+      disconnect();
+    }
+    console.log("connected LandingPage after: " + isConnected())
+  })
 
   const createLobby = async () => {
     try {
