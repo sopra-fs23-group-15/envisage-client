@@ -5,6 +5,7 @@ import { Button } from "components/ui/Button";
 import { Timer } from "components/ui/Timer";
 import { useParams } from "react-router-dom";
 import "styles/views/Game.scss";
+import ImagePrompt from "../../models/ImagePrompt";
 
 const Games = () => {
   const navigate = useNavigate();
@@ -12,14 +13,15 @@ const Games = () => {
   const [keywords, setKeywords] = useState(null);
   const { lobbyId, roundId } = useParams();
 
+
   useEffect(() => {
     async function fetchImage() {
       try {
         const response = await api.get("/metMuseum");
-
         await new Promise((resolve) => setTimeout(resolve, 1000));
-
-        setImage(response.data);
+        const challengeImage = localStorage.getItem('challengeImage')
+        console.log(challengeImage);
+        setImage(challengeImage);
       } catch (error) {
         console.error(
           `Something went wrong while fetching the users: \n${handleError(
