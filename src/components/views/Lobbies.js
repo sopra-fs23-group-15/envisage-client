@@ -10,7 +10,6 @@ import {connect, getChallengeForRound, isConnected, notifyLobbyJoin, subscribe} 
 
 import Game from "models/Game";
 import Challenge from "../../models/Challenge";
-import ImagePrompt from "../../models/ImagePrompt";
 
 const Lobbies = () => {
   const navigate = useNavigate();

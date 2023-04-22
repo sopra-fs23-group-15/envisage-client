@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { api, handleError } from "helpers/api";
+import {handleError } from "helpers/api";
 import { useNavigate } from "react-router-dom";
 import { Button } from "components/ui/Button";
 import { Timer } from "components/ui/Timer";
 import { useParams } from "react-router-dom";
 import "styles/views/Game.scss";
-import ImagePrompt from "../../models/ImagePrompt";
 
 const Games = () => {
   const navigate = useNavigate();
@@ -17,7 +16,7 @@ const Games = () => {
   useEffect(() => {
     async function fetchImage() {
       try {
-        const response = await api.get("/metMuseum");
+        //const response = await api.get("/metMuseum");
         await new Promise((resolve) => setTimeout(resolve, 1000));
         const challengeImage = localStorage.getItem('challengeImage')
         console.log(challengeImage);
