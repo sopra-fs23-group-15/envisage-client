@@ -38,6 +38,11 @@ export let subscribe = (destination, callback) => {
   });
 };
 
+export let unsubscribe = () =>{
+  // # (void) unsubscribe(id, headers = {})
+  stompClient.unsubscribe();
+}
+
 export let disconnect = () => {
   if (stompClient !== null) {
     // # (void) disconnect(disconnectCallback, headers = {})
@@ -55,4 +60,8 @@ export let notifyLobbyJoin = (lobbyId) => {
   // # (void) send(destination, headers = {}, body = '')
   // body must be a STRING
   stompClient.send("/app/lobbies/" + lobbyId +"/lobbyJoin")
-}
+};
+
+export let getChallengeForRound = (lobbyId, roundId) => {
+  stompClient.send("/app/lobbies/" + lobbyId +"/challengeForRounds/" + roundId)
+};
