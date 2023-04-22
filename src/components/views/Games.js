@@ -37,7 +37,7 @@ const Games = () => {
 
   const submitPrompt = async () => {
     try {
-      navigate(`/lobbies/${lobbyId}/finalPage`);
+      navigate(`/lobbies/${lobbyId}`);
     } catch (error) {
       console.error(
         `Something went wrong while fetching the users: \n${handleError(error)}`

@@ -72,4 +72,11 @@ h5{
         flex-grow: 1;
         width: 10%;
     }
+    &.winner{
+        position: relative;
+        margin-top: 6%;
+        margin-left: 17%;
+        font-size: 3rem;
+        color: $primary;
+    }
 }

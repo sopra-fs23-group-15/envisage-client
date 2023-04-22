@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { api, handleError } from "helpers/api";
-import { useNavigate } from "react-router-dom";
 import { Button } from "components/ui/Button";
 import { useParams } from "react-router-dom";
 import LobbyContainer from "components/ui/LobbyContainer";
-import LobbyBanner from "components/ui/LobbyBanner";
 import "styles/views/Player.scss";
 import Game from "models/Game";
 
 
 const FinalPage = () => {
-  const navigate = useNavigate();
   const [playerScores, setPlayerScores] = useState(null);
   const { lobbyId} = useParams();
 
@@ -56,6 +53,7 @@ const FinalPage = () => {
 
           playersList = (
             <div>
+              <div className="player winner">The winner of the game is {playerScores[0].player}. Congratulations!</div>
               <div className="player down">
                 <div className="player round">Round 0</div>
                 <div className="player left">
@@ -71,7 +69,6 @@ const FinalPage = () => {
                   <Button>
                     Visit Exhibition
                   </Button>
-                  <div>Fill this wall with your masterpieces</div>
                 </div>
               </div>
             </div>
