@@ -4,7 +4,6 @@ import { Button } from "components/ui/Button";
 import { useParams } from "react-router-dom";
 import LobbyContainer from "components/ui/LobbyContainer";
 import "styles/views/Player.scss";
-import Game from "models/Game";
 
 
 const FinalPage = () => {
