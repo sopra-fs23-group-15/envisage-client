@@ -17,7 +17,7 @@ const Games = () => {
     async function fetchImage() {
       try {
         //const response = await api.get("/metMuseum");
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        //await new Promise((resolve) => setTimeout(resolve, 1000));
         const challengeImage = localStorage.getItem('challengeImage')
         console.log(challengeImage);
         setImage(challengeImage);
@@ -55,7 +55,7 @@ const Games = () => {
       <img className="game image" src={image} alt=""/>
       <div className="game input">
         <Timer func={submitPrompt} />
-        <div className="game input-style">Style Placeholder</div>
+        <div className="game input-style">{localStorage.getItem("challengeStyle")}</div>
         <label className="game input-label">Describe your image</label>
         <textarea
           className="game input-field"
