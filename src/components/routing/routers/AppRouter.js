@@ -37,6 +37,7 @@ const AppRouter = () => {
           }
         />
         <Route path="image" element={<ImageComponent />} />
+        <Route path="*" element={<Navigate replace to="/landingPage" />} />
       </Routes>
     </BrowserRouter>
   );
