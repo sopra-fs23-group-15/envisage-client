@@ -17,7 +17,6 @@ import FinalPage from "components/views/FinalPage"
 const AppRouter = () => {
   return (
     <BrowserRouter>
-
       <Routes>
         <Route path="/" element={<Navigate replace to="/landingPage" />} />
         <Route path="landingPage" element={<LandingPage />} />
@@ -26,6 +25,7 @@ const AppRouter = () => {
         <Route path="lobbies/:lobbyId/finalPage" element={<FinalPage />} />
         <Route path="lobbies/:lobbyId/games/:roundId" element={<Games />} />
         <Route path="image" element={<ImageComponent />} />
+        <Route path="*" element={<Navigate replace to="/landingPage" />} />
       </Routes>
     </BrowserRouter>
   );
