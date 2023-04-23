@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {handleError } from "helpers/api";
+import { handleError } from "helpers/api";
 import { useNavigate } from "react-router-dom";
 import { Button } from "components/ui/Button";
 import { Timer } from "components/ui/Timer";
@@ -10,15 +10,14 @@ const Games = () => {
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
   // const [keywords, setKeywords] = useState(null);
-  const { lobbyId } = useParams();
-
+  const { lobbyId, roundId } = useParams();
 
   useEffect(() => {
     async function fetchImage() {
       try {
         //const response = await api.get("/metMuseum");
         //await new Promise((resolve) => setTimeout(resolve, 1000));
-        const challengeImage = localStorage.getItem('challengeImage')
+        const challengeImage = localStorage.getItem("challengeImage");
         console.log(challengeImage);
         setImage(challengeImage);
       } catch (error) {
@@ -34,11 +33,22 @@ const Games = () => {
       }
     }
     fetchImage();
+    console.log(localStorage.getItem("image"));
   }, []);
 
   const submitPrompt = async () => {
     try {
-      navigate(`/lobbies/${lobbyId}`);
+      // const requestBody = JSON.stringify({ keywords });
+      // await api.put(
+      //   "/lobbies/" +
+      //     lobbyId +
+      //     "/games/" +
+      //     roundId +
+      //     localStorage.getItem("player"),
+      //   requestBody
+      // );
+
+      navigate(`/lobbies/${lobbyId}/games/${roundId}/votePage`);
     } catch (error) {
       console.error(
         `Something went wrong while fetching the users: \n${handleError(error)}`
@@ -52,10 +62,12 @@ const Games = () => {
 
   return (
     <div className="game">
-      <img className="game image" src={image} alt=""/>
+      <img className="game image" src={image} alt="" />
       <div className="game input">
         <Timer func={submitPrompt} />
-        <div className="game input-style">{localStorage.getItem("challengeStyle")}</div>
+        <div className="game input-style">
+          {localStorage.getItem("challengeStyle")}
+        </div>
         <label className="game input-label">Describe your image</label>
         <textarea
           className="game input-field"

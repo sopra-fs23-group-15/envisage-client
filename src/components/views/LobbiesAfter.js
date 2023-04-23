@@ -6,10 +6,13 @@ import { useParams } from "react-router-dom";
 import LobbyContainer from "components/ui/LobbyContainer";
 import LobbyBanner from "components/ui/LobbyBanner";
 import "styles/views/Player.scss";
-import {connect, getChallengeForRound, isConnected, notifyLobbyJoin, subscribe} from "../../helpers/stomp";
-
+import {
+  connect,
+  getPlayers,
+  isConnected,
+  subscribe,
+} from "../../helpers/stomp";
 import Game from "models/Game";
-import Challenge from "models/Challenge";
 
 const Lobbies = () => {
   const navigate = useNavigate();
@@ -18,48 +21,26 @@ const Lobbies = () => {
 
   useEffect(() => {
     console.log("Connected Lobbies: " + isConnected());
-    
     if (!isConnected()) {
-      connect(subscribeLobby);
-      //new Promise((resolve) => setTimeout(resolve, 1000)).then(() =>subscribeLobby());
-    }
-    else{
+      connect(lobbyId);
+      new Promise((resolve) => setTimeout(resolve, 1000)).then(() =>
+        subscribeLobby()
+      );
+      new Promise((resolve) => setTimeout(resolve, 1000)).then(() =>
+        getPlayers(lobbyId)
+      );
+    } else {
       subscribeLobby();
+      getPlayers(lobbyId);
     }
 
-    function subscribeLobby(){
-      subscribe(`/topic/lobbies/${lobbyId}`, data => {
-        let players2 = data["players"]
-        setPlayers(players2)
-        console.log(players2)
-      });
-      notifyLobbyJoin(lobbyId);
-      subscribeChallenge();
-
+    function subscribeLobby() {
+      subscribe(`/topic/lobbies/${lobbyId}`, fetchlobby());
     }
-
-    function subscribeChallenge(){
-      subscribe(`/topic/lobbies/${lobbyId}/challenges`, data => {
-        console.log(data);
-        const challenge = new Challenge();
-        challenge.durationInSeconds = data["durationInSeconds"]
-        challenge.styleRequirement = data["styleRequirement"]
-        challenge.imagePrompt = data["imagePrompt"]
-        localStorage.setItem('challengeImage', challenge.imagePrompt.image);
-        console.log(localStorage.getItem('challengeImage'));
-        localStorage.setItem('challengeStyle', challenge.styleRequirement.style);
-        localStorage.setItem('challengeDuration', challenge.durationInSeconds)
-        const roundId = 1;
-        navigate(`/lobbies/${lobbyId}/games/${roundId}`)
-
-      });
-
-    }
-    /**
     async function fetchlobby() {
       try {
         const response = await api.get("/lobbies/" + lobbyId);
-        //setPlayers(response.data.players);
+        setPlayers(response.data.players);
       } catch (error) {
         console.error(
           `something went wrong while fetching the users: \n${handleError(
@@ -73,19 +54,15 @@ const Lobbies = () => {
         );
       }
     }
-    fetchlobby();**/
-
-  }, [lobbyId, navigate]);
-
+    fetchlobby();
+  }, [lobbyId]);
 
   const startGame = async () => {
     try {
       const response = await api.post("/lobbies/" + lobbyId + "/games");
       const game = new Game(response.data);
-      console.log(game)
-      //const roundId = game.rounds.length;
-      getChallengeForRound(lobbyId, 1)
-
+      const roundId = game.rounds.length;
+      navigate(`/lobbies/${lobbyId}/games/${roundId}`);
     } catch (error) {
       console.error(
         `Something went wrong while fetching the users: \n${handleError(error)}`

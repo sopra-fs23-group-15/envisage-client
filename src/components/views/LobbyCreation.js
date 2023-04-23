@@ -50,6 +50,7 @@ const LobbyCreation = () => {
       const response = await api.post("/lobbies", requestBody);
       const lobby = new Lobby(response.data);
       const lobbyId = lobby.pin;
+      localStorage.setItem("lobbyId", parseInt(lobbyId));
 
       addPlayer(lobbyId);
     } catch (error) {
@@ -67,6 +68,8 @@ const LobbyCreation = () => {
       const player = new Player(response.data);
 
       localStorage.setItem("creator", player.lobbyCreator);
+      localStorage.setItem("player", userName);
+      localStorage.setItem("lobbyID", parseInt(lobbyId));
 
       navigate(`/lobbies/${lobbyId}`);
     } catch (error) {

@@ -6,7 +6,7 @@ import BaseContainer from "components/ui/BaseContainer";
 import { Button } from "components/ui/Button";
 import Slider from "components/ui/Slider";
 import "styles/views/Login.scss";
-import {disconnect, isConnected} from "../../helpers/stomp";
+import {disconnect, isConnected} from "helpers/stomp";
 
 const FormField = (props) => {
   return (
@@ -29,7 +29,6 @@ FormField.propTypes = {
   onChange: PropTypes.func,
 };
 
-
 const LandingPage = () => {
   const [userName, setUsername] = useState("");
   const [lobbyId, setLobbyId] = useState("");
@@ -49,7 +48,9 @@ const LandingPage = () => {
       const requestBody = JSON.stringify({ userName });
       const response = await api.post(`/lobbies/${lobbyId}`, requestBody);
       console.log(response.data);
-      console.log("Connected Lobbies: " + isConnected())
+      console.log("Connected Lobbies: " + isConnected());
+      localStorage.setItem("player", userName);
+      localStorage.setItem("lobbyID", parseInt(lobbyId));
       navigate(`/lobbies/${lobbyId}`);
     } catch (error) {
       alert(
