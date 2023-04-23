@@ -44,7 +44,10 @@ const LobbyCreation = () => {
 
   const createLobby = async () => {
     try {
-      const response = await api.post("/lobbies");
+      const RoundDurationInSeconds = 60;
+      const NoOfRounds = 5;
+      const requestBody = JSON.stringify({ RoundDurationInSeconds,  NoOfRounds});
+      const response = await api.post("/lobbies", requestBody);
       const lobby = new Lobby(response.data);
       const lobbyId = lobby.pin;
 
