@@ -46,7 +46,7 @@ const Lobbies = () => {
         challenge.imagePrompt = data["imagePrompt"]
         localStorage.setItem('challengeImage', challenge.imagePrompt.image);
         console.log(localStorage.getItem('challengeImage'));
-        localStorage.setItem('challengeStyle', challenge.styleRequirement);
+        localStorage.setItem('challengeStyle', challenge.styleRequirement.style);
         localStorage.setItem('challengeDuration', challenge.durationInSeconds)
         const roundId = 1;
         navigate(`/lobbies/${lobbyId}/games/${roundId}`)
