@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import "styles/ui/Slider.scss";
 import slider1 from "img/slider1.png";
 import slider2 from "img/slider2.png";
 import slider3 from "img/slider3.png";
 import slider4 from "img/slider4.png";
 import slider5 from "img/slider5.png";
+import "styles/ui/Slider.scss";
 
 const images = [
   { img: slider1 },

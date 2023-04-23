@@ -11,9 +11,8 @@ import {
   getPlayers,
   isConnected,
   subscribe,
-} from "helpers/stomp";
+} from "../../helpers/stomp";
 import Game from "models/Game";
-import Lobby from "models/Lobby";
 
 const Lobbies = () => {
   const navigate = useNavigate();
@@ -22,7 +21,6 @@ const Lobbies = () => {
 
   useEffect(() => {
     console.log("Connected Lobbies: " + isConnected());
-    
     if (!isConnected()) {
       connect(lobbyId);
       new Promise((resolve) => setTimeout(resolve, 1000)).then(() =>
@@ -39,12 +37,10 @@ const Lobbies = () => {
     function subscribeLobby() {
       subscribe(`/topic/lobbies/${lobbyId}`, fetchlobby());
     }
-
     async function fetchlobby() {
       try {
         const response = await api.get("/lobbies/" + lobbyId);
-        const lobby = new Lobby(response.data)
-        setPlayers(lobby.players);
+        setPlayers(response.data.players);
       } catch (error) {
         console.error(
           `something went wrong while fetching the users: \n${handleError(

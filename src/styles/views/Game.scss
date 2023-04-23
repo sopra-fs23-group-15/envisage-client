@@ -26,12 +26,12 @@
         margin-top: 2em;
         margin-bottom: 8em;
         padding: 0.75em;
-        background-color: mix($primary, white, 80);
+        background-color: mix($primary, white, 85);
         border-radius: 1em;
     }
     &.input-label {
         font-weight: bold;
-        color: $primary;
+        color: mix($primary, white, 85);
     }
     &.input-field {
         height: 30vh;

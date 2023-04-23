@@ -9,17 +9,17 @@ import "styles/views/Game.scss";
 const Games = () => {
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
-  // const [keywords, setKeywords] = useState(null);
-  const { lobbyId } = useParams();
+  const [keywords, setKeywords] = useState(null);
+  const { lobbyId, roundId } = useParams();
 
   useEffect(() => {
     async function fetchImage() {
       try {
         const response = await api.get("/metMuseum");
-
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
         setImage(response.data);
+        localStorage.setItem("image", response.data)
       } catch (error) {
         console.error(
           `Something went wrong while fetching the users: \n${handleError(
@@ -33,11 +33,22 @@ const Games = () => {
       }
     }
     fetchImage();
+    console.log(localStorage.getItem("image"))
   }, []);
 
   const submitPrompt = async () => {
     try {
-      navigate(`/lobbies/${lobbyId}`);
+      const requestBody = JSON.stringify({ keywords });
+      await api.put(
+        "/lobbies/" +
+          lobbyId +
+          "/games/" +
+          roundId +
+          localStorage.getItem("player"),
+        requestBody
+      );
+
+      navigate(`/lobbies/${lobbyId}/games/${roundId}/votePage`);
     } catch (error) {
       console.error(
         `Something went wrong while fetching the users: \n${handleError(error)}`
@@ -51,7 +62,7 @@ const Games = () => {
 
   return (
     <div className="game">
-      <img className="game image" src={image} alt=""/>
+      <img className="game image" src={image} alt="" />
       <div className="game input">
         <Timer func={submitPrompt} />
         <div className="game input-style">Style Placeholder</div>
@@ -59,7 +70,7 @@ const Games = () => {
         <textarea
           className="game input-field"
           placeholder="tweak your keywords to make it more fun!"
-          // onChange={(kw) => setKeywords(kw)}
+          onChange={(kw) => setKeywords(kw)}
         />
         <Button className="G" onClick={() => submitPrompt()}>
           Submit
