@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "components/ui/Button";
 import { Timer } from "components/ui/Timer";
 import { useParams } from "react-router-dom";
-import TextArea from "./TextArea";
+//import TextArea from "./TextArea";
 import "styles/views/Game.scss";
 
 const Games = () => {
