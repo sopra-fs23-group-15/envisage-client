@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "components/ui/Button";
 import { Timer } from "components/ui/Timer";
 import { useParams } from "react-router-dom";
+import TextArea from "./TextArea";
 import "styles/views/Game.scss";
 
 const Games = () => {
@@ -74,6 +75,7 @@ const Games = () => {
           placeholder="tweak your keywords to make it more fun!"
           // onChange={(kw) => setKeywords(kw)}
         />
+        {/* <TextArea /> */}
         <Button className="G" onClick={() => submitPrompt()}>
           Submit
         </Button>
