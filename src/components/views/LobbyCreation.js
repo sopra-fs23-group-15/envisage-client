@@ -52,7 +52,7 @@ const LobbyCreation = () => {
       const lobbyId = lobby.pin;
       localStorage.setItem("lobbyId", parseInt(lobbyId));
 
-      addPlayer(lobbyId);
+      await addPlayer(lobbyId);
     } catch (error) {
       alert(
         `Something went wrong when joining the lobby: \n${handleError(error)}`
