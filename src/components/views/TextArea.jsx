@@ -5,19 +5,22 @@ const MAX_CHARS = 400;
 const TextArea = () => {
   const [text, setText] = useState("");
   const [charCount, setCharCount] = useState(0);
+  const [isOverLimit, setIsOverLimit] = useState(false);
 
   const handleInputChange = (e) => {
     const inputText = e.target.value;
     const inputCharCount = inputText.length;
-    if (inputCharCount > MAX_CHARS) {
-      return;
-    }
+    // if (inputCharCount > MAX_CHARS) { //works by not allowing user to write more than 50 at all
+    //   return;
+    // }
     setText(inputText);
     setCharCount(inputCharCount);
+    setIsOverLimit(charCount > MAX_CHARS);
   };
 
   const inputStyle = {
-    border: charCount > MAX_CHARS ? "2px solid red" : "",
+    border: isOverLimit ? "2px solid red" : "",
+    color: isOverLimit ? 'red' : 'black',
   };
 
   /**const handleSubmit = (e) => {
