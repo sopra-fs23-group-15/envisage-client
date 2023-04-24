@@ -20,13 +20,13 @@ const TextArea = () => {
     border: charCount > MAX_CHARS ? "2px solid red" : "",
   };
 
-  const handleSubmit = (e) => {
+  /**const handleSubmit = (e) => {
     e.preventDefault();
     if (charCount > MAX_CHARS) {
       return;
     }
     // code for submitting form goes here
-  };
+  };**/
 
   return (
     <>
