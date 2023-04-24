@@ -8,13 +8,12 @@ import LobbyBanner from "components/ui/LobbyBanner";
 import "styles/views/Player.scss";
 import {
   connect,
-  getPlayers,
   isConnected,
   subscribe,
 } from "../../helpers/stomp";
 import Game from "models/Game";
 
-const Lobbies = () => {
+const LobbiesAfter = () => {
   const navigate = useNavigate();
   const [players, setPlayers] = useState(null);
   const { lobbyId } = useParams();
@@ -118,4 +117,4 @@ const Lobbies = () => {
   return <LobbyContainer>{playersList}</LobbyContainer>;
 };
 
-export default Lobbies;
+export default LobbiesAfter;
