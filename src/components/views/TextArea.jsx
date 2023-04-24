@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const MAX_CHARS = 50;
+const MAX_CHARS = 400;
 
 const TextArea = () => {
   const [text, setText] = useState("");
@@ -29,18 +29,20 @@ const TextArea = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <>
+    <label className="game input-label">Describe your image. {charCount}/{MAX_CHARS}</label>
       <textarea
+        className= "game input-field"
         style={inputStyle}
         value={text}
         onChange={handleInputChange}
-        placeholder="Enter text (max 400 characters)"
+        placeholder="tweak your keywords to make it more fun! (max 400 characters)"
       />
-      <p>
-        Character Count: {charCount}/{MAX_CHARS}
-      </p>
-      <button type="submit">Submit</button>
-    </form>
+    </>
+    //   <p>
+    //     Character Count: {charCount}/{MAX_CHARS}
+    //   </p>
+    //   <button type="submit">Submit</button>
   );
 };
 

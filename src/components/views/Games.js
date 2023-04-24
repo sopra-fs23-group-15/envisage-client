@@ -68,14 +68,13 @@ const Games = () => {
         <Timer func={submitPrompt} />
         <div className="game input-style">
           {localStorage.getItem("challengeStyle")}
-        </div>
-        <label className="game input-label">Describe your image</label>
-        <textarea
+        </div>        
+        {/* <textarea
           className="game input-field"
           placeholder="tweak your keywords to make it more fun!"
           // onChange={(kw) => setKeywords(kw)}
-        />
-        {/* <TextArea /> */}
+        /> */}
+        <TextArea />
         <Button className="G" onClick={() => submitPrompt()}>
           Submit
         </Button>
