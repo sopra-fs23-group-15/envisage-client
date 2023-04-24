@@ -65,6 +65,7 @@ const LobbyCreation = () => {
 
   const addPlayer = async (lobbyId) => {
     try {
+      console.log("try to add player");
       const requestBody = JSON.stringify({ userName });
       const response = await api.post(`/lobbies/${lobbyId}`, requestBody);
 
