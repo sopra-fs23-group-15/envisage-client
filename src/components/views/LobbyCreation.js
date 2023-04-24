@@ -43,14 +43,15 @@ const LobbyCreation = () => {
   })
 
 
-  const createLobby = async () => {
+  const createLobby = () => {
     try {
       const RoundDurationInSeconds = 60;
       const NoOfRounds = 5;
       const requestBody = JSON.stringify({RoundDurationInSeconds, NoOfRounds});
-      await api.post("/lobbies", requestBody).then(async function (response) {
+      api.post("/lobbies", requestBody).then(async function (response) {
         const lobby = new Lobby(response.data);
         const lobbyId = lobby.pin;
+        console.log(response);
         localStorage.setItem("lobbyId", parseInt(lobbyId));
         console.log("LobbyId in Storage: " + localStorage.getItem("lobbyId"));
         await addPlayer(lobbyId);
