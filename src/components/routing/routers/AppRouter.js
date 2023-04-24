@@ -6,6 +6,7 @@ import Games from "components/views/Games";
 import ImageComponent from "components/views/Image";
 import VotePage from "components/views/VotePage";
 import FinalPage from "components/views/FinalPage";
+import { LobbyGuard } from "components/routing/routeProtectors/LobbyGuard";
 
 // Base64 string data
 const b64Data =
@@ -19,23 +20,25 @@ const AppRouter = () => {
         <Route path="/" element={<Navigate replace to="/landingPage" />} />
         <Route path="landingPage" element={<LandingPage />} />
         <Route path="lobbyCreation" element={<LobbyCreation />} />
-        <Route path="lobbies/:lobbyId" element={<Lobbies />} />
-        <Route path="lobbies/:lobbyId/finalPage" element={<FinalPage />} />
-        <Route path="lobbies/:lobbyId/games/:roundId" element={<Games />} />
-        <Route
-          path="lobbies/:lobbyId/games/:roundId/votePage"
-          element={
-            <VotePage
-              images={[
-                { url: true, image: imageURL },
-                { url: false, image: b64Data },
-                { url: true, image: imageURL },
-                { url: false, image: b64Data },
-                { url: true, image: imageURL },
-              ]}
+        <Route element={<LobbyGuard />}>
+            <Route path="lobbies/:lobbyId" element={<Lobbies />} />
+            <Route path="lobbies/:lobbyId/finalPage" element={<FinalPage />} />
+            <Route path="lobbies/:lobbyId/games/:roundId" element={<Games />} />
+            <Route
+              path="lobbies/:lobbyId/games/:roundId/votePage"
+              element={
+                <VotePage
+                  images={[
+                    { url: true, image: imageURL },
+                    { url: false, image: b64Data },
+                    { url: true, image: imageURL },
+                    { url: false, image: b64Data },
+                    { url: true, image: imageURL },
+                  ]}
+                />
+              }
             />
-          }
-        />
+        </Route>
         <Route path="image" element={<ImageComponent />} />
         <Route path="*" element={<Navigate replace to="/landingPage" />} />
       </Routes>

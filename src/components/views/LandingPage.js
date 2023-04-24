@@ -50,7 +50,7 @@ const LandingPage = () => {
       console.log(response.data);
       console.log("Connected Lobbies: " + isConnected());
       localStorage.setItem("player", userName);
-      localStorage.setItem("lobbyID", parseInt(lobbyId));
+      localStorage.setItem("lobbyId", parseInt(lobbyId));
       navigate(`/lobbies/${lobbyId}`);
     } catch (error) {
       alert(
