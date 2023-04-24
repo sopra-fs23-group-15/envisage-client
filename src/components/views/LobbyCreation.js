@@ -42,20 +42,23 @@ const LobbyCreation = () => {
     console.log("connected LandingPage after: " + isConnected())
   })
 
+
   const createLobby = async () => {
     try {
       const RoundDurationInSeconds = 60;
       const NoOfRounds = 5;
-      const requestBody = JSON.stringify({ RoundDurationInSeconds,  NoOfRounds});
-      const response = await api.post("/lobbies", requestBody);
-      const lobby = new Lobby(response.data);
-      const lobbyId = lobby.pin;
-      localStorage.setItem("lobbyId", parseInt(lobbyId));
+      const requestBody = JSON.stringify({RoundDurationInSeconds, NoOfRounds});
+      await api.post("/lobbies", requestBody).then(async function (response) {
+        const lobby = new Lobby(response.data);
+        const lobbyId = lobby.pin;
+        localStorage.setItem("lobbyId", parseInt(lobbyId));
+        console.log("LobbyId in Storage: " + localStorage.getItem("lobbyId"));
+        await addPlayer(lobbyId);
+      });
 
-      await addPlayer(lobbyId);
     } catch (error) {
       alert(
-        `Something went wrong when joining the lobby: \n${handleError(error)}`
+          `Something went wrong when joining the lobby: \n${handleError(error)}`
       );
     }
   };
