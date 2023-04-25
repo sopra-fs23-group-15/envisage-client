@@ -54,7 +54,8 @@ const VotePage = ({ images }) => {
       <div
         className="vote container"
         style={{
-          backgroundImage: "url(" + localStorage.getItem("image") + ")",
+          backgroundImage:
+            "url(" + localStorage.getItem("challengeImage") + ")",
         }}
       ></div>
       <h1 className="vote manifesto">Vote for your favorite image!</h1>

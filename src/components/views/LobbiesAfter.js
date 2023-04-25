@@ -6,11 +6,7 @@ import { useParams } from "react-router-dom";
 import LobbyContainer from "components/ui/LobbyContainer";
 import LobbyBanner from "components/ui/LobbyBanner";
 import "styles/views/Player.scss";
-import {
-  connect,
-  isConnected,
-  subscribe,
-} from "../../helpers/stomp";
+import { connect, isConnected, subscribe } from "helpers/stomp";
 import Game from "models/Game";
 
 const LobbiesAfter = () => {

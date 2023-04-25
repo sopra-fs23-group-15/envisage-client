@@ -68,7 +68,7 @@ const Games = () => {
         <Timer func={submitPrompt} />
         <div className="game input-style">
           {localStorage.getItem("challengeStyle")}
-        </div>        
+        </div>
         {/* <textarea
           className="game input-field"
           placeholder="tweak your keywords to make it more fun!"

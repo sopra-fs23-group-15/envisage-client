@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { api, handleError } from "helpers/api";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -8,7 +8,7 @@ import Slider from "components/ui/Slider";
 import "styles/views/Login.scss";
 import Player from "models/Player";
 import Lobby from "models/Lobby";
-import {disconnect, isConnected} from "../../helpers/stomp";
+import { disconnect, isConnected } from "helpers/stomp";
 
 const FormField = (props) => {
   return (
@@ -35,22 +35,24 @@ const LobbyCreation = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("connected LandingPage before: " + isConnected())
-    if (isConnected()){
+    console.log("connected LandingPage before: " + isConnected());
+    if (isConnected()) {
       disconnect();
     }
-    console.log("connected LandingPage after: " + isConnected())
-  })
-
+    console.log("connected LandingPage after: " + isConnected());
+  });
 
   const createLobby = () => {
     try {
       const RoundDurationInSeconds = 60;
       const NoOfRounds = 5;
-      const requestBody = JSON.stringify({RoundDurationInSeconds, NoOfRounds});
+      const requestBody = JSON.stringify({
+        RoundDurationInSeconds,
+        NoOfRounds,
+      });
       api.post("/lobbies", requestBody).then(async function (response) {
         const r = await api.get(`/lobbies`);
-        console.log(r)
+        console.log(r);
         const lobby = new Lobby(response.data);
         const lobbyId = lobby.pin;
         console.log(response);
@@ -58,10 +60,9 @@ const LobbyCreation = () => {
         console.log("LobbyId in Storage: " + localStorage.getItem("lobbyId"));
         await addPlayer(lobbyId);
       });
-
     } catch (error) {
       alert(
-          `Something went wrong when joining the lobby: \n${handleError(error)}`
+        `Something went wrong when joining the lobby: \n${handleError(error)}`
       );
     }
   };
