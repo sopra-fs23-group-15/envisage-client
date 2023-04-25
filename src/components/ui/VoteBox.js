@@ -1,3 +1,4 @@
+import React from "react";
 import { Button } from "./Button";
 
 const VoteBox = (props) => {
@@ -16,7 +17,7 @@ const VoteBox = (props) => {
         Said by <span>{props.userName ? props.userName : "player:"}</span>
       </h3>
       <h5 className="vote box-keywords">
-        {props.keyWord ? props.keyWord : "\"description of the image\""}
+        {props.keyWord ? props.keyWord : '"description of the image"'}
       </h5>
       <Button
         className="V"

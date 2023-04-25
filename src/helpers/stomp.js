@@ -7,9 +7,9 @@ let connected;
 connected = false;
 
 export let connect = (callback) => {
-  var url = (getDomain() + `/envisage-ws`);
+  var url = getDomain() + `/envisage-ws`;
   // over(ws) creates a WebSocket client that is connected to the STOMP server located at the url
-  stompClient = Stomp.over(function(){
+  stompClient = Stomp.over(function () {
     return new SockJS(url);
   });
   // automatic reconnect (delay in milli seconds)
@@ -21,29 +21,31 @@ export let connect = (callback) => {
     connected = true;
     callback();
     // # (Object) subscribe(destination, callback, headers = {})
-    const subscription = stompClient.subscribe(`/topic/hallo`, function (frame) {
-          console.log("Subscribed: " + frame);
-        },
-        // function frame is called when an error occurred
-        function (frame) {
-          console.log("Error: " + frame)
-        });
-    console.log(subscription)
-  })
-
+    const subscription = stompClient.subscribe(
+      `/topic/hallo`,
+      function (frame) {
+        console.log("Subscribed: " + frame);
+      },
+      // function frame is called when an error occurred
+      function (frame) {
+        console.log("Error: " + frame);
+      }
+    );
+    console.log(subscription);
+  });
 };
 
 export let subscribe = (destination, callback) => {
   // # (Object) subscribe(destination, callback, headers = {})
-  stompClient.subscribe(destination, function(data){
+  stompClient.subscribe(destination, function (data) {
     callback(JSON.parse(data.body));
   });
 };
 
-export let unsubscribe = () =>{
+export let unsubscribe = () => {
   // # (void) unsubscribe(id, headers = {})
   stompClient.unsubscribe();
-}
+};
 
 export let disconnect = () => {
   if (stompClient !== null) {
@@ -61,9 +63,11 @@ export let isConnected = () => connected;
 export let notifyLobbyJoin = (lobbyId) => {
   // # (void) send(destination, headers = {}, body = '')
   // body must be a STRING
-  stompClient.send("/app/lobbies/" + lobbyId +"/lobbyJoin")
+  stompClient.send("/app/lobbies/" + lobbyId + "/lobbyJoin");
 };
 
 export let getChallengeForRound = (lobbyId, roundId) => {
-  stompClient.send("/app/lobbies/" + lobbyId +"/challengeForRounds/" + roundId)
+  stompClient.send(
+    "/app/lobbies/" + lobbyId + "/challengeForRounds/" + roundId
+  );
 };

@@ -2,22 +2,26 @@ import React, { useState } from "react";
 
 const MAX_CHARS = 400;
 
-const TextArea = () => {
+const TextArea = (props) => {
   const [text, setText] = useState("");
   const [charCount, setCharCount] = useState(0);
+  const [isOverLimit, setIsOverLimit] = useState(false);
 
   const handleInputChange = (e) => {
+    props.func(e.target.value);
     const inputText = e.target.value;
     const inputCharCount = inputText.length;
-    if (inputCharCount > MAX_CHARS) {
-      return;
-    }
+    // if (inputCharCount > MAX_CHARS) { //works by not allowing user to write more than 50 at all
+    //   return;
+    // }
     setText(inputText);
     setCharCount(inputCharCount);
+    setIsOverLimit(charCount > MAX_CHARS);
   };
 
   const inputStyle = {
-    border: charCount > MAX_CHARS ? "2px solid red" : "",
+    border: isOverLimit ? "2px solid red" : "",
+    color: isOverLimit ? "red" : "black",
   };
 
   /**const handleSubmit = (e) => {
@@ -30,9 +34,11 @@ const TextArea = () => {
 
   return (
     <>
-    <label className="game input-label">Describe your image. {charCount}/{MAX_CHARS}</label>
+      <label className="game input-label">
+        Describe your image {charCount}/{MAX_CHARS}
+      </label>
       <textarea
-        className= "game input-field"
+        className="game input-field"
         style={inputStyle}
         value={text}
         onChange={handleInputChange}

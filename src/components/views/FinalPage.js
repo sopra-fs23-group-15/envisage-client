@@ -7,6 +7,7 @@ import "styles/views/Player.scss";
 
 const FinalPage = () => {
   const [playerScores, setPlayerScores] = useState(null);
+  const [sortedPlayerScores, setSortedPlayerScores] = useState(null);
   const { lobbyId } = useParams();
 
   useEffect(() => {
@@ -14,6 +15,8 @@ const FinalPage = () => {
       try {
         const response = await api.get("/lobbies/" + lobbyId + "/games");
         setPlayerScores(response.data.playerScores);
+        const sortedScores = playerScores.sort((a, b) => b.score - a.score);
+        setSortedPlayerScores(sortedScores);
       } catch (error) {
         console.error(
           `something went wrong while fetching the users: \n${handleError(
@@ -28,11 +31,11 @@ const FinalPage = () => {
       }
     }
     fetchScores();
-  }, [lobbyId]);
+  }, [lobbyId, playerScores]);
 
   let playersList = <LobbyContainer />;
 
-  if (playerScores) {
+  if (sortedPlayerScores) {
     const fillPlayes = () => {
       const rows = [];
       for (let i = 0; i < 5 - playerScores.length; i++) {
@@ -49,12 +52,13 @@ const FinalPage = () => {
     playersList = (
       <div>
         <div className="player winner">
-          The winner of the game is {playerScores[0].player}. Congratulations!
+          The winner of the game is {sortedPlayerScores[0].player}.
+          Congratulations!
         </div>
         <div className="player down">
           <div className="player round">Round 0</div>
           <div className="player left">
-            {playerScores.map((playerScore) => (
+            {sortedPlayerScores.map((playerScore) => (
               <div className="player row">
                 <div>{playerScore.player}</div>
                 <div>{playerScore.score}</div>
