@@ -21,7 +21,6 @@ const Lobbies = () => {
     
     if (!isConnected()) {
       connect(subscribeLobby);
-      //new Promise((resolve) => setTimeout(resolve, 1000)).then(() =>subscribeLobby());
     }
     else{
       subscribeLobby();
@@ -55,25 +54,6 @@ const Lobbies = () => {
       });
 
     }
-    /**
-    async function fetchlobby() {
-      try {
-        const response = await api.get("/lobbies/" + lobbyId);
-        //setPlayers(response.data.players);
-      } catch (error) {
-        console.error(
-          `something went wrong while fetching the users: \n${handleError(
-            error
-          )}`
-        );
-        console.error("details:", error);
-
-        alert(
-          "something went wrong while fetching the users! see the console for details."
-        );
-      }
-    }
-    fetchlobby();**/
 
   }, [lobbyId, navigate]);
 

@@ -35,11 +35,9 @@ const LandingPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("connected LandingPage before: " + isConnected())
     if (isConnected()){
-    disconnect();
+      disconnect();
     }
-    console.log("connected LandingPage after: " + isConnected())
   })
 
 
