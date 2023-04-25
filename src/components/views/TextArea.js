@@ -2,12 +2,13 @@ import React, { useState } from "react";
 
 const MAX_CHARS = 400;
 
-const TextArea = () => {
+const TextArea = (props) => {
   const [text, setText] = useState("");
   const [charCount, setCharCount] = useState(0);
   const [isOverLimit, setIsOverLimit] = useState(false);
 
   const handleInputChange = (e) => {
+    props.func(e.target.value);
     const inputText = e.target.value;
     const inputCharCount = inputText.length;
     // if (inputCharCount > MAX_CHARS) { //works by not allowing user to write more than 50 at all
