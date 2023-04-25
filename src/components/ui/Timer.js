@@ -15,7 +15,7 @@ export const Timer = (props) => {
       }
     }, 1000);
     if (minutes === 0 && seconds === 1) {
-      return () => props.func();
+      props.func();
     } else {
       return () => clearInterval(interval);
     }
