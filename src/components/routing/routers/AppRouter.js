@@ -21,23 +21,23 @@ const AppRouter = () => {
         <Route path="landingPage" element={<LandingPage />} />
         <Route path="lobbyCreation" element={<LobbyCreation />} />
         <Route element={<LobbyGuard />}>
-            <Route path="lobbies/:lobbyId" element={<Lobbies />} />
-            <Route path="lobbies/:lobbyId/finalPage" element={<FinalPage />} />
-            <Route path="lobbies/:lobbyId/games/:roundId" element={<Games />} />
-            <Route
-              path="lobbies/:lobbyId/games/:roundId/votePage"
-              element={
-                <VotePage
-                  images={[
-                    { url: true, image: imageURL },
-                    { url: false, image: b64Data },
-                    { url: true, image: imageURL },
-                    { url: false, image: b64Data },
-                    { url: true, image: imageURL },
-                  ]}
-                />
-              }
-            />
+          <Route path="lobbies/:lobbyId" element={<Lobbies />} />
+          <Route path="lobbies/:lobbyId/finalPage" element={<FinalPage />} />
+          <Route path="lobbies/:lobbyId/games/:roundId" element={<Games />} />
+          <Route
+            path="lobbies/:lobbyId/games/:roundId/votePage"
+            element={
+              <VotePage
+                images={[
+                  { url: true, image: imageURL },
+                  { url: false, image: b64Data },
+                  { url: true, image: imageURL },
+                  { url: false, image: b64Data },
+                  { url: true, image: imageURL },
+                ]}
+              />
+            }
+          />
         </Route>
         <Route path="image" element={<ImageComponent />} />
         <Route path="*" element={<Navigate replace to="/landingPage" />} />

@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { api, handleError } from "helpers/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "components/ui/Button";
 import { Timer } from "components/ui/Timer";
-import { useParams } from "react-router-dom";
-// import TextArea from "./TextArea";
+// import { TextArea } from "components/ui/TextArea";
 import "styles/views/Game.scss";
+
 const MAX_CHARS = 400;
 
 const Games = () => {
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
-  const [prompt, setPrompt] = useState("");
-  // const [keywords, setKeywords] = useState(null);
   const { lobbyId, roundId } = useParams();
   const [text, setText] = useState("");
   const [charCount, setCharCount] = useState(0);
@@ -30,14 +28,10 @@ const Games = () => {
   const inputStyle = {
     border: charCount > MAX_CHARS ? "2px solid red" : "",
   };
-  const handlePromptChange = (value) => {
-    setPrompt(value);
-  };
+
   useEffect(() => {
     async function fetchImage() {
       try {
-        //const response = await api.get("/metMuseum");
-        //await new Promise((resolve) => setTimeout(resolve, 1000));
         const challengeImage = localStorage.getItem("challengeImage");
         console.log(challengeImage);
         setImage(challengeImage);
@@ -57,12 +51,18 @@ const Games = () => {
     console.log(localStorage.getItem("image"));
   }, []);
 
-  const submitPrompt = async (prompt) => {
-    console.log("user prompt is: "+ prompt);
+  const submitPrompt = async () => {
     try {
-      const requestBody = JSON.stringify({ "prompt": prompt, "player": localStorage.getItem("player"), "lobbyId": localStorage.getItem("lobbyId") });
+      const requestBody = JSON.stringify(text);
       console.log(requestBody);
-      await api.post("/getdalleimage", requestBody);
+      await api.post(
+        "/lobbies/" +
+          lobbyId +
+          "/games/" +
+          roundId +
+          localStorage.getItem("player"),
+        requestBody
+      );
       //code to sleep for 5 seconds...
       navigate(`/lobbies/${lobbyId}/games/${roundId}/votePage`);
     } catch (error) {
@@ -80,7 +80,7 @@ const Games = () => {
     <div className="game">
       <img className="game image" src={image} alt="" />
       <div className="game input">
-        <Timer func={()=>submitPrompt(text)} />
+        <Timer func={() => submitPrompt(text)} />
         <div className="game input-style">
           {localStorage.getItem("challengeStyle")}
         </div>
@@ -90,16 +90,18 @@ const Games = () => {
           // onChange={(kw) => setKeywords(kw)}
         /> */}
         <>
-    <label className="game input-label">Describe your image. {charCount}/{MAX_CHARS}</label>
-      <textarea
-        className= "game input-field"
-        style={inputStyle}
-        value={text}
-        onChange={handleInputChange}
-        placeholder="tweak your keywords to make it more fun! (max 400 characters)"
-      />
-    </>
-        <Button className="G" onClick={() => submitPrompt(text) }>
+          <label className="game input-label">
+            Describe your image {charCount}/{MAX_CHARS}
+          </label>
+          <textarea
+            className="game input-field"
+            style={inputStyle}
+            value={text}
+            onChange={handleInputChange}
+            placeholder="tweak your keywords to make it more fun! (max 400 characters)"
+          />
+        </>
+        <Button className="G" onClick={() => submitPrompt(text)}>
           Submit
         </Button>
       </div>

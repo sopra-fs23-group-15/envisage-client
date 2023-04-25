@@ -5,8 +5,8 @@ import PropTypes from "prop-types";
 import BaseContainer from "components/ui/BaseContainer";
 import { Button } from "components/ui/Button";
 import Slider from "components/ui/Slider";
-import "styles/views/Login.scss";
 import { disconnect, isConnected } from "helpers/stomp";
+import "styles/views/Login.scss";
 
 const FormField = (props) => {
   return (

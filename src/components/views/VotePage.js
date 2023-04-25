@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { api, handleError } from "helpers/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ImageComponent from "./Image";
 import VoteBox from "components/ui/VoteBox";
 import "styles/views/Vote.scss";
@@ -9,7 +9,30 @@ const VotePage = ({ images }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [renderBox, setRenderBox] = useState(false);
+  const { lobbyId, roundId } = useParams;
   const navigate = useNavigate();
+
+  useEffect(() => {
+    async function fetchImages() {
+      try {
+        const response = await api.get(
+          "/lobbies/" + lobbyId + "/games/" + roundId + "/images"
+        );
+      } catch (error) {
+        console.error(
+          `something went wrong while fetching the images: \n${handleError(
+            error
+          )}`
+        );
+        console.error("details:", error);
+
+        alert(
+          "something went wrong while fetching the images! see the console for details."
+        );
+      }
+    }
+    fetchImages();
+  }, [lobbyId, roundId]);
 
   const renderTrue = (image, index) => {
     setSelectedImage(image);

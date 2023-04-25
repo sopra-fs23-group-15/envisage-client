@@ -5,7 +5,6 @@ import { Button } from "components/ui/Button";
 import { useParams } from "react-router-dom";
 import LobbyContainer from "components/ui/LobbyContainer";
 import LobbyBanner from "components/ui/LobbyBanner";
-import "styles/views/Player.scss";
 import {
   connect,
   getChallengeForRound,
@@ -13,9 +12,9 @@ import {
   notifyLobbyJoin,
   subscribe,
 } from "helpers/stomp";
-
 import Game from "models/Game";
 import Challenge from "models/Challenge";
+import "styles/views/Player.scss";
 
 const Lobbies = () => {
   const navigate = useNavigate();

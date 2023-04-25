@@ -59,7 +59,10 @@ const LobbyBanner = (props) => {
       {!changeBanner && playerUp}
       {changeBanner && howToPlay}
       <h5>
-        How to play: <span onClick={toggle} style={{cursor: "pointer"}}>{changeBanner ? "ⓧ" : "⇨"}</span>
+        How to play:{" "}
+        <span onClick={toggle} style={{ cursor: "pointer" }}>
+          {changeBanner ? "ⓧ" : "⇨"}
+        </span>
       </h5>
     </div>
   );

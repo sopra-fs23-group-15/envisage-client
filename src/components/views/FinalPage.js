@@ -52,7 +52,8 @@ const FinalPage = () => {
     playersList = (
       <div>
         <div className="player winner">
-          The winner of the game is {sortedPlayerScores[0].player}. Congratulations!
+          The winner of the game is {sortedPlayerScores[0].player}.
+          Congratulations!
         </div>
         <div className="player down">
           <div className="player round">Round 0</div>

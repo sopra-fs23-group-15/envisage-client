@@ -21,7 +21,7 @@ const TextArea = (props) => {
 
   const inputStyle = {
     border: isOverLimit ? "2px solid red" : "",
-    color: isOverLimit ? 'red' : 'black',
+    color: isOverLimit ? "red" : "black",
   };
 
   /**const handleSubmit = (e) => {
@@ -34,9 +34,11 @@ const TextArea = (props) => {
 
   return (
     <>
-    <label className="game input-label">Describe your image. {charCount}/{MAX_CHARS}</label>
+      <label className="game input-label">
+        Describe your image {charCount}/{MAX_CHARS}
+      </label>
       <textarea
-        className= "game input-field"
+        className="game input-field"
         style={inputStyle}
         value={text}
         onChange={handleInputChange}
