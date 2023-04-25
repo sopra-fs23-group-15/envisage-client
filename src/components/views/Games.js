@@ -52,18 +52,21 @@ const Games = () => {
 
   const submitPrompt = async () => {
     try {
-      const requestBody = JSON.stringify(text);
-      console.log(requestBody);
-      console.log(localStorage.getItem("challengeImage"))
-      await api.post(
-        "/lobbies/" +
-          lobbyId +
-          "/games/" +
-          roundId +
-          localStorage.getItem("player"),
-        requestBody
-      );
-      //code to sleep for 5 seconds...
+      // const requestBody = JSON.stringify({ keywords });
+      // await api.put(
+      //   "/lobbies/" +
+      //     lobbyId +
+      //     "/games/" +
+      //     roundId +
+      //     localStorage.getItem("player"),
+      //   requestBody
+      // );
+      /**just for testing purpose**/
+      const username = localStorage.getItem("userName");
+      const keywords = "little penguin running";
+      const requestBody = JSON.stringify({ keywords });
+      const response = await api.put(`/lobbies/${lobbyId}/games/${roundId}/${username}`, requestBody)
+      console.log(response.data)
       navigate(`/lobbies/${lobbyId}/games/${roundId}/votePage`);
     } catch (error) {
       console.error(

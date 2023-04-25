@@ -26,8 +26,8 @@ const Lobbies = () => {
 
     if (!isConnected()) {
       connect(subscribeLobby);
-      //new Promise((resolve) => setTimeout(resolve, 1000)).then(() =>subscribeLobby());
-    } else {
+    }
+    else{
       subscribeLobby();
     }
 
@@ -58,7 +58,9 @@ const Lobbies = () => {
         const roundId = 1;
         navigate(`/lobbies/${lobbyId}/games/${roundId}`);
       });
+
     }
+
   }, [lobbyId, navigate]);
 
   const startGame = async () => {

@@ -35,12 +35,11 @@ const LandingPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("connected LandingPage before: " + isConnected());
-    if (isConnected()) {
+    if (isConnected()){
       disconnect();
     }
-    console.log("connected LandingPage after: " + isConnected());
-  });
+  })
+
 
   const addUser = async () => {
     try {
