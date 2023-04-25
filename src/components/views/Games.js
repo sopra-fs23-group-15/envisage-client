@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { handleError } from "helpers/api";
+import {api, handleError} from "helpers/api";
 import { useNavigate } from "react-router-dom";
 import { Button } from "components/ui/Button";
 import { Timer } from "components/ui/Timer";
@@ -48,7 +48,11 @@ const Games = () => {
       //     localStorage.getItem("player"),
       //   requestBody
       // );
-
+      /**just for testing purpose**/
+      const username = localStorage.getItem("userName");
+      const keywords = "little penguin running";
+      const requestBody = JSON.stringify({ keywords });
+      await api.put(`/lobbies/${lobbyId}/games/${roundId}/${username}`, requestBody)
       navigate(`/lobbies/${lobbyId}/games/${roundId}/votePage`);
     } catch (error) {
       console.error(

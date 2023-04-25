@@ -35,11 +35,9 @@ const LobbyCreation = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("connected LandingPage before: " + isConnected())
     if (isConnected()){
       disconnect();
     }
-    console.log("connected LandingPage after: " + isConnected())
   })
 
 
@@ -73,9 +71,10 @@ const LobbyCreation = () => {
       const response = await api.post(`/lobbies/${lobbyId}`, requestBody);
 
       const player = new Player(response.data);
+      localStorage.setItem("player", JSON.stringify(player));
 
       localStorage.setItem("creator", player.lobbyCreator);
-      localStorage.setItem("player", userName);
+      localStorage.setItem("userName", userName);
       localStorage.setItem("lobbyID", parseInt(lobbyId));
 
       navigate(`/lobbies/${lobbyId}`);
