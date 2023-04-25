@@ -48,13 +48,13 @@ const Games = () => {
       }
     }
     fetchImage();
-    console.log(localStorage.getItem("image"));
   }, []);
 
   const submitPrompt = async () => {
     try {
       const requestBody = JSON.stringify(text);
       console.log(requestBody);
+      console.log(localStorage.getItem("challengeImage"))
       await api.post(
         "/lobbies/" +
           lobbyId +

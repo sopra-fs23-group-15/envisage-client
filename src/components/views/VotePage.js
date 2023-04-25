@@ -3,9 +3,11 @@ import { api, handleError } from "helpers/api";
 import { useNavigate, useParams } from "react-router-dom";
 import ImageComponent from "./Image";
 import VoteBox from "components/ui/VoteBox";
+import { Spinner } from "components/ui/Spinner";
 import "styles/views/Vote.scss";
 
-const VotePage = ({ images }) => {
+const VotePage = () => {
+  const [images, setImages] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [renderBox, setRenderBox] = useState(false);
@@ -18,6 +20,7 @@ const VotePage = ({ images }) => {
         const response = await api.get(
           "/lobbies/" + lobbyId + "/games/" + roundId + "/images"
         );
+        setImages(response.data);
       } catch (error) {
         console.error(
           `something went wrong while fetching the images: \n${handleError(
@@ -71,43 +74,47 @@ const VotePage = ({ images }) => {
       }
     }
   };
+  let imagesList = <Spinner backgroundImage={localStorage.getItem("challengeImage")} />;
 
-  return (
-    <div className="vote">
-      <div
-        className="vote container"
-        style={{
-          backgroundImage:
-            "url(" + localStorage.getItem("challengeImage") + ")",
-        }}
-      ></div>
-      <h1 className="vote manifesto">Vote for your favorite image!</h1>
-      <div className="vote image-container">
-        {images.map((image, index) => (
-          <div>
-            <ImageComponent
-              key={index}
-              url={image.url}
-              image={image.image}
-              onClick={() => {
-                renderTrue(image, index);
-                console.log("clicked on image " + index);
-              }}
-              selected={selectedImage === image}
-            />
-            {renderBox && selectedIndex === index && (
-              <VoteBox
-                renderFalse={renderFalse}
-                handleVoteClick={handleVoteClick}
-                handleImageClick={handleImageClick}
-                selectedImage={selectedImage}
+  if (images && images.length) {
+    imagesList = (
+      <div className="vote">
+        <div
+          className="vote container"
+          style={{
+            backgroundImage:
+              "url(" + localStorage.getItem("challengeImage") + ")",
+          }}
+        ></div>
+        <h1 className="vote manifesto">Vote for your favorite image!</h1>
+        <div className="vote image-container">
+          {images.map((image, index) => (
+            <div>
+              <ImageComponent
+                key={index}
+                url={image.url}
+                image={image.image}
+                onClick={() => {
+                  renderTrue(image, index);
+                  console.log("clicked on image " + index);
+                }}
+                selected={selectedImage === image}
               />
-            )}
-          </div>
-        ))}
+              {renderBox && selectedIndex === index && (
+                <VoteBox
+                  renderFalse={renderFalse}
+                  handleVoteClick={handleVoteClick}
+                  handleImageClick={handleImageClick}
+                  selectedImage={selectedImage}
+                />
+              )}
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+  return <div>{ imagesList }</div>;
 };
 
 export default VotePage;

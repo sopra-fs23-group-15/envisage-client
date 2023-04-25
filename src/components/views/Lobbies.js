@@ -33,9 +33,9 @@ const Lobbies = () => {
 
     function subscribeLobby() {
       subscribe(`/topic/lobbies/${lobbyId}`, (data) => {
-        let players2 = data["players"];
-        setPlayers(players2);
-        console.log(players2);
+        let subscribedPlayers = data["players"];
+        setPlayers(subscribedPlayers);
+        console.log(subscribedPlayers);
       });
       notifyLobbyJoin(lobbyId);
       subscribeChallenge();
@@ -59,25 +59,6 @@ const Lobbies = () => {
         navigate(`/lobbies/${lobbyId}/games/${roundId}`);
       });
     }
-    /**
-    async function fetchlobby() {
-      try {
-        const response = await api.get("/lobbies/" + lobbyId);
-        //setPlayers(response.data.players);
-      } catch (error) {
-        console.error(
-          `something went wrong while fetching the users: \n${handleError(
-            error
-          )}`
-        );
-        console.error("details:", error);
-
-        alert(
-          "something went wrong while fetching the users! see the console for details."
-        );
-      }
-    }
-    fetchlobby();**/
   }, [lobbyId, navigate]);
 
   const startGame = async () => {

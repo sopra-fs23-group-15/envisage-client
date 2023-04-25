@@ -31,7 +31,7 @@ const FinalPage = () => {
       }
     }
     fetchScores();
-  }, [lobbyId]);
+  }, [lobbyId, playerScores]);
 
   let playersList = <LobbyContainer />;
 
