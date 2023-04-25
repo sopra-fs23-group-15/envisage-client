@@ -26,8 +26,7 @@ const Lobbies = () => {
 
     if (!isConnected()) {
       connect(subscribeLobby);
-    }
-    else{
+    } else {
       subscribeLobby();
     }
 
@@ -58,9 +57,7 @@ const Lobbies = () => {
         const roundId = 1;
         navigate(`/lobbies/${lobbyId}/games/${roundId}`);
       });
-
     }
-
   }, [lobbyId, navigate]);
 
   const startGame = async () => {

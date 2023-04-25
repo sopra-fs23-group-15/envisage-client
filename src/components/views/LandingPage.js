@@ -35,11 +35,10 @@ const LandingPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isConnected()){
+    if (isConnected()) {
       disconnect();
     }
-  })
-
+  });
 
   const addUser = async () => {
     try {

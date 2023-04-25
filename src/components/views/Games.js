@@ -65,8 +65,11 @@ const Games = () => {
       const username = localStorage.getItem("userName");
       const keywords = "little penguin running";
       const requestBody = JSON.stringify({ keywords });
-      const response = await api.put(`/lobbies/${lobbyId}/games/${roundId}/${username}`, requestBody)
-      console.log(response.data)
+      const response = await api.put(
+        `/lobbies/${lobbyId}/games/${roundId}/${username}`,
+        requestBody
+      );
+      console.log(response.data);
       navigate(`/lobbies/${lobbyId}/games/${roundId}/votePage`);
     } catch (error) {
       console.error(

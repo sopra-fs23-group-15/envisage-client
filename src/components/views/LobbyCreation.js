@@ -35,11 +35,10 @@ const LobbyCreation = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isConnected()){
+    if (isConnected()) {
       disconnect();
     }
-  })
-
+  });
 
   const createLobby = () => {
     try {

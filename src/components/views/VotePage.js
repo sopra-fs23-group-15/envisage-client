@@ -74,7 +74,9 @@ const VotePage = () => {
       }
     }
   };
-  let imagesList = <Spinner backgroundImage={localStorage.getItem("challengeImage")} />;
+  let imagesList = (
+    <Spinner backgroundImage={localStorage.getItem("challengeImage")} />
+  );
 
   if (images && images.length) {
     imagesList = (
@@ -114,7 +116,7 @@ const VotePage = () => {
       </div>
     );
   }
-  return <div>{ imagesList }</div>;
+  return <div>{imagesList}</div>;
 };
 
 export default VotePage;
