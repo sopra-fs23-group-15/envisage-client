@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { api, handleError } from "helpers/api";
 import { useNavigate, useLocation } from "react-router-dom";
 import ImageComponent from "./Image";
@@ -12,7 +12,6 @@ const VotePage = () => {
   const [renderBox, setRenderBox] = useState(false);
   const navigate = useNavigate();
   const { state } = useLocation();
-  console.log(state);
 
   const renderTrue = (image, index) => {
     setSelectedImage(image);
@@ -55,13 +54,14 @@ const VotePage = () => {
     <Spinner backgroundImage={localStorage.getItem("challengeImage")} />
   );
 
-  if (state.length === localStorage.getItem("#players")) {
+  if (/*state.length === localStorage.getItem("#players")*/ true) {
     imagesList = (
       <div className="vote">
         <div
           className="vote container"
           style={{
-            backgroundImage: "url(" + localStorage.getItem("image") + ")",
+            backgroundImage:
+              "url(" + localStorage.getItem("challengeImage") + ")",
           }}
         ></div>
         <h1 className="vote manifesto">Vote for your favorite image!</h1>

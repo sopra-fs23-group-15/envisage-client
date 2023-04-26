@@ -6,36 +6,23 @@ import { useParams } from "react-router-dom";
 import LobbyContainer from "components/ui/LobbyContainer";
 import LobbyBanner from "components/ui/LobbyBanner";
 import "styles/views/Player.scss";
-import { connect, isConnected, subscribe } from "helpers/stomp";
-import Game from "models/Game";
 
 const LobbiesAfter = () => {
   const navigate = useNavigate();
-  const [players, setPlayers] = useState(null);
+  const [playerScores, setPlayerScores] = useState(null);
+  const [sortedPlayerScores, setSortedPlayerScores] = useState(null);
+  const [currentRound, setCurrentRound] = useState(null);
   const { lobbyId } = useParams();
 
   useEffect(() => {
-    console.log("Connected Lobbies: " + isConnected());
-    if (!isConnected()) {
-      connect(lobbyId);
-      new Promise((resolve) => setTimeout(resolve, 1000)).then(() =>
-        subscribeLobby()
-      );
-      new Promise((resolve) => setTimeout(resolve, 1000)).then(() =>
-        getPlayers(lobbyId)
-      );
-    } else {
-      subscribeLobby();
-      getPlayers(lobbyId);
-    }
-
-    function subscribeLobby() {
-      subscribe(`/topic/lobbies/${lobbyId}`, fetchlobby());
-    }
-    async function fetchlobby() {
+    async function fetchScores() {
       try {
-        const response = await api.get("/lobbies/" + lobbyId);
-        setPlayers(response.data.players);
+        const response = await api.get("/lobbies/" + lobbyId + "/games");
+        setPlayerScores(response.data.playerScores);
+        setCurrentRound(response.data.rounds.length);
+
+        const sortedScores = playerScores.sort((a, b) => b.score - a.score);
+        setSortedPlayerScores(sortedScores);
       } catch (error) {
         console.error(
           `something went wrong while fetching the users: \n${handleError(
@@ -49,15 +36,13 @@ const LobbiesAfter = () => {
         );
       }
     }
-    fetchlobby();
-  }, [lobbyId]);
+    fetchScores();
+  }, [lobbyId, playerScores]);
 
   const startGame = async () => {
     try {
-      const response = await api.post("/lobbies/" + lobbyId + "/games");
-      const game = new Game(response.data);
-      const roundId = game.rounds.length;
-      navigate(`/lobbies/${lobbyId}/games/${roundId}`);
+      await api.post("/lobbies/" + lobbyId + "/games/rounds");
+      navigate(`/lobbies/${lobbyId}/games/${currentRound + 1}`);
     } catch (error) {
       console.error(
         `Something went wrong while fetching the users: \n${handleError(error)}`
@@ -71,10 +56,10 @@ const LobbiesAfter = () => {
 
   let playersList = <LobbyContainer />;
 
-  if (players) {
+  if (playerScores) {
     const fillPlayes = () => {
       const rows = [];
-      for (let i = 0; i < 5 - players.length; i++) {
+      for (let i = 0; i < 5 - playerScores.length; i++) {
         rows.push(
           <div className="player row">
             <div></div>
@@ -87,20 +72,26 @@ const LobbiesAfter = () => {
 
     playersList = (
       <div>
-        <LobbyBanner players={players} />
+        <LobbyBanner players={sortedPlayerScores.players} />
         <div className="player down">
-          <div className="player round">Round 0</div>
+          <div className="player round">Round {currentRound}</div>
           <div className="player left">
-            {players.map((player) => (
+            {sortedPlayerScores.map((playerScore) => (
               <div className="player row">
-                <div>{player.userName}</div>
-                <div>0</div>
+                <div>{playerScore.player.userName}</div>
+                <div>{playerScore.score}</div>
               </div>
             ))}
             {fillPlayes()}
           </div>
           <div className="player right">
-            <Button disabled={players.length < 3} onClick={() => startGame()}>
+            <Button
+              disabled={
+                /*localStorage.getItem("player") !=
+                  localStorage.getItem("curator") ||*/ players.length < 3
+              }
+              onClick={() => startGame()}
+            >
               Start the game
             </Button>
             <div>Fill this wall with your masterpieces</div>

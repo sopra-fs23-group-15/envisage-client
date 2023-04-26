@@ -15,7 +15,7 @@ const LobbyBanner = (props) => {
         You are in the <span>{lobbyId}</span> museum space
       </h3>
       <h3>
-        You exibition curator is: <span>{props.players[0].userName}</span>
+        You exibition curator is: <span>{localStorage.getItem("curator")}</span>
       </h3>
       <h5
         style={

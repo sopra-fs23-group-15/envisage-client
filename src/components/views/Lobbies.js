@@ -12,7 +12,6 @@ import {
   notifyLobbyJoin,
   subscribe,
 } from "helpers/stomp";
-import Game from "models/Game";
 import Challenge from "models/Challenge";
 import "styles/views/Player.scss";
 
@@ -34,9 +33,9 @@ const Lobbies = () => {
       subscribe(`/topic/lobbies/${lobbyId}`, (data) => {
         let subscribedPlayers = data["players"];
         setPlayers(subscribedPlayers);
-        localStorage.setItem("#players", subscribedPlayers.length)
+        localStorage.setItem("curator", players[0].userName);
+        localStorage.setItem("#players", subscribedPlayers.length);
         console.log(subscribedPlayers);
-        console.log(localStorage)
       });
       notifyLobbyJoin(lobbyId);
       subscribeChallenge();
@@ -60,14 +59,12 @@ const Lobbies = () => {
         navigate(`/lobbies/${lobbyId}/games/${roundId}`);
       });
     }
-  }, [lobbyId, navigate]);
+  }, [lobbyId, navigate, players]);
 
   const startGame = async () => {
     try {
-      const response = await api.post("/lobbies/" + lobbyId + "/games");
-      const game = new Game(response.data);
-      console.log(game);
-      //const roundId = game.rounds.length;
+      await api.post("/lobbies/" + lobbyId + "/games");
+      // const game = new Game(response.data);
       getChallengeForRound(lobbyId, 1);
     } catch (error) {
       console.error(
@@ -111,7 +108,13 @@ const Lobbies = () => {
             {fillPlayes()}
           </div>
           <div className="player right">
-            <Button disabled={players.length < 3} onClick={() => startGame()}>
+            <Button
+              disabled={
+                /*localStorage.getItem("player") !=
+                  localStorage.getItem("curator") ||*/ players.length < 3
+              }
+              onClick={() => startGame()}
+            >
               Start the game
             </Button>
             <div>Fill this wall with your masterpieces</div>

@@ -34,7 +34,9 @@ const Games = () => {
       try {
         const challengeImage = localStorage.getItem("challengeImage");
         setImage(challengeImage);
-        console.log(localStorage)
+        console.log(
+          localStorage.getItem("player") !== localStorage.getItem("curator")
+        );
       } catch (error) {
         console.error(
           `Something went wrong while fetching the users: \n${handleError(

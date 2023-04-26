@@ -2,7 +2,9 @@
 
 .spinner{
     margin: 0;
-    padding: 0;    
+    padding: 0;
+    display: flex;
+    flex-direction: row;  
     &.background {
         background-size: cover;
         position: fixed;
@@ -13,13 +15,14 @@
     }
     &.manifesto {
         color: mix($primary, white, 85);
-        position: absolute;
         font-size: 2rem;
-        margin: 1em;
+        margin-top: 1em;
+        margin-left: 1em;
+        text-align: end;
     }
     &.loader {
-        margin-top: 5em;
-        margin-left: 1.5em;
+        margin-top: 2.5em;
+        margin-right: 2.5em;
         position: relative;
         display: inline-block;
         width: 60px;
