@@ -6,6 +6,7 @@ import Games from "components/views/Games";
 import ImageComponent from "components/views/Image";
 import VotePage from "components/views/VotePage";
 import FinalPage from "components/views/FinalPage";
+import ExhibitionPage from "components/views/ExhibitionPage";
 import { LobbyGuard } from "components/routing/routeProtectors/LobbyGuard";
 
 // Base64 string data
@@ -23,6 +24,7 @@ const AppRouter = () => {
         <Route element={<LobbyGuard />}>
           <Route path="lobbies/:lobbyId" element={<Lobbies />} />
           <Route path="lobbies/:lobbyId/finalPage" element={<FinalPage />} />
+          <Route path="lobbies/:lobbyId/exhibitionPage" element={<ExhibitionPage />} />
           <Route path="lobbies/:lobbyId/games/:roundId" element={<Games />} />
           <Route
             path="lobbies/:lobbyId/games/:roundId/votePage"
