@@ -42,9 +42,9 @@ export let subscribe = (destination, callback) => {
   });
 };
 
-export let unsubscribe = () => {
+export let unsubscribe = (mapping) => {
   // # (void) unsubscribe(id, headers = {})
-  stompClient.unsubscribe();
+  stompClient.unsubscribe(mapping);
 };
 
 export let disconnect = () => {
@@ -71,3 +71,4 @@ export let getChallengeForRound = (lobbyId, roundId) => {
     "/app/lobbies/" + lobbyId + "/challengeForRounds/" + roundId
   );
 };
+

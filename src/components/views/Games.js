@@ -5,6 +5,7 @@ import { Button } from "components/ui/Button";
 import { Timer } from "components/ui/Timer";
 // import { TextArea } from "components/ui/TextArea";
 import "styles/views/Game.scss";
+import {connect, isConnected, subscribe} from "../../helpers/stomp";
 
 const MAX_CHARS = 400;
 
@@ -30,6 +31,17 @@ const Games = () => {
   };
 
   useEffect(() => {
+    console.log("Connected Lobbies: " + isConnected());
+
+    if (!isConnected()) {
+      connect(subscribeEssential);
+    }
+
+    function subscribeEssential() {
+      subscribe(`/topic/lobbies/${lobbyId}`, () => {
+        console.log("Subscribed to lobby")
+      });
+    }
     async function fetchImage() {
       try {
         const challengeImage = localStorage.getItem("challengeImage");
@@ -50,29 +62,27 @@ const Games = () => {
       }
     }
     fetchImage();
-  }, []);
+  }, [lobbyId]);
 
   const submitPrompt = async (prompt) => {
     console.log("user prompt is: " + prompt);
-    console.log("ENVIRONMENT IS: " + process.env.NODE_ENV);
+    //console.log("ENVIRONMENT IS: " + process.env.NODE_ENV);
     try {
       const requestBody = JSON.stringify({
-        prompt: prompt,
-        player: localStorage.getItem("player"),
-        lobbyId: localStorage.getItem("lobbyId"),
-        environment: process.env.NODE_ENV,
+        keywords: prompt
+        //player: localStorage.getItem("player"),
+        //lobbyId: localStorage.getItem("lobbyId"),
+        //environment: process.env.NODE_ENV,
       });
       console.log(requestBody);
       const playerImage = await api.put(
-        `/lobbies/${lobbyId}/games/${roundId}/${localStorage.getItem(
-          "player"
-        )}`,
+        `/lobbies/${lobbyId}/games/${roundId}/${localStorage.getItem("player")}`,
         requestBody
       );
-      console.log(playerImage.data);
+      console.log(playerImage.data.image);
       //code to sleep for 5 seconds...
       navigate(`/lobbies/${lobbyId}/games/${roundId}/votePage`, {
-        state: [{ url: true, image: playerImage.data }],
+        state: [{ url: true, image: playerImage.data.image }],
       });
     } catch (error) {
       console.error(
