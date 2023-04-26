@@ -30,7 +30,7 @@ const AppRouter = () => {
             path="lobbies/:lobbyId/games/:roundId/votePage"
             element={
               <VotePage
-                images={[
+                images_={[
                   { url: true, image: imageURL },
                   { url: false, image: b64Data },
                   { url: true, image: imageURL },
