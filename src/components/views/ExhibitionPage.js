@@ -1,11 +1,10 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import LobbyContainer from "components/ui/LobbyContainer";
 import { Button } from "components/ui/Button";
 import React from "react";
 import "styles/views/Exhibition.scss";
 
 const ExhibitionPage = () => {
-    const { lobbyId } = useParams();
     const navigate = useNavigate();
 
     const goMain = async () => {
