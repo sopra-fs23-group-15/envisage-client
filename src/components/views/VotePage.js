@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { api, handleError } from "helpers/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import ImageComponent from "./Image";
 import VoteBox from "components/ui/VoteBox";
 import "styles/views/Vote.scss";
 
-const VotePage = ({ images }) => {
+const VotePage = ({ images_ }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [renderBox, setRenderBox] = useState(false);
   const navigate = useNavigate();
+  const { state } = useLocation();
+console.log(state);
 
   const renderTrue = (image, index) => {
     setSelectedImage(image);
@@ -59,7 +61,7 @@ const VotePage = ({ images }) => {
       ></div>
       <h1 className="vote manifesto">Vote for your favorite image!</h1>
       <div className="vote image-container">
-        {images.map((image, index) => (
+        {state.map((image, index) => (
           <div>
             <ImageComponent
               key={index}
