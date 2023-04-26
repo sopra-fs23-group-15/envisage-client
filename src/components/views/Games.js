@@ -50,27 +50,17 @@ const Games = () => {
     fetchImage();
   }, []);
 
-  const submitPrompt = async () => {
+  const submitPrompt = async (prompt) => {
+    console.log("user prompt is: "+ prompt);
+    console.log("ENVIRONMENT IS: " + process.env.NODE_ENV);
     try {
-      // const requestBody = JSON.stringify({ keywords });
-      // await api.put(
-      //   "/lobbies/" +
-      //     lobbyId +
-      //     "/games/" +
-      //     roundId +
-      //     localStorage.getItem("player"),
-      //   requestBody
-      // );
-      /**just for testing purpose**/
-      const username = localStorage.getItem("userName");
-      const keywords = "little penguin running";
-      const requestBody = JSON.stringify({ keywords });
-      const response = await api.put(
-        `/lobbies/${lobbyId}/games/${roundId}/${username}`,
-        requestBody
-      );
-      console.log(response.data);
-      navigate(`/lobbies/${lobbyId}/games/${roundId}/votePage`);
+      const requestBody = JSON.stringify({ "prompt": prompt, "player": localStorage.getItem("player"), "lobbyId": localStorage.getItem("lobbyId"), "environment": process.env.NODE_ENV });
+      console.log(requestBody);
+      // await api.post("/testdalle", requestBody);
+      const playerImage = await api.put(`/lobbies/${lobbyId}/games/${roundId}/${localStorage.getItem("player")}`, requestBody);
+      console.log(playerImage.data);
+      //code to sleep for 5 seconds...
+      navigate(`/lobbies/${lobbyId}/games/${roundId}/votePage`, { state:[{ url: true, image: playerImage.data }] });
     } catch (error) {
       console.error(
         `Something went wrong while fetching the users: \n${handleError(error)}`
