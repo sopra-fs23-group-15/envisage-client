@@ -6,14 +6,13 @@ import VoteBox from "components/ui/VoteBox";
 import { Spinner } from "components/ui/Spinner";
 import "styles/views/Vote.scss";
 
-const VotePage = ({ images_ }) => {
+const VotePage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [renderBox, setRenderBox] = useState(false);
-  const { lobbyId, roundId } = useParams;
   const navigate = useNavigate();
   const { state } = useLocation();
-console.log(state);
+  console.log(state);
 
   const renderTrue = (image, index) => {
     setSelectedImage(image);
@@ -56,54 +55,18 @@ console.log(state);
     <Spinner backgroundImage={localStorage.getItem("challengeImage")} />
   );
 
-  return (
-    <div className="vote">
-      <div
-        className="vote container"
-        style={{
-          backgroundImage: "url(" + localStorage.getItem("image") + ")",
-        }}
-      ></div>
-      <h1 className="vote manifesto">Vote for your favorite image!</h1>
-      <div className="vote image-container">
-        {state.map((image, index) => (
-          <div>
-            <ImageComponent
-              key={index}
-              url={image.url}
-              image={image.image}
-              onClick={() => {
-                renderTrue(image, index);
-                console.log("clicked on image " + index);
-              }}
-              selected={selectedImage === image}
-            />
-            {renderBox && selectedIndex === index && (
-              <VoteBox
-                renderFalse={renderFalse}
-                handleVoteClick={handleVoteClick}
-                handleImageClick={handleImageClick}
-                selectedImage={selectedImage}
-              />
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-  if (images && images.length) {
+  if (state.length === localStorage.getItem("#players")) {
     imagesList = (
       <div className="vote">
         <div
           className="vote container"
           style={{
-            backgroundImage:
-              "url(" + localStorage.getItem("challengeImage") + ")",
+            backgroundImage: "url(" + localStorage.getItem("image") + ")",
           }}
         ></div>
         <h1 className="vote manifesto">Vote for your favorite image!</h1>
         <div className="vote image-container">
-          {images.map((image, index) => (
+          {state.map((image, index) => (
             <div>
               <ImageComponent
                 key={index}
@@ -129,7 +92,8 @@ console.log(state);
       </div>
     );
   }
-  return <div>{imagesList}</div>;
+
+  return <>{imagesList}</>;
 };
 
 export default VotePage;

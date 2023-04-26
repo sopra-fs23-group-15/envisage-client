@@ -33,8 +33,8 @@ const Games = () => {
     async function fetchImage() {
       try {
         const challengeImage = localStorage.getItem("challengeImage");
-        console.log(challengeImage);
         setImage(challengeImage);
+        console.log(localStorage)
       } catch (error) {
         console.error(
           `Something went wrong while fetching the users: \n${handleError(
@@ -51,16 +51,27 @@ const Games = () => {
   }, []);
 
   const submitPrompt = async (prompt) => {
-    console.log("user prompt is: "+ prompt);
+    console.log("user prompt is: " + prompt);
     console.log("ENVIRONMENT IS: " + process.env.NODE_ENV);
     try {
-      const requestBody = JSON.stringify({ "prompt": prompt, "player": localStorage.getItem("player"), "lobbyId": localStorage.getItem("lobbyId"), "environment": process.env.NODE_ENV });
+      const requestBody = JSON.stringify({
+        prompt: prompt,
+        player: localStorage.getItem("player"),
+        lobbyId: localStorage.getItem("lobbyId"),
+        environment: process.env.NODE_ENV,
+      });
       console.log(requestBody);
-      // await api.post("/testdalle", requestBody);
-      const playerImage = await api.put(`/lobbies/${lobbyId}/games/${roundId}/${localStorage.getItem("player")}`, requestBody);
+      const playerImage = await api.put(
+        `/lobbies/${lobbyId}/games/${roundId}/${localStorage.getItem(
+          "player"
+        )}`,
+        requestBody
+      );
       console.log(playerImage.data);
       //code to sleep for 5 seconds...
-      navigate(`/lobbies/${lobbyId}/games/${roundId}/votePage`, { state:[{ url: true, image: playerImage.data }] });
+      navigate(`/lobbies/${lobbyId}/games/${roundId}/votePage`, {
+        state: [{ url: true, image: playerImage.data }],
+      });
     } catch (error) {
       console.error(
         `Something went wrong while fetching the users: \n${handleError(error)}`
@@ -80,11 +91,6 @@ const Games = () => {
         <div className="game input-style">
           {localStorage.getItem("challengeStyle")}
         </div>
-        {/* <textarea
-          className="game input-field"
-          placeholder="tweak your keywords to make it more fun!"
-          // onChange={(kw) => setKeywords(kw)}
-        /> */}
         <>
           <label className="game input-label">
             Describe your image {charCount}/{MAX_CHARS}

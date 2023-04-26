@@ -9,7 +9,7 @@ export const Spinner = (props) => {
         style={{ backgroundImage: "url(" + props.backgroundImage + ")" }}
       ></div>
       <h1 className="spinner manifesto">
-        Please wait for your fellow artists to finish the work
+        Please wait for your fellow artists to finish their works
       </h1>
       <div className="spinner loader">
         <div />
