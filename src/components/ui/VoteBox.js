@@ -17,7 +17,7 @@ const VoteBox = (props) => {
         Said by <span>{props.playerName}:</span>
       </h3>
       <h5 className="vote box-keywords">
-        {props.keyWords ? props.keyWords : '"description of the image"'}
+        {props.keywords ? props.keywords : '"description of the image"'}
       </h5>
       <Button
         className="V"

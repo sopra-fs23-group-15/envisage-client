@@ -5,7 +5,6 @@ import ImageComponent from "./Image";
 import VoteBox from "components/ui/VoteBox";
 import { Spinner } from "components/ui/Spinner";
 import "styles/views/Vote.scss";
-import { Button } from "components/ui/Button";
 
 const VotePage = () => {
   const [imgs, setImgs] = useState(null);
@@ -23,18 +22,7 @@ const VotePage = () => {
       setImgs(response.data);
       console.log("fetched");
     }
-    //   } catch (error) {
-    //     console.error(
-    //       `Something went wrong while fetching the player images: \n${handleError(
-    //         error
-    //       )}`
-    //     );
-    //     console.error("Details:", error);
-    //     alert(
-    //       "Something went wrong while fetching the player images! See the console for details."
-    //     );
-    //   }
-    // }
+
     let interval;
     interval = setInterval(fetch, 5000);
     return () => clearInterval(interval);
@@ -83,17 +71,15 @@ const VotePage = () => {
     }
   };
 
-  const testConsole = () => console.log(localStorage.getItem("#players"));
 
   let imagesList = (
     <>
       <Spinner backgroundImage={localStorage.getItem("challengeImage")} />
-      <Button onClick={testConsole}>console test click</Button>
     </>
   );
 
   if (imgs) {
-    if (/*imgs.length === parseInt(localStorage.getItem("#players"))*/true) {
+    if (imgs.length === parseInt(localStorage.getItem("#players"))) {
       imagesList = (
         <div className="vote">
           <div
@@ -125,6 +111,7 @@ const VotePage = () => {
                     selectedImage={selectedImage}
                     playerName={image.player}
                     imageId={image.id}
+                    keywords = {image.keywords}
                   />
                 )}
               </div>

@@ -42,8 +42,8 @@ const LobbyCreation = () => {
 
   const createLobby = () => {
     try {
-      const roundDurationInSeconds = 60;
-      const noOfRounds = 5;
+      const roundDurationInSeconds = 30;
+      const noOfRounds = 2;
       const requestBody = JSON.stringify({
         roundDurationInSeconds,
         noOfRounds,
