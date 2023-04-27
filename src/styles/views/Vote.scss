@@ -4,11 +4,14 @@
     font-size: 1.25rem;
     color: white;
     margin: 0;
+    padding: 0;
     &.manifesto {
+        top: 1em;
+        left: 1em;
+        position: absolute;
         color: mix($primary, white, 85);
         position: absolute;
         font-size: 2rem;
-        margin: 1em;
     }
     &.container {
         background-size: cover;

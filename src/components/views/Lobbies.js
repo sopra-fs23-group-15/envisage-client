@@ -12,7 +12,6 @@ import {
   notifyLobbyJoin,
   subscribe,
 } from "helpers/stomp";
-import Game from "models/Game";
 import Challenge from "models/Challenge";
 import "styles/views/Player.scss";
 
@@ -64,9 +63,7 @@ const Lobbies = () => {
 
   const startGame = async () => {
     try {
-      const response = await api.post("/lobbies/" + lobbyId + "/games");
-      const game = new Game(response.data);
-      console.log(game);
+      await api.post("/lobbies/" + lobbyId + "/games");
       getChallengeForRound(lobbyId, 1);
     } catch (error) {
       console.error(

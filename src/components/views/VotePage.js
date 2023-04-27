@@ -54,7 +54,7 @@ const VotePage = () => {
     setSelectedImage(null);
   };
 
-  const handleVoteClick = async (playerName) => {
+  const handleVoteClick = async (playerName, imageId) => {
     if (selectedImage) {
       // Send a request to the server to record the vote
       console.log(`Voted for image: ${selectedImage}`);
@@ -65,16 +65,15 @@ const VotePage = () => {
         const requestBody = JSON.stringify({ player, score });
         console.log(requestBody);
         const response = await api.put(
-          `/lobbies/${lobbyId}/games/votes`,
+          `/lobbies/${lobbyId}/games/votes/${imageId}`,
           requestBody
         );
         console.log(response);
         // Update successfully worked --> navigate to the lobby
-        if (roundId < 5){
-           navigate(`/lobbies/${lobbyId}/scores`);
-        }
-        else{
-            navigate(`lobbies/${lobbyId}/finalPage`);
+        if (roundId < 5) {
+          navigate(`/lobbies/${lobbyId}/scores`);
+        } else {
+          navigate(`lobbies/${lobbyId}/finalPage`);
         }
       } catch (error) {
         alert(
@@ -94,7 +93,7 @@ const VotePage = () => {
   );
 
   if (imgs) {
-    if (imgs.length === parseInt(localStorage.getItem("#players"))) {
+    if (/*imgs.length === parseInt(localStorage.getItem("#players"))*/true) {
       imagesList = (
         <div className="vote">
           <div
@@ -109,7 +108,6 @@ const VotePage = () => {
             {imgs.map((image) => (
               <div>
                 <ImageComponent
-                  key={image.id}
                   url={true}
                   image={image.image}
                   onClick={() => {
@@ -126,6 +124,7 @@ const VotePage = () => {
                     handleImageClick={handleImageClick}
                     selectedImage={selectedImage}
                     playerName={image.player}
+                    imageId={image.id}
                   />
                 )}
               </div>
