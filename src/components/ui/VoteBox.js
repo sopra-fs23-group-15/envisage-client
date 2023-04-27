@@ -21,7 +21,7 @@ const VoteBox = (props) => {
       </h5>
       <Button
         className="V"
-        onClick={props.handleVoteClick}
+        onClick={() => props.handleVoteClick(props.playerName)}
         disabled={!props.selectedImage}
       >
         Vote

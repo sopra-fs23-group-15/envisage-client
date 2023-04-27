@@ -1,7 +1,7 @@
 const ImageComponent = ({ url, image, onClick, selected }) => {
   return (
     <div
-      className={`image-component ${selected ? "selected" : ""}`}
+      className={`vote image-component ${selected ? "selected" : ""}`}
       onClick={onClick}
     >
       {url ? (

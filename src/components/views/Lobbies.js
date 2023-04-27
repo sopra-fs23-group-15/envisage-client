@@ -12,6 +12,7 @@ import {
   notifyLobbyJoin,
   subscribe,
 } from "helpers/stomp";
+import Game from "models/Game";
 import Challenge from "models/Challenge";
 import "styles/views/Player.scss";
 
@@ -59,20 +60,21 @@ const Lobbies = () => {
         navigate(`/lobbies/${lobbyId}/games/${roundId}`);
       });
     }
-  }, [lobbyId, navigate, players]);
+  }, [lobbyId, navigate]);
 
   const startGame = async () => {
     try {
-      await api.post("/lobbies/" + lobbyId + "/games");
-      // const game = new Game(response.data);
+      const response = await api.post("/lobbies/" + lobbyId + "/games");
+      const game = new Game(response.data);
+      console.log(game);
       getChallengeForRound(lobbyId, 1);
     } catch (error) {
       console.error(
-        `Something went wrong while fetching the users: \n${handleError(error)}`
+        `Something went wrong while starting the game: \n${handleError(error)}`
       );
       console.error("Details:", error);
       alert(
-        "Something went wrong while fetching the users! See the console for details."
+        "Something went wrong while starting the game! See the console for details."
       );
     }
   };

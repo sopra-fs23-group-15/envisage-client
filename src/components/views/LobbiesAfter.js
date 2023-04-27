@@ -88,7 +88,8 @@ const LobbiesAfter = () => {
             <Button
               disabled={
                 /*localStorage.getItem("player") !=
-                  localStorage.getItem("curator") ||*/ players.length < 3
+                  localStorage.getItem("curator") ||*/ sortedPlayerScores.length <
+                3
               }
               onClick={() => startGame()}
             >
