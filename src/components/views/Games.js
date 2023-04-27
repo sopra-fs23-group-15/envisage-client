@@ -65,11 +65,11 @@ const Games = () => {
   }, [lobbyId]);
 
   const submitPrompt = async () => {
+    if(keywords.length === 0){
+      setKeywords("blank canvas")
+    }
     console.log("user prompt is: " + prompt);
     try {
-      if(keywords.length === 0){
-        setKeywords("blank canvas")
-      }
       const requestBody = JSON.stringify({
         keywords,
       });
