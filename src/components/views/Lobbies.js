@@ -34,7 +34,7 @@ const Lobbies = () => {
       subscribe(`/topic/lobbies/${lobbyId}`, (data) => {
         let subscribedPlayers = data["players"];
         setPlayers(subscribedPlayers);
-        localStorage.setItem("curator", players[0].userName);
+        localStorage.setItem("curator", subscribedPlayers[0].userName);
         localStorage.setItem("#players", subscribedPlayers.length);
         console.log(subscribedPlayers);
       });

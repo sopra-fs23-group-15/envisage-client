@@ -5,6 +5,7 @@ import { Button } from "components/ui/Button";
 import { Timer } from "components/ui/Timer";
 // import { TextArea } from "components/ui/TextArea";
 import "styles/views/Game.scss";
+import {connect, isConnected, subscribe} from "../../helpers/stomp";
 
 const MAX_CHARS = 400;
 
@@ -30,6 +31,17 @@ const Games = () => {
   };
 
   useEffect(() => {
+    console.log("Connected Lobbies: " + isConnected());
+
+    if (!isConnected()) {
+      connect(subscribeEssential);
+    }
+
+    function subscribeEssential() {
+      subscribe(`/topic/lobbies/${lobbyId}`, () => {
+        console.log("Subscribed to lobby")
+      });
+    }
     async function fetchImage() {
       try {
         const challengeImage = localStorage.getItem("challengeImage");
@@ -50,7 +62,7 @@ const Games = () => {
       }
     }
     fetchImage();
-  }, []);
+  }, [lobbyId]);
 
   const submitPrompt = async () => {
     console.log("user prompt is: " + prompt);
@@ -64,9 +76,7 @@ const Games = () => {
       keywords});
       console.log(requestBody);
       const playerImage = await api.put(
-        `/lobbies/${lobbyId}/games/${roundId}/${localStorage.getItem(
-          "player"
-        )}`,
+        `/lobbies/${lobbyId}/games/${roundId}/${localStorage.getItem("player")}`,
         requestBody
       );
       console.log(playerImage.data);

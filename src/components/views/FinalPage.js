@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { api, handleError } from "helpers/api";
 import { Button } from "components/ui/Button";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import LobbyContainer from "components/ui/LobbyContainer";
 import "styles/views/Player.scss";
 
@@ -9,6 +9,7 @@ const FinalPage = () => {
   const [playerScores, setPlayerScores] = useState(null);
   const [sortedPlayerScores, setSortedPlayerScores] = useState(null);
   const { lobbyId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchScores() {
@@ -32,6 +33,10 @@ const FinalPage = () => {
     }
     fetchScores();
   }, [lobbyId, playerScores]);
+
+  const visitNext = async () => {
+    navigate(`/lobbies/${lobbyId}/exhibitionPage`);
+  }
 
   let playersList = <LobbyContainer />;
 
@@ -67,7 +72,7 @@ const FinalPage = () => {
             {fillPlayes()}
           </div>
           <div className="player right">
-            <Button>Visit Exhibition</Button>
+            <Button onClick={() => visitNext()}>Visit Exhibition</Button>
           </div>
         </div>
       </div>

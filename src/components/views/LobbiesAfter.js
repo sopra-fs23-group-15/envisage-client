@@ -42,6 +42,7 @@ const LobbiesAfter = () => {
   const startGame = async () => {
     try {
       await api.post("/lobbies/" + lobbyId + "/games/rounds");
+
       navigate(`/lobbies/${lobbyId}/games/${currentRound + 1}`);
     } catch (error) {
       console.error(
