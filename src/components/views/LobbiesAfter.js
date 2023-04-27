@@ -46,11 +46,11 @@ const LobbiesAfter = () => {
       getChallengeForRound(lobbyId, currentRound + 1);
     } catch (error) {
       console.error(
-        `Something went wrong while fetching the users: \n${handleError(error)}`
+        `Something went wrong while initiating the next round: \n${handleError(error)}`
       );
       console.error("Details:", error);
       alert(
-        "Something went wrong while fetching the users! See the console for details."
+        "Something went wrong while initiating the next round! See the console for details."
       );
     }
   };

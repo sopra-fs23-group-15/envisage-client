@@ -38,6 +38,7 @@ const Lobbies = () => {
         localStorage.setItem("curator", subscribedPlayers[0].userName);
         localStorage.setItem("#players", subscribedPlayers.length);
         console.log(subscribedPlayers);
+
       });
       notifyLobbyJoin(lobbyId);
       subscribeChallenge();
@@ -61,6 +62,7 @@ const Lobbies = () => {
         navigate(`/lobbies/${lobbyId}/games/${challenge.roundNr}`);
       });
     }
+
   }, [lobbyId, navigate]);
 
   const startGame = async () => {
@@ -111,8 +113,8 @@ const Lobbies = () => {
           <div className="player right">
             <Button
               disabled={
-                /*localStorage.getItem("player") !=
-                  localStorage.getItem("curator") ||*/ players.length < 3
+                localStorage.getItem("userName") !==
+                  localStorage.getItem("curator") || players.length < 3
               }
               onClick={() => startGame()}
             >
