@@ -22,6 +22,7 @@
         display: flex;
         flex-direction: column;
         position: absolute;
+        margin-top: 1em;
         width: 25%;
         height: 12.5em;
         background-color: rgba($primary, 0.45);
@@ -49,7 +50,7 @@
 }
 
 .selected {
-    border: 0.25rem solid $primary;
+    border: 0.5em solid rgba($primary, 0.45);
 }
 .image-container {
     top: 5em;
@@ -61,13 +62,10 @@
     
 }
 .image-component {
-
     width: 256px;
     height: 256px;
     & img {
         position: relative;
-        margin: 0;
-        padding: 0;
         width: 256px;
         height: 256px;
         object-fit: cover;

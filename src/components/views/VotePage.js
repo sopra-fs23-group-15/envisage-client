@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { api, handleError } from "helpers/api";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ImageComponent from "./Image";
 import VoteBox from "components/ui/VoteBox";
 import { Spinner } from "components/ui/Spinner";
@@ -70,7 +70,7 @@ const VotePage = () => {
         );
         console.log(response);
         // Update successfully worked --> navigate to the lobby
-        // navigate(`/lobbiesAfter/${lobbyId}`);
+        navigate(`/lobbiesAfter/${lobbyId}`);
       } catch (error) {
         alert(
           `Something went wrong during the update: \n${handleError(error)}`

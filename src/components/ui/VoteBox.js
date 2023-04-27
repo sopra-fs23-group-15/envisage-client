@@ -14,10 +14,10 @@ const VoteBox = (props) => {
         ⓧ
       </div>
       <h3 className="vote box-title">
-        Said by <span>{props.userName ? props.userName : "player:"}</span>
+        Said by <span>{props.playerName}:</span>
       </h3>
       <h5 className="vote box-keywords">
-        {props.keyWord ? props.keyWord : '"description of the image"'}
+        {props.keyWords ? props.keyWords : '"description of the image"'}
       </h5>
       <Button
         className="V"
