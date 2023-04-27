@@ -23,13 +23,6 @@ const VotePage = () => {
       setImgs(response.data);
       console.log("fetched");
     }
-    // async function fetchPlayerImages() {
-    //   try {
-    //     const response = await api.get(
-    //       `/lobbies/${lobbyId}/games/${roundId}/images`
-    //     );
-    //     setImgs(response.data);
-    //     console.log(response.data);
     //   } catch (error) {
     //     console.error(
     //       `Something went wrong while fetching the player images: \n${handleError(
@@ -45,11 +38,6 @@ const VotePage = () => {
     let interval;
     interval = setInterval(fetch, 5000);
     return () => clearInterval(interval);
-    // if (playerImages.length === localStorage.getItem("#players")) {
-    //   clearInterval(interval);
-    // }
-    // fetchPlayerImages();
-    // fetch();
   }, [lobbyId, roundId]);
 
   const renderTrue = (image, index) => {

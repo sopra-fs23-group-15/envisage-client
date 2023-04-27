@@ -4,13 +4,13 @@
     font-size: 1.25rem;
     color: white;
     margin: 0;
-    &.manifesto{
+    &.manifesto {
         color: mix($primary, white, 85);
         position: absolute;
         font-size: 2rem;
         margin: 1em;
     }
-    &.container{
+    &.container {
         background-size: cover;
         opacity: 0.70;
         position: fixed;
@@ -18,7 +18,7 @@
         height: 100vh;
         z-index: -1;
     }
-    &.box{
+    &.box {
         display: flex;
         flex-direction: column;
         position: absolute;
@@ -27,31 +27,31 @@
         background-color: rgba($primary, 0.45);
         border-radius: 1em;
     }
-    &.box-click{
+    &.box-click {
         cursor: pointer;
         position: absolute;
         right: 10px;
         top: 2.5px;
     }
-    &.box-title{
+    &.box-title {
         margin-top: 1.5em;
         padding-left: 0.75em;
     }
-    &.box-keywords{
+    &.box-keywords {
         margin-bottom: 1.5em;
         padding: 0.75em;
         font-style: italic;
     }
 }
-.V{
+.V {
     width: 30%;
     margin-left: 60%;
 }
 
-.selected{
+.selected {
     border: 0.25rem solid $primary;
 }
-.image-container{
+.image-container {
     top: 5em;
     position: relative;
     display: flex;
@@ -60,3 +60,18 @@
     align-items: center;
     
 }
+.image-component {
+
+    width: 256px;
+    height: 256px;
+    & img {
+        position: relative;
+        margin: 0;
+        padding: 0;
+        width: 256px;
+        height: 256px;
+        object-fit: cover;
+        z-index: -1;
+    }
+}
+
