@@ -62,7 +62,12 @@ const VotePage = () => {
         );
         console.log(response);
         // Update successfully worked --> navigate to the lobby
-        navigate(`/lobbies`);
+        if (roundId < 5){
+           navigate(`/lobbies/${lobbyId}/scores`);
+        }
+        else{
+            navigate(`lobbies/${lobbyId}/finalPage`);
+        }
       } catch (error) {
         alert(
           `Something went wrong during the update: \n${handleError(error)}`

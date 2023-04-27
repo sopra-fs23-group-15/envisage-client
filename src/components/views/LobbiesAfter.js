@@ -87,10 +87,10 @@ const LobbiesAfter = () => {
           </div>
           <div className="player right">
             <Button
-              disabled={
-                /*localStorage.getItem("player") !=
-                  localStorage.getItem("curator") ||*/ players.length < 3
-              }
+              /*disabled={
+                localStorage.getItem("player") !=
+                  localStorage.getItem("curator") || players.length < 3
+              }*/
               onClick={() => startGame()}
             >
               Start the game
