@@ -64,10 +64,14 @@ const Games = () => {
     fetchImage();
   }, [lobbyId]);
 
-  const submitPrompt = async () => {
+  const keywords_check= () => {
     if(keywords.length === 0){
-      setKeywords("blank canvas")
+      setKeywords("blank canvas");
+      submitPrompt();
     }
+    else{submitPrompt()}
+  }
+  const submitPrompt = async () => {
     console.log("user prompt is: " + prompt);
     try {
       const requestBody = JSON.stringify({
@@ -96,7 +100,7 @@ const Games = () => {
     <div className="game">
       <img className="game image" src={image} alt="" />
       <div className="game input">
-        <Timer func={() => submitPrompt(keywords)} />
+        <Timer func={() => keywords_check(keywords)} />
         <div className="game input-style">
           {localStorage.getItem("challengeStyle")}
         </div>
@@ -112,7 +116,7 @@ const Games = () => {
             placeholder="tweak your keywords to make it more fun! (max 400 characters)"
           />
         </>
-        <Button className="G" onClick={() => submitPrompt(keywords)}>
+        <Button className="G" onClick={() => keywords_check(keywords)}>
           Submit
         </Button>
       </div>
