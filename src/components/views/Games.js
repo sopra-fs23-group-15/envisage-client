@@ -72,7 +72,6 @@ const Games = () => {
     else{submitPrompt()}
   }
   const submitPrompt = async () => {
-    if (keywords.length !==0){
     console.log("user prompt is: " + prompt);
     try {
       const requestBody = JSON.stringify({
@@ -94,7 +93,7 @@ const Games = () => {
       alert(
         "Something went wrong while fetching the users! See the console for details."
       );
-    }}
+    }
   };
 
   return (
