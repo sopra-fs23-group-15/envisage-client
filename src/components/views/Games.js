@@ -66,13 +66,8 @@ const Games = () => {
 
   const submitPrompt = async () => {
     console.log("user prompt is: " + prompt);
-    // console.log("ENVIRONMENT IS: " + process.env.NODE_ENV);
     try {
       const requestBody = JSON.stringify({
-        /*kewords: prompt,
-        player: localStorage.getItem("player"),
-        lobbyId: localStorage.getItem("lobbyId"),
-        environment: process.env.NODE_ENV,*/
       keywords});
       console.log(requestBody);
       const playerImage = await api.put(
@@ -82,9 +77,7 @@ const Games = () => {
       console.log(playerImage.data);
       // code to sleep for 5 seconds...
       navigate(
-        `/lobbies/${lobbyId}/games/${roundId}/votePage` /*, {
-      state: [{ url: true, image: playerImage.data }],
-      }*/
+        `/lobbies/${lobbyId}/games/${roundId}/votePage`
       );
     } catch (error) {
       console.error(

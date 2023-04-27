@@ -5,7 +5,6 @@ import ImageComponent from "./Image";
 import VoteBox from "components/ui/VoteBox";
 import { Spinner } from "components/ui/Spinner";
 import "styles/views/Vote.scss";
-import { Button } from "components/ui/Button";
 
 const VotePage = () => {
   const [imgs, setImgs] = useState(null);
@@ -59,10 +58,10 @@ const VotePage = () => {
         );
         console.log(response);
         // Update successfully worked --> navigate to the lobby
-        if (roundId < 5) {
+        if (roundId < 2) {
           navigate(`/lobbies/${lobbyId}/scores`);
         } else {
-          navigate(`lobbies/${lobbyId}/finalPage`);
+          navigate(`/lobbies/${lobbyId}/finalPage`);
         }
       } catch (error) {
         alert(
@@ -72,17 +71,15 @@ const VotePage = () => {
     }
   };
 
-  const testConsole = () => console.log(localStorage.getItem("#players"));
 
   let imagesList = (
     <>
       <Spinner backgroundImage={localStorage.getItem("challengeImage")} />
-      <Button onClick={testConsole}>console test click</Button>
     </>
   );
 
   if (imgs) {
-    if (/*imgs.length === parseInt(localStorage.getItem("#players"))*/true) {
+    if (imgs.length === parseInt(localStorage.getItem("#players"))) {
       imagesList = (
         <div className="vote">
           <div

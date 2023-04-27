@@ -24,7 +24,7 @@ const AppRouter = () => {
             path="lobbies/:lobbyId/games/:roundId/votePage"
             element={<VotePage />}
           />
-          <Route path="lobbies/:lobbyId/final" element={<FinalPage />} />
+          <Route path="lobbies/:lobbyId/finalPage" element={<FinalPage />} />
           <Route
             path="lobbies/:lobbyId/exhibitionPage"
             element={<ExhibitionPage />}
