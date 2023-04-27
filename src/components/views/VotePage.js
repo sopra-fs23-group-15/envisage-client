@@ -70,10 +70,10 @@ const VotePage = () => {
         );
         console.log(response);
         // Update successfully worked --> navigate to the lobby
-        if (roundId < 5) {
-          navigate(`/lobbies/${lobbyId}/scores`);
+        if (roundId < 2) {
+          navigate(`/lobbies/${lobbyId}/scoreBoard`);
         } else {
-          navigate(`lobbies/${lobbyId}/finalPage`);
+          navigate(`lobbies/${lobbyId}/finalResult`);
         }
       } catch (error) {
         alert(
