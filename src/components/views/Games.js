@@ -74,7 +74,7 @@ const Games = () => {
       keywords});
       console.log(requestBody);
       const playerImage = await api.put(
-        `/lobbies/${lobbyId}/games/${roundId}/${localStorage.getItem("player")}`,
+        `/lobbies/${lobbyId}/games/${roundId}/${localStorage.getItem("userName")}`,
         requestBody
       );
       console.log(playerImage.data);
