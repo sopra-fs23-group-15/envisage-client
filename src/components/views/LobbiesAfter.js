@@ -23,8 +23,7 @@ const LobbiesAfter = () => {
         );
         setPlayerScores(scoresResponse.data.playerScores);
         setCurrentRound(scoresResponse.data.rounds.length);
-        setWinner(winnerResponse.data.image)
-        console.log(winnerResponse.data);
+        setWinner(winnerResponse.data.image);
       } catch (error) {
         console.error(
           `something went wrong while fetching the users: \n${handleError(
@@ -101,7 +100,10 @@ const LobbiesAfter = () => {
             >
               Start the game
             </Button>
-            <div className="player special" style={{backgroundImage: "url(" + winner + ")"}}>
+            <div
+              className="player special"
+              style={{ backgroundImage: "url(" + winner + ")" }}
+            >
               Round Winner
             </div>
           </div>
