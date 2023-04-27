@@ -1,22 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { api, handleError } from "helpers/api";
-import { useNavigate } from "react-router-dom";
 import { Button } from "components/ui/Button";
 import { useParams } from "react-router-dom";
 import LobbyContainer from "components/ui/LobbyContainer";
 import LobbyBanner from "components/ui/LobbyBanner";
-import Challenge from "models/Challenge";
 import {
-  connect,
   getChallengeForRound,
-  isConnected,
-  notifyLobbyJoin,
-  subscribe,
 } from "helpers/stomp";
 import "styles/views/Player.scss";
 
 const LobbiesAfter = () => {
-  const navigate = useNavigate();
   const [playerScores, setPlayerScores] = useState(null);
   const [currentRound, setCurrentRound] = useState(null);
   const { lobbyId } = useParams();
@@ -24,7 +17,7 @@ const LobbiesAfter = () => {
   useEffect(() => {
     async function fetchScores() {
       try {
-        const response = await api.get(`/lobbies/${lobbyId}/games/`);
+        const response = await api.get(`/lobbies/${lobbyId}/games`);
         setPlayerScores(response.data.playerScores);
         setCurrentRound(response.data.rounds.length);
       } catch (error) {
@@ -41,31 +34,13 @@ const LobbiesAfter = () => {
       }
     }
 
-    // function subscribeChallenge() {
-    //   subscribe(`/topic/lobbies/${lobbyId}/challenges`, (data) => {
-    //     console.log(data);
-    //     const challenge = new Challenge();
-    //     challenge.durationInSeconds = data["durationInSeconds"];
-    //     challenge.styleRequirement = data["styleRequirement"];
-    //     challenge.imagePrompt = data["imagePrompt"];
-    //     localStorage.setItem("challengeImage", challenge.imagePrompt.image);
-    //     console.log(localStorage.getItem("challengeImage"));
-    //     localStorage.setItem(
-    //       "challengeStyle",
-    //       challenge.styleRequirement.style
-    //     );
-    //     localStorage.setItem("challengeDuration", challenge.durationInSeconds);
-    //     const roundId = 1;
-    //     navigate(`/lobbies/${lobbyId}/games/${currentRound + 1}`);
-    //   });
-    // }
-
     fetchScores();
   }, [lobbyId]);
 
   const startGame = async () => {
     try {
       await api.post(`/lobbies/${lobbyId}/games/rounds`);
+      getChallengeForRound(lobbyId, currentRound+1);
     } catch (error) {
       console.error(
         `Something went wrong while fetching the users: \n${handleError(error)}`
