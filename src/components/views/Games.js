@@ -5,7 +5,7 @@ import { Button } from "components/ui/Button";
 import { Timer } from "components/ui/Timer";
 // import { TextArea } from "components/ui/TextArea";
 import "styles/views/Game.scss";
-import {connect, isConnected, subscribe} from "../../helpers/stomp";
+import { connect, isConnected, subscribe } from "../../helpers/stomp";
 
 const MAX_CHARS = 400;
 
@@ -39,7 +39,7 @@ const Games = () => {
 
     function subscribeEssential() {
       subscribe(`/topic/lobbies/${lobbyId}`, () => {
-        console.log("Subscribed to lobby")
+        console.log("Subscribed to lobby");
       });
     }
     async function fetchImage() {
@@ -68,17 +68,18 @@ const Games = () => {
     console.log("user prompt is: " + prompt);
     try {
       const requestBody = JSON.stringify({
-      keywords});
+        keywords,
+      });
       console.log(requestBody);
       const playerImage = await api.put(
-        `/lobbies/${lobbyId}/games/${roundId}/${localStorage.getItem("player")}`,
+        `/lobbies/${lobbyId}/games/${roundId}/${localStorage.getItem(
+          "player"
+        )}`,
         requestBody
       );
       console.log(playerImage.data);
       // code to sleep for 5 seconds...
-      navigate(
-        `/lobbies/${lobbyId}/games/${roundId}/votePage`
-      );
+      navigate(`/lobbies/${lobbyId}/games/${roundId}/votePage`);
     } catch (error) {
       console.error(
         `Something went wrong while fetching the users: \n${handleError(error)}`

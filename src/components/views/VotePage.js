@@ -71,7 +71,6 @@ const VotePage = () => {
     }
   };
 
-
   let imagesList = (
     <>
       <Spinner backgroundImage={localStorage.getItem("challengeImage")} />
@@ -111,7 +110,7 @@ const VotePage = () => {
                     selectedImage={selectedImage}
                     playerName={image.player}
                     imageId={image.id}
-                    keywords = {image.keywords}
+                    keywords={image.keywords}
                   />
                 )}
               </div>

@@ -4,9 +4,7 @@ import { Button } from "components/ui/Button";
 import { useParams } from "react-router-dom";
 import LobbyContainer from "components/ui/LobbyContainer";
 import LobbyBanner from "components/ui/LobbyBanner";
-import {
-  getChallengeForRound,
-} from "helpers/stomp";
+import { getChallengeForRound } from "helpers/stomp";
 import "styles/views/Player.scss";
 
 const LobbiesAfter = () => {
@@ -40,7 +38,7 @@ const LobbiesAfter = () => {
   const startGame = async () => {
     try {
       await api.post(`/lobbies/${lobbyId}/games/rounds`);
-      getChallengeForRound(lobbyId, currentRound+1);
+      getChallengeForRound(lobbyId, currentRound + 1);
     } catch (error) {
       console.error(
         `Something went wrong while fetching the users: \n${handleError(error)}`

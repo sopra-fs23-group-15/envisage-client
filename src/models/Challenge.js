@@ -6,7 +6,7 @@ class Challenge {
         this.durationInSeconds = null;
         this.styleRequirement = null;
         this.imagePrompt = null;
-        this.roundNr = null;
+        this.round = null;
         Object.assign(this, data);
     }
 }

@@ -36,7 +36,7 @@ const FinalPage = () => {
 
   const visitNext = async () => {
     navigate(`/lobbies/${lobbyId}/exhibitionPage`);
-  }
+  };
 
   let playersList = <LobbyContainer />;
 
