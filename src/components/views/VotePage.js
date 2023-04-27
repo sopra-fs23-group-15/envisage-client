@@ -59,9 +59,11 @@ const VotePage = () => {
         console.log(response);
         // Update successfully worked --> navigate to the lobby
         if (roundId < 2) {
-          navigate(`/lobbies/${lobbyId}/scores`);
+          navigate(`/lobbies/${lobbyId}/scoreBoard`, {
+            state: { currentRound: roundId },
+          });
         } else {
-          navigate(`/lobbies/${lobbyId}/finalPage`);
+          navigate(`/lobbies/${lobbyId}/finalResult`);
         }
       } catch (error) {
         alert(
@@ -70,7 +72,6 @@ const VotePage = () => {
       }
     }
   };
-
 
   let imagesList = (
     <>
@@ -111,7 +112,7 @@ const VotePage = () => {
                     selectedImage={selectedImage}
                     playerName={image.player}
                     imageId={image.id}
-                    keywords = {image.keywords}
+                    keywords={image.keywords}
                   />
                 )}
               </div>

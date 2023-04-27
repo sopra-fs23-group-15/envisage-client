@@ -1,25 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { api, handleError } from "helpers/api";
 import { Button } from "components/ui/Button";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import LobbyContainer from "components/ui/LobbyContainer";
 import LobbyBanner from "components/ui/LobbyBanner";
-import {
-  getChallengeForRound,
-} from "helpers/stomp";
+import { getChallengeForRound } from "helpers/stomp";
 import "styles/views/Player.scss";
 
 const LobbiesAfter = () => {
   const [playerScores, setPlayerScores] = useState(null);
   const [currentRound, setCurrentRound] = useState(null);
+  const [winner, setWinner] = useState("");
   const { lobbyId } = useParams();
+  const { state } = useLocation();
 
   useEffect(() => {
     async function fetchScores() {
       try {
-        const response = await api.get(`/lobbies/${lobbyId}/games`);
-        setPlayerScores(response.data.playerScores);
-        setCurrentRound(response.data.rounds.length);
+        const scoresResponse = await api.get(`/lobbies/${lobbyId}/games`);
+        const winnerResponse = await api.get(
+          `/lobbies/${lobbyId}/games/${state.currentRound}/winners`
+        );
+        setPlayerScores(scoresResponse.data.playerScores);
+        setCurrentRound(scoresResponse.data.rounds.length);
+        setWinner(winnerResponse.data.image);
       } catch (error) {
         console.error(
           `something went wrong while fetching the users: \n${handleError(
@@ -33,14 +37,13 @@ const LobbiesAfter = () => {
         );
       }
     }
-
     fetchScores();
-  }, [lobbyId]);
+  }, [lobbyId, state.currentRound]);
 
   const startGame = async () => {
     try {
       await api.post(`/lobbies/${lobbyId}/games/rounds`);
-      getChallengeForRound(lobbyId, currentRound+1);
+      getChallengeForRound(lobbyId, currentRound + 1);
     } catch (error) {
       console.error(
         `Something went wrong while initiating the next round: \n${handleError(error)}`
@@ -72,7 +75,10 @@ const LobbiesAfter = () => {
 
     playersList = (
       <div>
-        <LobbyBanner players={playerScores} />
+        <LobbyBanner
+          players={playerScores}
+          curator={localStorage.getItem("curator")}
+        />
         <div className="player down">
           <div className="player round">Round {currentRound}</div>
           <div className="player left">
@@ -94,7 +100,12 @@ const LobbiesAfter = () => {
             >
               Start the game
             </Button>
-            <div>Fill this wall with your masterpieces</div>
+            <div
+              className="player special"
+              style={{ backgroundImage: "url(" + winner + ")" }}
+            >
+              Round Winner
+            </div>
           </div>
         </div>
       </div>

@@ -18,6 +18,7 @@ import "styles/views/Player.scss";
 const Lobbies = () => {
   const navigate = useNavigate();
   const [players, setPlayers] = useState(null);
+  const [curator, setCurator] = useState(null);
   const { lobbyId } = useParams();
 
   useEffect(() => {
@@ -33,6 +34,7 @@ const Lobbies = () => {
       subscribe(`/topic/lobbies/${lobbyId}`, (data) => {
         let subscribedPlayers = data["players"];
         setPlayers(subscribedPlayers);
+        setCurator(subscribedPlayers[0].userName)
         localStorage.setItem("curator", subscribedPlayers[0].userName);
         localStorage.setItem("#players", subscribedPlayers.length);
         console.log(subscribedPlayers);
@@ -49,7 +51,7 @@ const Lobbies = () => {
         challenge.durationInSeconds = data["durationInSeconds"];
         challenge.styleRequirement = data["styleRequirement"];
         challenge.imagePrompt = data["imagePrompt"];
-        challenge.roundNr = data["roundNr"]
+        challenge.roundNr = data["roundNr"];
         localStorage.setItem("challengeImage", challenge.imagePrompt.image);
         console.log(localStorage.getItem("challengeImage"));
         localStorage.setItem(
@@ -96,7 +98,7 @@ const Lobbies = () => {
 
     playersList = (
       <div>
-        <LobbyBanner players={players} />
+        <LobbyBanner players={players} curator={curator}/>
         <div className="player down">
           <div className="player round">Round 0</div>
           <div className="player left">

@@ -5,10 +5,10 @@ import PropTypes from "prop-types";
 import BaseContainer from "components/ui/BaseContainer";
 import { Button } from "components/ui/Button";
 import Slider from "components/ui/Slider";
-import "styles/views/Login.scss";
 import Player from "models/Player";
 import Lobby from "models/Lobby";
 import { disconnect, isConnected } from "helpers/stomp";
+import "styles/views/Login.scss";
 
 const FormField = (props) => {
   return (
@@ -66,13 +66,11 @@ const LobbyCreation = () => {
 
   const addPlayer = async (lobbyId) => {
     try {
-      console.log("try to add player");
       const requestBody = JSON.stringify({ userName });
       const response = await api.post(`/lobbies/${lobbyId}`, requestBody);
 
       const player = new Player(response.data);
       localStorage.setItem("player", JSON.stringify(player));
-
       localStorage.setItem("creator", player.lobbyCreator);
       localStorage.setItem("userName", userName);
       localStorage.setItem("lobbyID", parseInt(lobbyId));
