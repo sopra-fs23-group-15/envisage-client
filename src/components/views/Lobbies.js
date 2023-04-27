@@ -48,6 +48,7 @@ const Lobbies = () => {
         challenge.durationInSeconds = data["durationInSeconds"];
         challenge.styleRequirement = data["styleRequirement"];
         challenge.imagePrompt = data["imagePrompt"];
+        challenge.roundNr = data["roundNr"]
         localStorage.setItem("challengeImage", challenge.imagePrompt.image);
         console.log(localStorage.getItem("challengeImage"));
         localStorage.setItem(
@@ -55,8 +56,7 @@ const Lobbies = () => {
           challenge.styleRequirement.style
         );
         localStorage.setItem("challengeDuration", challenge.durationInSeconds);
-        const roundId = 1;
-        navigate(`/lobbies/${lobbyId}/games/${roundId}`);
+        navigate(`/lobbies/${lobbyId}/games/${challenge.roundNr}`);
       });
     }
   }, [lobbyId, navigate]);

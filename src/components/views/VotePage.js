@@ -23,18 +23,7 @@ const VotePage = () => {
       setImgs(response.data);
       console.log("fetched");
     }
-    //   } catch (error) {
-    //     console.error(
-    //       `Something went wrong while fetching the player images: \n${handleError(
-    //         error
-    //       )}`
-    //     );
-    //     console.error("Details:", error);
-    //     alert(
-    //       "Something went wrong while fetching the player images! See the console for details."
-    //     );
-    //   }
-    // }
+
     let interval;
     interval = setInterval(fetch, 5000);
     return () => clearInterval(interval);
@@ -125,6 +114,7 @@ const VotePage = () => {
                     selectedImage={selectedImage}
                     playerName={image.player}
                     imageId={image.id}
+                    keywords = {image.keywords}
                   />
                 )}
               </div>
