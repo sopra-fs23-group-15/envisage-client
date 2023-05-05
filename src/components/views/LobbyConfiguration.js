@@ -75,8 +75,9 @@ const LobbyConfiguration = () => {
             <div className="login container">
                 <div>Hello {userName}</div>
                 <div>On this page you can configure your lobby</div>
+                <div>Set the number of rounds</div>
                 <div>
-                    <Select options= {options} onChange={handleChange}/>
+                    <Select className = "login select" options= {options} onChange={handleChange}/>
                 </div>
                 <Button disabled={!rounds} onClick={() => createLobby()}>
                     Start the game
