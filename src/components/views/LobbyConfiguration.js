@@ -8,55 +8,44 @@ import { api, handleError } from "helpers/api";
 import { useNavigate } from "react-router-dom";
 import Player from "models/Player";
 import Lobby from "models/Lobby";
+import Select from "react-select";
 
-const FormField = (props) => {
-  return (
-    <div className="login field">
-      <label className="login label">{props.label}</label>
-      <input
-        className="login input"
-        placeholder={props.placeholder}
-        value={props.value}
-        type={props.type}
-        onChange={(e) => props.onChange(e.target.value)}
-      />
-    </div>
-  );
-};
 
-FormField.propTypes = {
-  label: PropTypes.string,
-  value: PropTypes.string,
-  onChange: PropTypes.func,
-};
+const options = [
+            { value: '1', label: "1 round" },
+            { value: '2', label: "2 rounds" },
+            { value: '3', label: "3 rounds" },
+            { value: '4', label: "4 rounds" }
+          ];
 
 const LobbyConfiguration = () => {
     const userName = localStorage.getItem('userName')
-    const [rounds, setRounds] = useState(null);
+    const [rounds, setRounds] = useState('');
     const navigate = useNavigate();
 
-     const createLobby = () => {
-        try {
-          const roundDurationInSeconds = 30;
-          const requestBody = JSON.stringify({
-            roundDurationInSeconds,
-            rounds,
-          });
-          api.post("/lobbies", requestBody).then(async function (response) {
-            const r = await api.get(`/lobbies`);
-            console.log(r);
-            const lobby = new Lobby(response.data);
-            const lobbyId = lobby.pin;
-            localStorage.setItem("lobbyId", parseInt(lobbyId));
-            console.log("LobbyId in Storage: " + localStorage.getItem("lobbyId"));
-            await addPlayer(lobbyId);
-          });
-        } catch (error) {
-          alert(
-            `Something went wrong when joining the lobby: \n${handleError(error)}`
-          );
-        }
-      };
+    const createLobby = () => {
+     try {
+       const roundDurationInSeconds = 30;
+       const noOfRounds = rounds;
+       const requestBody = JSON.stringify({
+         roundDurationInSeconds,
+         noOfRounds,
+       });
+       api.post("/lobbies", requestBody).then(async function (response) {
+         const r = await api.get(`/lobbies`);
+         console.log(r);
+         const lobby = new Lobby(response.data);
+         const lobbyId = lobby.pin;
+         localStorage.setItem("lobbyId", parseInt(lobbyId));
+         console.log("LobbyId in Storage: " + localStorage.getItem("lobbyId"));
+         await addPlayer(lobbyId);
+       });
+     } catch (error) {
+       alert(
+         `Something went wrong when joining the lobby: \n${handleError(error)}`
+       );
+     }
+    };
 
     const addPlayer = async (lobbyId) => {
       try {
@@ -76,18 +65,18 @@ const LobbyConfiguration = () => {
       }
     };
 
+    const handleChange = (selectedOption) => {
+        setRounds(selectedOption["value"]);
+    };
+
+
     return (
         <BaseContainer>
             <div className="login container">
                 <div>Hello {userName}</div>
                 <div>On this page you can configure your lobby</div>
                 <div>
-                  <FormField
-                    label="Please enter the number of rounds"
-                    value={rounds}
-                    placeholder="number of rounds"
-                    onChange={(r) => setRounds(r)}
-                  />
+                    <Select options= {options} onChange={handleChange}/>
                 </div>
                 <Button disabled={!rounds} onClick={() => createLobby()}>
                     Start the game
