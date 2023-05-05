@@ -83,6 +83,11 @@ const LobbyCreation = () => {
     }
   };
 
+  const configureLobby = () => {
+    localStorage.setItem("userName", userName);
+    navigate("/lobbyConfiguration")
+  }
+
   return (
     <BaseContainer>
       <div className="login container">
@@ -97,7 +102,9 @@ const LobbyCreation = () => {
           />
         </div>
         <div className="login button-container">
-          <Button>Configure your lobby</Button>
+          <Button disabled={!userName} onClick={() => configureLobby()}>
+            Configure your lobby
+          </Button>
           <Button disabled={!userName} onClick={() => createLobby()}>
             Start a default game
           </Button>
