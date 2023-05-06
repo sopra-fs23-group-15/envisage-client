@@ -101,7 +101,7 @@ const Games = () => {
     <div className="game">
       <img className="game image" src={image} alt="" />
       <div className="game input">
-        <Timer func={() => keywords_check(keywords)} />
+        <Timer func={() => keywords_check()} />
         <div className="game input-style">
           {localStorage.getItem("challengeStyle")}
         </div>

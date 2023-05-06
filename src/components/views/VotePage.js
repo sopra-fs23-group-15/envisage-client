@@ -58,7 +58,7 @@ const VotePage = () => {
         );
         console.log(response);
         // Update successfully worked --> navigate to the lobby
-        if (roundId < 2) {
+        if (roundId < localStorage.getItem("numberOfRounds")) {
           navigate(`/lobbies/${lobbyId}/scoreBoard`, {
             state: { currentRound: roundId },
           });
