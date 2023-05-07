@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import { api, handleError } from "helpers/api";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "components/ui/Button";
 import { Timer } from "components/ui/Timer";
-// import { TextArea } from "components/ui/TextArea";
 import "styles/views/Game.scss";
 import { connect, isConnected, subscribe } from "../../helpers/stomp";
 
@@ -13,8 +12,9 @@ const Games = () => {
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
   const { lobbyId, roundId } = useParams();
-  const [keywords, setKeywords] = useState("");
+  const [keywordsInput, setKeywordsInput] = useState("");
   const [charCount, setCharCount] = useState(0);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleInputChange = (e) => {
     const inputText = e.target.value;
@@ -22,7 +22,7 @@ const Games = () => {
     if (inputCharCount > MAX_CHARS) {
       return;
     }
-    setKeywords(inputText);
+    setKeywordsInput(inputText);
     setCharCount(inputCharCount);
   };
 
@@ -65,26 +65,23 @@ const Games = () => {
   }, [lobbyId]);
 
   const keywords_check= () => {
-    if(keywords.length === 0){
-      setKeywords("blank canvas");
-      submitPrompt();
+    if(keywordsInput.length === 0){
+      submitPrompt("blank canvas");
     }
-    else{submitPrompt()}
+    else{submitPrompt(keywordsInput)}
   }
-  const submitPrompt = async () => {
-    if (keywords !== ""){
-    console.log("user prompt is: " + prompt);
+  const submitPrompt = (keywords) => {
+    if (keywords !== "" && isSubmitted === false){
+      setIsSubmitted(true);
     try {
       const requestBody = JSON.stringify({
-        keywords,
+        keywords
       });
       console.log(requestBody);
-      const playerImage = await api.put(
+      api.put(
         `/lobbies/${lobbyId}/games/${roundId}/${localStorage.getItem("userName")}`,
         requestBody
       );
-      console.log(playerImage.data);
-      // code to sleep for 5 seconds...
       navigate(`/lobbies/${lobbyId}/games/${roundId}/votePage`);
     } catch (error) {
       console.error(
@@ -112,12 +109,12 @@ const Games = () => {
           <textarea
             className="game input-field"
             style={inputStyle}
-            value={keywords}
+            value={keywordsInput}
             onChange={handleInputChange}
             placeholder="tweak your keywords to make it more fun! (max 400 characters)"
           />
         </>
-        <Button className="G" onClick={() => keywords_check(keywords)}>
+        <Button className="G" onClick={() => keywords_check()}>
           Submit
         </Button>
       </div>

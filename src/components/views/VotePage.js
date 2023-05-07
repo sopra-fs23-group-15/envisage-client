@@ -20,7 +20,7 @@ const VotePage = () => {
         `/lobbies/${lobbyId}/games/${roundId}/images`
       );
       setImgs(response.data);
-      console.log("fetched");
+      console.log(response.data);
     }
 
     let interval;
