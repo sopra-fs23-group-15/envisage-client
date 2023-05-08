@@ -8,6 +8,57 @@ import Slider from "components/ui/Slider";
 import { disconnect, isConnected } from "helpers/stomp";
 import "styles/views/Login.scss";
 
+const NumberInput = (props) => {
+  const [inputValue, setInputValue] = useState("");
+  // const [showAlert, setShowAlert] = useState(false);
+
+  const handleInputChange = (event) => {
+    // const regex = /^[0-9]*$/; // regex to allow only numbers
+    const regex = /^[0-9]*\s*$/;
+    const inputValue = event.target.value;
+    // if (regex.test(input)) {
+    //   setInputValue(input);
+    //   setShowAlert(false);
+    // } else {
+    //   setShowAlert(true);
+    // }
+
+    if (inputValue === "" || regex.test(inputValue)) {
+      setInputValue(inputValue);
+      props.onChange(inputValue);
+    } 
+    // else if (inputValue.length === 1) {
+    //   setInputValue("");
+    //   alert("Please enter only numbers");
+    else {
+      // setInputValue(inputValue);
+      alert("Please enter only numbers");
+    }
+  };
+
+  // const handleCloseAlert = () => {
+  //   setShowAlert(false);
+  // };
+
+  return (
+    <div className="login field">
+      <label className="login label">{props.label}</label>
+      <input 
+        type="text" 
+        value={inputValue} 
+        onChange={handleInputChange} 
+        className="login input"
+        placeholder={props.placeholder}
+      />
+      {/* {showAlert && (
+        alert("Please enter only numbers"
+          // <button onClick={handleCloseAlert}>X</button>
+        )
+      )} */}
+    </div>
+  );
+};
+
 const FormField = (props) => {
   return (
     <div className="login field">
@@ -39,10 +90,14 @@ const LandingPage = () => {
       disconnect();
     }
   });
-
+  const setLobbyPin = (pin) => {
+    setLobbyId(pin);
+    // console.log(pin);
+  }
   const addUser = async () => {
     try {
       const requestBody = JSON.stringify({ userName });
+      console.log(requestBody);
       const response = await api.post(`/lobbies/${lobbyId}`, requestBody);
       console.log(response.data);
       console.log("Connected Lobbies: " + isConnected());
@@ -63,11 +118,11 @@ const LandingPage = () => {
         <div>Welcome to Envisage</div>
         <div>Join a game now</div>
         <div className="login form-container">
-          <FormField
+          <NumberInput
             label="please enter a game pin"
             value={lobbyId}
             placeholder="game pin"
-            onChange={(id) => setLobbyId(id)}
+            onChange={(id) => setLobbyPin(id)}
           />
           <FormField
             label="please enter a username"
