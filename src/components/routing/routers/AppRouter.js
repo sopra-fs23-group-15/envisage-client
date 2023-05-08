@@ -7,6 +7,7 @@ import VotePage from "components/views/VotePage";
 import FinalPage from "components/views/FinalPage";
 import ExhibitionPage from "components/views/ExhibitionPage";
 import LobbiesAfter from "components/views/LobbiesAfter";
+import LobbyConfiguration from "components/views/LobbyConfiguration";
 import { LobbyGuard } from "components/routing/routeProtectors/LobbyGuard";
 
 const AppRouter = () => {
@@ -16,6 +17,7 @@ const AppRouter = () => {
         <Route path="/" element={<Navigate replace to="/landingPage" />} />
         <Route path="landingPage" element={<LandingPage />} />
         <Route path="lobbyCreation" element={<LobbyCreation />} />
+        <Route path="lobbyConfiguration" element={<LobbyConfiguration />} />
         <Route element={<LobbyGuard />}>
           <Route path="lobbies/:lobbyId" element={<Lobbies />} />
           <Route path="lobbies/:lobbyId/games/:roundId" element={<Games />} />
