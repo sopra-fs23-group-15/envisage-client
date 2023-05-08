@@ -4,17 +4,19 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    align-content: stretch;
     background-color: mix($primary, white, 30);
     &.image {
-        width: 65vw;
         height: 100vh;
-        object-fit: cover;
+        object-fit: contain;
+        flex-grow: 1;
     }
     &.input {
-        margin-top: 5vw;
-        margin-left: 5vw;
+        margin-top: 2.5vw;
         flex-direction: column;
-        width: 25vw;
+        flex-grow: 1;
     }
     &.input-style {
         font-size: 1.5rem;
@@ -40,6 +42,9 @@
         box-shadow: $innerShadow;
         padding: 0.5em;
         background: white;
+        width: 80%;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
     }
     &.timer {
         font-size: 3rem;
@@ -50,6 +55,7 @@
 
 .G {
     margin-top: 1em;
-    margin-left: 70%;
+    margin-right: 10%;
     width: 30%;
+    align-self: flex-end;
 } 
