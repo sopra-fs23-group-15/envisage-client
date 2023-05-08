@@ -72,11 +72,13 @@ const Games = () => {
     else{submitPrompt()}
   }
   const submitPrompt = async () => {
+    console.log("user prompt is: "+ prompt);
+    console.log("ENVIRONMENT IS: " + process.env.NODE_ENV);
     if (keywords !== ""){
     console.log("user prompt is: " + prompt);
     try {
       const requestBody = JSON.stringify({
-        keywords,
+        "keywords": keywords, "environment": process.env.NODE_ENV
       });
       console.log(requestBody);
       const playerImage = await api.put(

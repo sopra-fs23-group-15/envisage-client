@@ -59,7 +59,7 @@ const ExhibitionPage = () => {
   return (
     <LobbyContainer>
       <h1>Welcome to the exhibition</h1>
-      <div>
+      <div className="image-container">
       {imageList}
       </div>
       <div className="buttons">
