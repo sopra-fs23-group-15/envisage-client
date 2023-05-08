@@ -64,18 +64,12 @@ const Games = () => {
     fetchImage();
   }, [lobbyId]);
 
-  const keywords_check= () => {
-    if(keywordsInput.length === 0){
-      submitPrompt("blank canvas");
-    }
-    else{submitPrompt(keywordsInput)}
-  }
   const submitPrompt = (keywords) => {
-    if (keywords !== "" && isSubmitted === false){
+    if (isSubmitted === false){
       setIsSubmitted(true);
     try {
       const requestBody = JSON.stringify({
-        keywords
+        keywords, "environment": process.env.NODE_ENV
       });
       console.log(requestBody);
       api.put(
@@ -98,7 +92,7 @@ const Games = () => {
     <div className="game">
       <img className="game image" src={image} alt="" />
       <div className="game input">
-        <Timer func={() => keywords_check()} />
+        <Timer func={() => submitPrompt(keywordsInput)} />
         <div className="game input-style">
           {localStorage.getItem("challengeStyle")}
         </div>
@@ -114,7 +108,7 @@ const Games = () => {
             placeholder="tweak your keywords to make it more fun! (max 400 characters)"
           />
         </>
-        <Button className="G" onClick={() => keywords_check()}>
+        <Button className="G" onClick={() => submitPrompt(keywordsInput)}>
           Submit
         </Button>
       </div>
