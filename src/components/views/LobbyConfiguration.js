@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import React, { useState } from "react";
 import "styles/views/Login.scss";
 import BaseContainer from "components/ui/BaseContainer";
