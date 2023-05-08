@@ -20,7 +20,7 @@ const VotePage = () => {
         `/lobbies/${lobbyId}/games/${roundId}/images`
       );
       setImgs(response.data);
-      console.log("fetched");
+      console.log(response.data);
     }
 
     let interval;
@@ -58,7 +58,7 @@ const VotePage = () => {
         );
         console.log(response);
         // Update successfully worked --> navigate to the lobby
-        if (roundId < 2) {
+        if (roundId < localStorage.getItem("numberOfRounds")) {
           navigate(`/lobbies/${lobbyId}/scoreBoard`, {
             state: { currentRound: roundId },
           });
