@@ -8,14 +8,16 @@ export const Spinner = (props) => {
         className="spinner background"
         style={{ backgroundImage: "url(" + props.backgroundImage + ")" }}
       ></div>
-      <h1 className="spinner manifesto">
-        Please wait for your fellow artists to finish their works
-      </h1>
-      <div className="spinner loader">
-        <div />
-        <div />
-        <div />
-        <div />
+      <div className="spinner container">
+        <h1 className="spinner manifesto">
+          Please wait for your fellow artists to finish their works
+        </h1>
+        <div className="spinner loader">
+          <div />
+          <div />
+          <div />
+          <div />
+        </div>
       </div>
     </div>
   );

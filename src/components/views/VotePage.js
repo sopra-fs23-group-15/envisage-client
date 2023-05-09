@@ -40,7 +40,7 @@ const VotePage = () => {
   };
 
   const handleImageClick = () => {
-    setSelectedImage(null);
+    setSelectedImage(true);
   };
 
   const getNumberRounds = async () => {
