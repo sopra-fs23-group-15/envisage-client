@@ -36,7 +36,7 @@ const ExhibitionPage = () => {
       </>
     )
   }
-  },[]);
+  },[lobbyId, username]);
 
   let imageList = (
     <>
