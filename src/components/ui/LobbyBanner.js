@@ -15,7 +15,7 @@ const LobbyBanner = (props) => {
         You are in the <span>{lobbyId}</span> museum space
       </h3>
       <h3>
-        You exibition curator is: <span>{props.curator}</span>
+        You exhibition curator is: <span>{props.curator}</span>
       </h3>
       <h5
         style={
@@ -42,7 +42,7 @@ const LobbyBanner = (props) => {
         requirement.
       </h5>
       <h5>
-        3. At the end of each round, you vote on your favourite picture.and the
+        3. At the end of each round, you vote on your favorite picture.and the
         round winner is given as your prompt for the next round with a different
         style requirement.
       </h5>
