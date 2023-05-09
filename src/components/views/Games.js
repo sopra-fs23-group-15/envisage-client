@@ -79,7 +79,7 @@ const Games = () => {
           )}`,
           requestBody
         );
-        // navigate(`/lobbies/${lobbyId}/games/${roundId}/votePage`);
+        navigate(`/lobbies/${lobbyId}/games/${roundId}/votePage`);
       } catch (error) {
         console.error(
           `Something went wrong while fetching the users: \n${handleError(
