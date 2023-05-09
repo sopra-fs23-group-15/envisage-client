@@ -93,7 +93,7 @@ const LobbiesAfter = () => {
           <div className="player right">
             <Button
               disabled={
-                 localStorage.getItem("userName") !==
+                localStorage.getItem("userName") !==
                   localStorage.getItem("curator")
               }
               onClick={() => startGame()}

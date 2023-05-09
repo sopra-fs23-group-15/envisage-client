@@ -81,11 +81,13 @@ h5{
         font-weight: bold;
         color: $primary;
         margin-top: 1em;
+        margin-bottom: 1em;
         padding-top: 1em;
+        padding-bottom: 1em;
         background-size: cover;
         border-radius: 1em;
         width: 100%;
-        aspect-ratio: 4/3;
+        aspect-ratio: 7/5;
     }
     &.winner {
         position: relative;

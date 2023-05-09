@@ -83,7 +83,7 @@ const Lobbies = () => {
   let playersList = <LobbyContainer />;
 
   if (players) {
-    const fillPlayes = () => {
+    const fillPlayers = () => {
       const rows = [];
       for (let i = 0; i < 5 - players.length; i++) {
         rows.push(
@@ -108,7 +108,7 @@ const Lobbies = () => {
                 <div>0</div>
               </div>
             ))}
-            {fillPlayes()}
+            {fillPlayers()}
           </div>
           <div className="player right">
             <Button

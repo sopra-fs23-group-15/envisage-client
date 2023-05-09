@@ -3,7 +3,6 @@ import { api, handleError } from "helpers/api";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "components/ui/Button";
 import { Timer } from "components/ui/Timer";
-// import { TextArea } from "components/ui/TextArea";
 import "styles/views/Game.scss";
 import { connect, isConnected, subscribe } from "../../helpers/stomp";
 
@@ -13,8 +12,9 @@ const Games = () => {
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
   const { lobbyId, roundId } = useParams();
-  const [keywords, setKeywords] = useState("");
+  const [keywordsInput, setKeywordsInput] = useState("");
   const [charCount, setCharCount] = useState(0);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleInputChange = (e) => {
     const inputText = e.target.value;
@@ -22,7 +22,7 @@ const Games = () => {
     if (inputCharCount > MAX_CHARS) {
       return;
     }
-    setKeywords(inputText);
+    setKeywordsInput(inputText);
     setCharCount(inputCharCount);
   };
 
@@ -64,46 +64,41 @@ const Games = () => {
     fetchImage();
   }, [lobbyId]);
 
-  const keywords_check= () => {
-    if(keywords.length === 0){
-      setKeywords("blank canvas");
-      submitPrompt();
+  const submitPrompt = (keywords) => {
+    if (isSubmitted === false) {
+      setIsSubmitted(true);
+      try {
+        const requestBody = JSON.stringify({
+          keywords,
+          environment: process.env.NODE_ENV,
+        });
+        console.log(requestBody);
+        api.put(
+          `/lobbies/${lobbyId}/games/${roundId}/${localStorage.getItem(
+            "userName"
+          )}`,
+          requestBody
+        );
+        navigate(`/lobbies/${lobbyId}/games/${roundId}/votePage`);
+      } catch (error) {
+        console.error(
+          `Something went wrong while fetching the users: \n${handleError(
+            error
+          )}`
+        );
+        console.error("Details:", error);
+        alert(
+          "Something went wrong while fetching the users! See the console for details."
+        );
+      }
     }
-    else{submitPrompt()}
-  }
-  const submitPrompt = async () => {
-    console.log("user prompt is: "+ prompt);
-    console.log("ENVIRONMENT IS: " + process.env.NODE_ENV);
-    if (keywords !== ""){
-    console.log("user prompt is: " + prompt);
-    try {
-      const requestBody = JSON.stringify({
-        "keywords": keywords, "environment": process.env.NODE_ENV
-      });
-      console.log(requestBody);
-      const playerImage = await api.put(
-        `/lobbies/${lobbyId}/games/${roundId}/${localStorage.getItem("userName")}`,
-        requestBody
-      );
-      console.log(playerImage.data);
-      // code to sleep for 5 seconds...
-      navigate(`/lobbies/${lobbyId}/games/${roundId}/votePage`);
-    } catch (error) {
-      console.error(
-        `Something went wrong while fetching the users: \n${handleError(error)}`
-      );
-      console.error("Details:", error);
-      alert(
-        "Something went wrong while fetching the users! See the console for details."
-      );
-    }}
   };
 
   return (
     <div className="game">
       <img className="game image" src={image} alt="" />
       <div className="game input">
-        <Timer func={() => keywords_check(keywords)} />
+        <Timer func={() => submitPrompt(keywordsInput)} />
         <div className="game input-style">
           {localStorage.getItem("challengeStyle")}
         </div>
@@ -114,12 +109,16 @@ const Games = () => {
           <textarea
             className="game input-field"
             style={inputStyle}
-            value={keywords}
+            value={keywordsInput}
             onChange={handleInputChange}
             placeholder="tweak your keywords to make it more fun! (max 400 characters)"
           />
         </>
-        <Button className="G" onClick={() => keywords_check(keywords)}>
+        <Button
+          className="G"
+          onClick={() => submitPrompt(keywordsInput)}
+          disabled={isSubmitted}
+        >
           Submit
         </Button>
       </div>

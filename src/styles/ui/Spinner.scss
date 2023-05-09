@@ -13,16 +13,19 @@
         height: 100vh;
         z-index: -1;
     }
+    &.container {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 0;
+        padding: 1em;
+        background-color: rgba($primary, 0.45);
+        border-radius: 1em;
+    }
     &.manifesto {
-        color: mix($primary, white, 85);
+        color: white;
         font-size: 2rem;
-        margin-top: 1em;
-        margin-left: 1em;
-        text-align: end;
     }
     &.loader {
-        margin-top: 2.5em;
-        margin-right: 2.5em;
         position: relative;
         display: inline-block;
         width: 60px;

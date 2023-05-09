@@ -42,12 +42,7 @@ const LobbyCreation = () => {
 
   const createLobby = () => {
     try {
-      const roundDurationInSeconds = 30;
-      const noOfRounds = 2;
-      const requestBody = JSON.stringify({
-        roundDurationInSeconds,
-        noOfRounds,
-      });
+      const requestBody = JSON.stringify({});
       api.post("/lobbies", requestBody).then(async function (response) {
         const r = await api.get(`/lobbies`);
         console.log(r);
@@ -73,8 +68,6 @@ const LobbyCreation = () => {
       localStorage.setItem("player", JSON.stringify(player));
       localStorage.setItem("creator", player.lobbyCreator);
       localStorage.setItem("userName", userName);
-      localStorage.setItem("lobbyID", parseInt(lobbyId));
-
       navigate(`/lobbies/${lobbyId}`);
     } catch (error) {
       alert(
@@ -82,6 +75,11 @@ const LobbyCreation = () => {
       );
     }
   };
+
+  const configureLobby = () => {
+    localStorage.setItem("userName", userName);
+    navigate("/lobbyConfiguration")
+  }
 
   return (
     <BaseContainer>
@@ -97,7 +95,9 @@ const LobbyCreation = () => {
           />
         </div>
         <div className="login button-container">
-          <Button>Configure your lobby</Button>
+          <Button disabled={!userName} onClick={() => configureLobby()}>
+            Configure your lobby
+          </Button>
           <Button disabled={!userName} onClick={() => createLobby()}>
             Start a default game
           </Button>
