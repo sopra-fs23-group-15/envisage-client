@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { api, handleError } from "helpers/api";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "components/ui/Button";
@@ -65,27 +65,33 @@ const Games = () => {
   }, [lobbyId]);
 
   const submitPrompt = (keywords) => {
-    if (isSubmitted === false){
+    if (isSubmitted === false) {
       setIsSubmitted(true);
-    try {
-      const requestBody = JSON.stringify({
-        keywords, "environment": process.env.NODE_ENV
-      });
-      console.log(requestBody);
-      api.put(
-        `/lobbies/${lobbyId}/games/${roundId}/${localStorage.getItem("userName")}`,
-        requestBody
-      );
-      navigate(`/lobbies/${lobbyId}/games/${roundId}/votePage`);
-    } catch (error) {
-      console.error(
-        `Something went wrong while fetching the users: \n${handleError(error)}`
-      );
-      console.error("Details:", error);
-      alert(
-        "Something went wrong while fetching the users! See the console for details."
-      );
-    }}
+      try {
+        const requestBody = JSON.stringify({
+          keywords,
+          environment: process.env.NODE_ENV,
+        });
+        console.log(requestBody);
+        api.put(
+          `/lobbies/${lobbyId}/games/${roundId}/${localStorage.getItem(
+            "userName"
+          )}`,
+          requestBody
+        );
+        // navigate(`/lobbies/${lobbyId}/games/${roundId}/votePage`);
+      } catch (error) {
+        console.error(
+          `Something went wrong while fetching the users: \n${handleError(
+            error
+          )}`
+        );
+        console.error("Details:", error);
+        alert(
+          "Something went wrong while fetching the users! See the console for details."
+        );
+      }
+    }
   };
 
   return (
@@ -108,7 +114,11 @@ const Games = () => {
             placeholder="tweak your keywords to make it more fun! (max 400 characters)"
           />
         </>
-        <Button className="G" onClick={() => submitPrompt(keywordsInput)}>
+        <Button
+          className="G"
+          onClick={() => submitPrompt(keywordsInput)}
+          disabled={isSubmitted}
+        >
           Submit
         </Button>
       </div>
