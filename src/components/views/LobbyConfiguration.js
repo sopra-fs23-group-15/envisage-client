@@ -35,6 +35,7 @@ const LobbyConfiguration = () => {
          console.log(r);
          const lobby = new Lobby(response.data);
          const lobbyId = lobby.pin;
+
          localStorage.setItem("lobbyId", parseInt(lobbyId));
          console.log("LobbyId in Storage: " + localStorage.getItem("lobbyId"));
          await addPlayer(lobbyId);
