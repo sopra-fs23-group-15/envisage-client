@@ -17,11 +17,13 @@ const ExhibitionPage = () => {
     navigate("landingPage");
   };
   const lobbyId = localStorage.getItem("lobbyId");
-  const username = localStorage.getItem("player");
+  const username = localStorage.getItem("userName");
+  console.log(username);
   useEffect(()=>{
     try{
     async function fetch() {
       const response = await api.get(`/lobbies/${lobbyId}/games/images/${username}`);
+      console.log(response.data);
     setImgs(response.data);
   };
     fetch();
@@ -34,7 +36,7 @@ const ExhibitionPage = () => {
       </>
     )
   }
-  });
+  },[]);
 
   let imageList = (
     <>
@@ -57,7 +59,7 @@ const ExhibitionPage = () => {
   return (
     <LobbyContainer>
       <h1>Welcome to the exhibition</h1>
-      <div>
+      <div className="image-container">
       {imageList}
       </div>
       <div className="buttons">
