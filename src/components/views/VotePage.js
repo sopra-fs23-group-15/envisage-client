@@ -39,7 +39,7 @@ const VotePage = () => {
   };
 
   const handleImageClick = () => {
-    setSelectedImage(null);
+    setSelectedImage(true);
   };
 
   const handleVoteClick = async (playerName, imageId) => {
