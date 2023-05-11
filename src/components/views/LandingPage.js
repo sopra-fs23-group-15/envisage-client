@@ -115,6 +115,7 @@ const LandingPage = () => {
       <Slider />
       <div className="login container">
         <div>Welcome to Envisage</div>
+        <div>Drawing is describing</div>
         <div>Join a game now</div>
         <div className="login form-container">
           <NumberInput
@@ -142,7 +143,7 @@ const LandingPage = () => {
         </div>
       </div>
       <div className="login manifesto">
-        Compete with friends your AI generated masterpieces
+        Use imagination to compete with your AI generated masterpieces
       </div>
     </BaseContainer>
   );

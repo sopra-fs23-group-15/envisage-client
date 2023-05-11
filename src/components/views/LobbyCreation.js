@@ -85,6 +85,7 @@ const LobbyCreation = () => {
     <BaseContainer>
       <div className="login container">
         <div>Welcome to Envisage</div>
+        <div>Drawing is describing</div>
         <div>Join a game now</div>
         <div>
           <FormField
@@ -109,7 +110,7 @@ const LobbyCreation = () => {
       </div>
       <Slider />
       <div className="login manifesto">
-        Compete with friends your AI generated masterpieces
+        Use imagination to compete with your AI generated masterpieces
       </div>
     </BaseContainer>
   );

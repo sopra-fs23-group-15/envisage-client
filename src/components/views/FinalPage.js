@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { api, handleError } from "helpers/api";
 import { Button } from "components/ui/Button";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import LobbyContainer from "components/ui/LobbyContainer";
+import { Spinner } from "components/ui/Spinner";
 import "styles/views/Player.scss";
 
 const FinalPage = () => {
   const [playerScores, setPlayerScores] = useState(null);
+  const [allvotes, setAllvotes] = useState(false);
   const { lobbyId } = useParams();
+  const { state } = useLocation();
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,6 +19,14 @@ const FinalPage = () => {
       try {
         const response = await api.get("/lobbies/" + lobbyId + "/games");
         setPlayerScores(response.data.playerScores);
+
+        let votes = 0;
+        response.data.playerScores.map(
+          (playerScore) => (votes = votes + playerScore.score)
+        );
+        if (votes === response.data.playerScores.length * state.currentRound) {
+          setAllvotes(true);
+        }
       } catch (error) {
         console.error(
           `something went wrong while fetching the users: \n${handleError(
@@ -28,14 +40,24 @@ const FinalPage = () => {
         );
       }
     }
-    fetchScores();
-  }, [lobbyId]);
+    // fetchScores();
+    let interval;
+    interval = setInterval(fetchScores, 5000);
+    return () => clearInterval(interval);
+  }, [lobbyId, state.currentRound]);
 
   const visitNext = async () => {
     navigate(`/lobbies/${lobbyId}/exhibitionPage`);
   };
 
-  let playersList = <LobbyContainer />;
+  let playersList = (
+    <>
+      <Spinner
+        backgroundImage={"url(img/lobbyLg)"}
+        manifesto="Leaderboard after final round comes in 5 seconds"
+      />
+    </>
+  );
 
   if (playerScores) {
     playerScores.sort((a, b) => b.score - a.score);
@@ -54,8 +76,17 @@ const FinalPage = () => {
 
     playersList = (
       <div>
-        <div className="player winner">
-          The winner of the game is {playerScores[0].player}. Congratulations!
+        <div
+          className="player winner"
+          style={
+            allvotes ? { visibility: "visible" } : { visibility: "hidden" }
+          }
+        >
+          {playerScores[0].player === playerScores[1].player ||
+          (playerScores[0].player === playerScores[1].player) ===
+            playerScores[2].player
+            ? `Congratulations to our multiple winners, what a day!`
+            : `Congratulations! ${playerScores[0].player} is our winner`}
         </div>
         <div className="player down">
           <div className="player round"></div>

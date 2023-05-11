@@ -78,7 +78,9 @@ const VotePage = () => {
             state: { currentRound: roundId },
           });
         } else {
-          navigate(`/lobbies/${lobbyId}/finalResult`);
+          navigate(`/lobbies/${lobbyId}/finalResult`, {
+            state: { currentRound: roundId },
+          });
         }
       } catch (error) {
         alert(
@@ -90,7 +92,10 @@ const VotePage = () => {
 
   let imagesList = (
     <>
-      <Spinner backgroundImage={localStorage.getItem("challengeImage")} />
+      <Spinner
+        backgroundImage={localStorage.getItem("challengeImage")}
+        manifesto="Please wait for your fellow artists to finish their works"
+      />
     </>
   );
 

@@ -30,7 +30,7 @@ const Slider = () => {
   return (
     <div className="slider">
       <div className="slider label">
-        "David Hockney style Captain America jumping into a splash of water"
+        "Captain America jumps into a big splash of water, David Hockney style"
       </div>
       <div className="slider left-arrow" onClick={goToLeft}>
         ❮

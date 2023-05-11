@@ -3,22 +3,23 @@ import "styles/ui/Spinner.scss";
 
 export const Spinner = (props) => {
   return (
-    <div className="spinner">
-      <div
-        className="spinner background"
+    <>
+      <div className="background"
         style={{ backgroundImage: "url(" + props.backgroundImage + ")" }}
       ></div>
-      <div className="spinner container">
-        <h1 className="spinner manifesto">
-          Please wait for your fellow artists to finish their works
-        </h1>
-        <div className="spinner loader">
-          <div />
-          <div />
-          <div />
-          <div />
+      <div className="spinner">
+        <div className="spinner container">
+          <h1 className="spinner manifesto">
+            {props.manifesto}
+          </h1>
+          <div className="spinner loader">
+            <div />
+            <div />
+            <div />
+            <div />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
