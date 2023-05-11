@@ -82,6 +82,7 @@ const Lobbies = () => {
   };
 
   let playersList = <LobbyContainer />;
+  let notification = <div/>
 
   if (players) {
     const fillPlayers = () => {
@@ -96,6 +97,13 @@ const Lobbies = () => {
       }
       return rows;
     };
+
+    if (players.length > 1 && localStorage.getItem("curator") !== localStorage.getItem("userName")){
+        notification = (<div>Wait for the lobby creator to start the game</div>)
+    }
+    else{
+        notification = (<div>Fill this wall with your masterpieces</div>)
+    }
 
     playersList = (
       <div>
@@ -121,7 +129,7 @@ const Lobbies = () => {
             >
               Start the game
             </Button>
-            <div>Fill this wall with your masterpieces</div>
+            {notification}
           </div>
         </div>
       </div>
