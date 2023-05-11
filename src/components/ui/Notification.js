@@ -5,14 +5,15 @@ export const Notification = (props) => {
     return (
       <>
         <div
+          className="player special"
           style={
             props.players.length > 2
               ? { visibility: "visible" }
               : { visibility: "hidden" }
           }
         >
-          Hello {localStorage.getItem("curator")}, as the curator, please start
-          the game when you are ready
+          Hello <span>{localStorage.getItem("curator")}</span>, as the curator,
+          please start the game when you are ready
         </div>
       </>
     );
@@ -20,14 +21,15 @@ export const Notification = (props) => {
     return (
       <>
         <div
+          className="player special"
           style={
             props.players.length > 2
               ? { visibility: "visible" }
               : { visibility: "hidden" }
           }
         >
-          Get ready {localStorage.getItem("userName")}, your curator will start
-          the game soon, please wait...
+          Get ready <span>{localStorage.getItem("userName")}</span>, your
+          curator will start the game soon, please wait...
         </div>
       </>
     );

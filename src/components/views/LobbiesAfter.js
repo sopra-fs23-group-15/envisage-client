@@ -5,6 +5,7 @@ import { useLocation, useParams } from "react-router-dom";
 import LobbyContainer from "components/ui/LobbyContainer";
 import LobbyBanner from "components/ui/LobbyBanner";
 import { getChallengeForRound } from "helpers/stomp";
+import { Spinner } from "components/ui/Spinner";
 import "styles/views/Player.scss";
 
 const LobbiesAfter = () => {
@@ -48,6 +49,7 @@ const LobbiesAfter = () => {
         );
       }
     }
+    // fetchScores();
     let interval;
     interval = setInterval(fetchScores, 5000);
     return () => clearInterval(interval);
@@ -72,13 +74,10 @@ const LobbiesAfter = () => {
 
   let playersList = (
     <>
-      <LobbyContainer />
-      <div className="spinner loader">
-        <div />
-        <div />
-        <div />
-        <div />
-      </div>
+      <Spinner
+        backgroundImage={"url(img/lobbyLg)"}
+        manifesto={`Leaderboard after round ${state.currentRound} comes in 5 seconds`}
+      />
     </>
   );
 
@@ -119,7 +118,7 @@ const LobbiesAfter = () => {
             <Button
               disabled={
                 localStorage.getItem("userName") !==
-                  localStorage.getItem("curator") || !allvotes
+                localStorage.getItem("curator")
               }
               onClick={() => startGame()}
             >

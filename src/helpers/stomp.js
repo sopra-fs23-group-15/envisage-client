@@ -71,4 +71,3 @@ export let getChallengeForRound = (lobbyId, roundId) => {
     "/app/lobbies/" + lobbyId + "/challengeForRounds/" + roundId
   );
 };
-

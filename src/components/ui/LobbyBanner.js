@@ -17,10 +17,13 @@ const LobbyBanner = (props) => {
       <h3>
         You exhibition curator is: <span>{props.curator}</span>
       </h3>
-      <h3 style={
+      <h3
+        style={
           props.players.length > 2
             ? { visibility: "visible" }
-            : { visibility: "hidden" }}>
+            : { visibility: "hidden" }
+        }
+      >
         Fill this wall with your masterpieces!
       </h3>
       <h5
@@ -48,9 +51,11 @@ const LobbyBanner = (props) => {
         <span>use keywords to describe the image as creative as possible.</span>
       </h5>
       <h5>
-        3. The style requirement can be directly taken as a keyword. Or if you
-        happen to be a master of art history, feel free to tweak it into
-        something more fun!
+        3. The style requirement such as{" "}
+        <span style={{ fontStyle: "oblique" }}>"Pablo Picasso"</span> can be
+        directly used as a keyword in your description. Or if you happen to be a
+        story master of art history, feel free to tweak it into something more
+        informative and fun!
       </h5>
       <h5>
         4. At the end of each round,{" "}

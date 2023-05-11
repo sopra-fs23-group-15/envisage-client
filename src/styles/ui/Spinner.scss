@@ -1,29 +1,30 @@
 @import 'styles/theme';
 
 .spinner{
-    margin: 0;
-    padding: 0;
+    font-size: 1.5rem;
     display: flex;
-    flex-direction: row;  
-    &.background {
-        background-size: cover;
-        position: fixed;
-        opacity: 0.7;
-        width: 100vw;
-        height: 100vh;
-        z-index: -1;
-    }
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     &.container {
+        position:absolute;
+        top: 30%;
         display: flex;
         flex-direction: column;
-        flex-grow: 0;
+        justify-content: center;
+        align-items: center;
+        width: fit-content;
         padding: 1em;
         background-color: rgba($primary, 0.45);
         border-radius: 1em;
     }
+    &.container > * {
+        flex-grow: 1;
+        flex-shrink: 1;
+    }
     &.manifesto {
         color: white;
-        font-size: 2rem;
+        padding: 0.5em;
     }
     &.loader {
         position: relative;
@@ -82,4 +83,13 @@
             transform: scale(0);
         }
     }
+}
+
+.background {
+    background-size: cover;
+    position: fixed;
+    opacity: 0.7;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
 }

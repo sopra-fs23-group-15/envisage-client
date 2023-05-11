@@ -87,7 +87,7 @@ const Lobbies = () => {
       const rows = [];
       for (let i = 0; i < 5 - players.length; i++) {
         rows.push(
-          <div className="player row" key={i}>
+          <div className="player row">
             <div></div>
             <div></div>
           </div>
@@ -103,9 +103,23 @@ const Lobbies = () => {
           <div className="player round">Round 0</div>
           <div className="player left">
             {players.map((player) => (
-              <div className="player row" key={player.id}>
-                <div>{player.userName}</div>
-                <div>0</div>
+              <div className="player row">
+                <div
+                  style={{
+                    color: "#666",
+                    fontSize: "1rem",
+                  }}
+                >
+                  {player.userName}
+                </div>
+                <div
+                  style={{
+                    color: "#666",
+                    fontSize: "1rem",
+                  }}
+                >
+                  0
+                </div>
               </div>
             ))}
             {fillPlayers()}

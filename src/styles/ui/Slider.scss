@@ -6,9 +6,10 @@
     left: 19.05vw;
     margin-top: 3.925vw;
     width: 29.85vw;
-    font-size: 1.25vw;
+    font-size: 0.75rem;
+    font-weight: bold;
     text-align: right;
-    color: white;
+    color: $secondary;
     @include landscape {
         left: 28.5vh;
         bottom: 15.5vh;
@@ -24,10 +25,10 @@
         opacity: 0.75;
     }
     &.label {
-        font-style: italic;
+        font-style: oblique;
         height: 4em;
         padding: 1em;
-        margin-top: 29.75em;
+        margin-top: 3.887vw;
         background-color: $primary;
         z-index: 1;
         opacity: 0.75;

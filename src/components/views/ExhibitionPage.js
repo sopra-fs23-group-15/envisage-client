@@ -19,24 +19,25 @@ const ExhibitionPage = () => {
   const lobbyId = localStorage.getItem("lobbyId");
   const username = localStorage.getItem("userName");
   console.log(username);
-  useEffect(()=>{
-    try{
-    async function fetch() {
-      const response = await api.get(`/lobbies/${lobbyId}/games/images/${username}`);
-      console.log(response.data);
-    setImgs(response.data);
-  };
-    fetch();
-    
-  } catch (error){
-    return(
-      <>
-      Not implemented yet in the backend.\n
-      {error}
-      </>
-    )
-  }
-  },[lobbyId, username]);
+  useEffect(() => {
+    try {
+      async function fetch() {
+        const response = await api.get(
+          `/lobbies/${lobbyId}/games/images/${username}`
+        );
+        console.log(response.data);
+        setImgs(response.data);
+      }
+      fetch();
+    } catch (error) {
+      return (
+        <>
+          Not implemented yet in the backend.\n
+          {error}
+        </>
+      );
+    }
+  }, [lobbyId, username]);
 
   let imageList = (
     <>
@@ -44,24 +45,19 @@ const ExhibitionPage = () => {
     </>
   );
   if (imgs) {
-    imageList =   
-    <div>
-    {imgs.map((image) => (
-           <ImageComponent
-             url={true}
-             image={image.image}
-           />
-      ))}
-    </div>
-    }
-
+    imageList = (
+      <div>
+        {imgs.map((image) => (
+          <ImageComponent url={true} image={image.image} />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <LobbyContainer>
       <h1>Welcome to the exhibition</h1>
-      <div className="image-container">
-      {imageList}
-      </div>
+      <div className="image-container">{imageList}</div>
       <div className="buttons">
         <Button onClick={() => goMain()}>Logout</Button>
         <Button className="button2">Restart</Button>

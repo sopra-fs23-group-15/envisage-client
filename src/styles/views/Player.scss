@@ -66,6 +66,7 @@ h5{
         max-height: 2.5em;
         padding: 0.75em;
         color: #666;
+        font-weight: bold;
         text-align:center;
         background-color: white;
         border-radius: 0.75em;
@@ -79,7 +80,7 @@ h5{
     }
     &.special {
         font-weight: bold;
-        color: $primary;
+        color: white;
         margin-top: 1em;
         margin-bottom: 1em;
         padding-top: 1em;
@@ -90,10 +91,14 @@ h5{
         aspect-ratio: 7/5;
     }
     &.winner {
-        position: relative;
-        margin-top: 10%;
-        margin-left: 10%;
-        font-size: 2.5em;
-        color: $primary;
+        font-size: 2rem;
+        font-weight: bolder;
+        color:white;
+        border-radius: 0.75rem;
+        padding: 1.5em;
+        margin-top: 6%;
+        margin-left: 20%;
+        width: 50%;
+        background-color: rgba($color: #1e1e1e, $alpha: 0.75);
     }
 }
