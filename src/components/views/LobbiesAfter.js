@@ -9,10 +9,10 @@ import "styles/views/Player.scss";
 
 const LobbiesAfter = () => {
   const [playerScores, setPlayerScores] = useState(null);
-  const [currentRound, setCurrentRound] = useState(null);
   const [winner, setWinner] = useState("");
   const { lobbyId } = useParams();
   const { state } = useLocation();
+  const [allvotes, setAllvotes] = useState(false);
 
   useEffect(() => {
     async function fetchScores() {
@@ -22,8 +22,19 @@ const LobbiesAfter = () => {
           `/lobbies/${lobbyId}/games/${state.currentRound}/winners`
         );
         setPlayerScores(scoresResponse.data.playerScores);
-        setCurrentRound(scoresResponse.data.rounds.length);
         setWinner(winnerResponse.data.image);
+        console.log(scoresResponse);
+
+        let votes = 0;
+        scoresResponse.data.playerScores.map(
+          (playerScore) => (votes = votes + playerScore.score)
+        );
+        if (
+          votes ===
+          scoresResponse.data.playerScores.length * state.currentRound
+        ) {
+          setAllvotes(true);
+        }
       } catch (error) {
         console.error(
           `something went wrong while fetching the users: \n${handleError(
@@ -37,16 +48,20 @@ const LobbiesAfter = () => {
         );
       }
     }
-    fetchScores();
+    let interval;
+    interval = setInterval(fetchScores, 5000);
+    return () => clearInterval(interval);
   }, [lobbyId, state.currentRound]);
 
   const startGame = async () => {
     try {
       await api.post(`/lobbies/${lobbyId}/games/rounds`);
-      getChallengeForRound(lobbyId, currentRound + 1);
+      getChallengeForRound(lobbyId, state.currentRound + 1);
     } catch (error) {
       console.error(
-        `Something went wrong while initiating the next round: \n${handleError(error)}`
+        `Something went wrong while initiating the next round: \n${handleError(
+          error
+        )}`
       );
       console.error("Details:", error);
       alert(
@@ -55,11 +70,21 @@ const LobbiesAfter = () => {
     }
   };
 
-  let playersList = <LobbyContainer />;
+  let playersList = (
+    <>
+      <LobbyContainer />
+      <div className="spinner loader">
+        <div />
+        <div />
+        <div />
+        <div />
+      </div>
+    </>
+  );
 
   if (playerScores) {
     playerScores.sort((a, b) => b.score - a.score);
-    // console.log(playerScores);
+
     const fillPlayes = () => {
       const rows = [];
       for (let i = 0; i < 5 - playerScores.length; i++) {
@@ -80,7 +105,7 @@ const LobbiesAfter = () => {
           curator={localStorage.getItem("curator")}
         />
         <div className="player down">
-          <div className="player round">Round {currentRound}</div>
+          <div className="player round">Round {state.currentRound}</div>
           <div className="player left">
             {playerScores.map((playerScore) => (
               <div className="player row">
@@ -94,24 +119,30 @@ const LobbiesAfter = () => {
             <Button
               disabled={
                 localStorage.getItem("userName") !==
-                  localStorage.getItem("curator")
+                  localStorage.getItem("curator") || !allvotes
               }
               onClick={() => startGame()}
             >
-              Start the game
+              Start next round
             </Button>
             <div
               className="player special"
-              style={{ backgroundImage: "url(" + winner + ")" }}
+              style={
+                allvotes
+                  ? {
+                      // visibility: "visible",
+                      backgroundImage: "url(" + winner + ")",
+                    }
+                  : { backgroundImage: "none" }
+              }
             >
-              Round Winner
+              Behold the round winner!
             </div>
           </div>
         </div>
       </div>
     );
   }
-
   return <LobbyContainer>{playersList}</LobbyContainer>;
 };
 

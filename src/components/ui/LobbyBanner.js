@@ -17,6 +17,12 @@ const LobbyBanner = (props) => {
       <h3>
         You exhibition curator is: <span>{props.curator}</span>
       </h3>
+      <h3 style={
+          props.players.length > 2
+            ? { visibility: "visible" }
+            : { visibility: "hidden" }}>
+        Fill this wall with your masterpieces!
+      </h3>
       <h5
         style={
           props.players.length > 2
@@ -37,17 +43,19 @@ const LobbyBanner = (props) => {
         generated masterpieces.
       </h5>
       <h5>
-        2. With a given picture and a style requirement, your task is to
-        describe the image as creative as possible, while adding in the style
-        requirement.
+        2. With <span>a given image and a style requirement</span>, your task is
+        to{" "}
+        <span>use keywords to describe the image as creative as possible.</span>
       </h5>
       <h5>
-        3. At the end of each round, you vote on your favorite picture.and the
-        round winner is given as your prompt for the next round with a different
-        style requirement.
+        3. The style requirement can be directly taken as a keyword. Or if you
+        happen to be a master of art history, feel free to tweak it into
+        something more fun!
       </h5>
       <h5>
-        4. The round winner is given as your prompt for the next round with a
+        4. At the end of each round,{" "}
+        <span>you vote on your favorite picture other than your own.</span> The
+        round winner is given as the image prompt for the next round with a
         different style requirement.
       </h5>
       <h5>5. The final winner is declared based on the accumulated votes.</h5>
