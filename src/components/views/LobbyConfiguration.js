@@ -10,21 +10,30 @@ import Lobby from "models/Lobby";
 import Select from "react-select";
 
 
-const options = [
+const options_rounds = [
             { value: '1', label: "1 round" },
             { value: '2', label: "2 rounds" },
             { value: '3', label: "3 rounds" },
             { value: '4', label: "4 rounds" }
           ];
 
+const options_time = [
+            {value: "10", label: "10 seconds"},
+            {value: "20", label: "20 seconds"},
+            {value: "30", label: "30 seconds"},
+            {value: "60", label: "1 minute"},
+            {value: "90", label: "1.5 minutes"}
+];
+
 const LobbyConfiguration = () => {
     const userName = localStorage.getItem('userName')
     const [rounds, setRounds] = useState('');
+    const [time, setTime] = useState('');
     const navigate = useNavigate();
 
     const createLobby = () => {
      try {
-       const roundDurationInSeconds = 30;
+       const roundDurationInSeconds = time;
        const noOfRounds = rounds;
        const requestBody = JSON.stringify({
          roundDurationInSeconds,
@@ -65,8 +74,12 @@ const LobbyConfiguration = () => {
       }
     };
 
-    const handleChange = (selectedOption) => {
+    const handleChangeRounds = (selectedOption) => {
         setRounds(selectedOption["value"]);
+    };
+
+    const handleChangeTime = (selectedOption) => {
+        setTime(selectedOption["value"]);
     };
 
 
@@ -75,12 +88,16 @@ const LobbyConfiguration = () => {
             <div className="login container">
                 <div>Hello {userName}</div>
                 <div>On this page you can configure your lobby</div>
-                <div>Set the number of rounds</div>
+                <div>Set the number of rounds:</div>
                 <div>
-                    <Select className = "login select" options= {options} onChange={handleChange}/>
+                    <Select className = "login select" options= {options_rounds} onChange={handleChangeRounds}/>
+                </div>
+                <div>Set the time for one round:</div>
+                <div>
+                    <Select className = "login select" options= {options_time} onChange={handleChangeTime}/>
                 </div>
                 <Button disabled={!rounds} onClick={() => createLobby()}>
-                    Start the game
+                    Create the lobby
                 </Button>
             </div>
             <Slider />
