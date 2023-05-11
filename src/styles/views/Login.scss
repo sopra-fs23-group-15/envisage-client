@@ -71,7 +71,16 @@
     text-align: right;
     }
 
-    &.select {
+    &.selectionbar{
+        margin-bottom: 10%;
+    }
+
+    &.selectiontitle{
+        font-size: 13px;
+    }
+
+    &.react-select-container{
         color: $primary;
+        borderColor: $primary;
     }
 }

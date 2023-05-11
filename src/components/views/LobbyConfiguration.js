@@ -81,34 +81,50 @@ const LobbyConfiguration = () => {
     setTime(selectedOption["value"]);
   };
 
-  return (
-    <BaseContainer>
-      <div className="login container">
-        <div>Hello {userName}</div>
-        <div>On this page you can configure your lobby</div>
-        <div>Set the number of rounds:</div>
-        <div>
-          <Select
-            className="login select"
-            options={options_rounds}
-            onChange={handleChangeRounds}
-          />
-        </div>
-        <div>Set the time for one round:</div>
-        <div>
-          <Select
-            className="login select"
-            options={options_time}
-            onChange={handleChangeTime}
-          />
-        </div>
-        <Button disabled={!rounds} onClick={() => createLobby()}>
-          Create the lobby
-        </Button>
-      </div>
-      <Slider />
-    </BaseContainer>
-  );
-};
+
+    return (
+        <BaseContainer>
+            <div className="login container">
+                <div>Welcome to Envisage</div>
+                <div>Join a game now</div>
+                <div className="login selectiontitle">Please set the number of rounds</div>
+                <div className="login selectionbar">
+                    <Select className = "login react-select-container"
+                    options= {options_rounds}
+                    onChange={handleChangeRounds}
+                    theme={(theme) => ({
+                       ...theme,
+                       borderRadius: 0,
+                       colors: {
+                         ...theme.colors,
+                         primary25: 'gainsboro',
+                         primary: 'rebeccaPurple',
+                       },
+                     })}/>
+                </div>
+                <div className="login selectiontitle">Please set the timer for each round</div>
+                <div className="login selectionbar">
+                    <Select className="login react-select-container"
+                    options= {options_time}
+                    onChange={handleChangeTime}
+                    theme={(theme) => ({
+                       ...theme,
+                       borderRadius: 0,
+                       colors: {
+                         ...theme.colors,
+                         primary25: 'gainsboro',
+                         primary: 'rebeccaPurple',
+                       },
+                     })}/>
+                </div>
+                <Button disabled={!rounds} onClick={() => createLobby()}>
+                    Save and start a game
+                </Button>
+            </div>
+            <Slider />
+        </BaseContainer>
+    )
+
+}
 
 export default LobbyConfiguration;
