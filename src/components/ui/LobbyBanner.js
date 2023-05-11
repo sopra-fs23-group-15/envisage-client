@@ -17,10 +17,13 @@ const LobbyBanner = (props) => {
       <h3>
         You exhibition curator is: <span>{props.curator}</span>
       </h3>
-      <h3 style={
+      <h3
+        style={
           props.players.length > 2
             ? { visibility: "visible" }
-            : { visibility: "hidden" }}>
+            : { visibility: "hidden" }
+        }
+      >
         Fill this wall with your masterpieces!
       </h3>
       <h5

@@ -22,7 +22,10 @@ const VoteBox = (props) => {
       <Button
         className="V"
         onClick={() => props.handleVoteClick(props.playerName, props.imageId)}
-        disabled={props.selectedImage && props.playerName === localStorage.getItem("userName")}
+        disabled={
+          props.selectedImage &&
+          props.playerName === localStorage.getItem("userName")
+        }
       >
         Vote
       </Button>

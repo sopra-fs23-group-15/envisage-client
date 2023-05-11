@@ -45,99 +45,100 @@ const VotePage = () => {
 
   const getNumberRounds = async () => {
     try {
-      const responseLobby = await api.get(`/lobbies/${lobbyId}`)
+      const responseLobby = await api.get(`/lobbies/${lobbyId}`);
       const lobby = new Lobby(responseLobby.data);
       return lobby.numberOfRounds;
     } catch (error) {
       alert(
-          `Something went wrong during fetching the lobby: \n${handleError(error)}`
+        `Something went wrong during fetching the lobby: \n${handleError(
+          error
+        )}`
       );
-
     }
-  }
+  };
 
-    const handleVoteClick = async (playerName, imageId) => {
-      if (selectedImage) {
-        // Send a request to the server to record the vote
-        console.log(`Voted for image: ${selectedImage}`);
-        try {
-          const player = playerName;
-          const score = 1;
-          const lobbyId = localStorage.getItem("lobbyId");
-          const requestBody = JSON.stringify({player, score});
-          console.log(requestBody);
-          const response = await api.put(
-              `/lobbies/${lobbyId}/games/votes/${imageId}`,
-              requestBody
-          );
-          console.log(response);
-          // Update successfully worked --> navigate to the lobby
-          if (roundId < await getNumberRounds()) {
-            navigate(`/lobbies/${lobbyId}/scoreBoard`, {
-              state: {currentRound: roundId},
-            });
-          } else {
-            navigate(`/lobbies/${lobbyId}/finalResult`);
-          }
-        } catch (error) {
-          alert(
-              `Something went wrong during the update: \n${handleError(error)}`
-          );
+  const handleVoteClick = async (playerName, imageId) => {
+    if (selectedImage) {
+      // Send a request to the server to record the vote
+      console.log(`Voted for image: ${selectedImage}`);
+      try {
+        const player = playerName;
+        const score = 1;
+        const lobbyId = localStorage.getItem("lobbyId");
+        const requestBody = JSON.stringify({ player, score });
+        console.log(requestBody);
+        const response = await api.put(
+          `/lobbies/${lobbyId}/games/votes/${imageId}`,
+          requestBody
+        );
+        console.log(response);
+        // Update successfully worked --> navigate to the lobby
+        if (roundId < (await getNumberRounds())) {
+          navigate(`/lobbies/${lobbyId}/scoreBoard`, {
+            state: { currentRound: roundId },
+          });
+        } else {
+          navigate(`/lobbies/${lobbyId}/finalResult`);
         }
-      }
-    };
-
-    let imagesList = (
-        <>
-          <Spinner backgroundImage={localStorage.getItem("challengeImage")}/>
-        </>
-    );
-
-    if (imgs) {
-      if (imgs.length === parseInt(localStorage.getItem("#players"))) {
-        imagesList = (
-            <div className="vote">
-              <div
-                  className="vote container"
-                  style={{
-                    backgroundImage:
-                        "url(" + localStorage.getItem("challengeImage") + ")",
-                  }}
-              ></div>
-              <h1 className="vote manifesto">Vote for your favorite image!</h1>
-              <div className="vote image-container">
-                {imgs.map((image) => (
-                    <div>
-                      <ImageComponent
-                          url={true}
-                          image={image.image}
-                          onClick={() => {
-                            renderTrue(image.image, image.id);
-                            console.log("clicked on image " + image.id);
-                            console.log(image.player);
-                          }}
-                          selected={selectedImage === image.image}
-                      />
-                      {renderBox && selectedIndex === image.id && (
-                          <VoteBox
-                              renderFalse={renderFalse}
-                              handleVoteClick={handleVoteClick}
-                              handleImageClick={handleImageClick}
-                              selectedImage={selectedImage}
-                              playerName={image.player}
-                              imageId={image.id}
-                              keywords={image.keywords}
-                          />
-                      )}
-                    </div>
-                ))}
-              </div>
-            </div>
+      } catch (error) {
+        alert(
+          `Something went wrong during the update: \n${handleError(error)}`
         );
       }
     }
-
-    return <>{imagesList}</>;
   };
+
+  let imagesList = (
+    <>
+      <Spinner backgroundImage={localStorage.getItem("challengeImage")} />
+    </>
+  );
+
+  if (imgs) {
+    if (imgs.length === parseInt(localStorage.getItem("#players"))) {
+      imagesList = (
+        <div className="vote">
+          <div
+            className="vote container"
+            style={{
+              backgroundImage:
+                "url(" + localStorage.getItem("challengeImage") + ")",
+            }}
+          ></div>
+          <h1 className="vote manifesto">Vote for your favorite image!</h1>
+          <div className="vote image-container">
+            {imgs.map((image) => (
+              <div>
+                <ImageComponent
+                  url={true}
+                  image={image.image}
+                  onClick={() => {
+                    renderTrue(image.image, image.id);
+                    console.log("clicked on image " + image.id);
+                    console.log(image.player);
+                  }}
+                  selected={selectedImage === image.image}
+                />
+                {renderBox && selectedIndex === image.id && (
+                  <VoteBox
+                    renderFalse={renderFalse}
+                    handleVoteClick={handleVoteClick}
+                    handleImageClick={handleImageClick}
+                    selectedImage={selectedImage}
+                    playerName={image.player}
+                    imageId={image.id}
+                    keywords={image.keywords}
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+  }
+
+  return <>{imagesList}</>;
+};
 
 export default VotePage;

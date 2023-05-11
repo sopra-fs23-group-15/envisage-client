@@ -26,7 +26,7 @@ const NumberInput = (props) => {
     if (inputValue === "" || regex.test(inputValue)) {
       setInputValue(inputValue);
       props.onChange(inputValue);
-    } 
+    }
     // else if (inputValue.length === 1) {
     //   setInputValue("");
     //   alert("Please enter only numbers");
@@ -43,10 +43,10 @@ const NumberInput = (props) => {
   return (
     <div className="login field">
       <label className="login label">{props.label}</label>
-      <input 
-        type="text" 
-        value={inputValue} 
-        onChange={handleInputChange} 
+      <input
+        type="text"
+        value={inputValue}
+        onChange={handleInputChange}
         className="login input"
         placeholder={props.placeholder}
       />
@@ -92,8 +92,7 @@ const LandingPage = () => {
   });
   const setLobbyPin = (pin) => {
     setLobbyId(pin);
-    // console.log(pin);
-  }
+  };
   const addUser = async () => {
     try {
       const requestBody = JSON.stringify({ userName });

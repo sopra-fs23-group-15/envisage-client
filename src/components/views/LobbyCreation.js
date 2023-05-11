@@ -78,8 +78,8 @@ const LobbyCreation = () => {
 
   const configureLobby = () => {
     localStorage.setItem("userName", userName);
-    navigate("/lobbyConfiguration")
-  }
+    navigate("/lobbyConfiguration");
+  };
 
   return (
     <BaseContainer>
