@@ -13,6 +13,7 @@ import {
   subscribe,
 } from "helpers/stomp";
 import Challenge from "models/Challenge";
+import { Notification } from "components/ui/Notification";
 import "styles/views/Player.scss";
 
 const Lobbies = () => {
@@ -34,12 +35,11 @@ const Lobbies = () => {
       subscribe(`/topic/lobbies/${lobbyId}`, (data) => {
         let subscribedPlayers = data["players"];
         setPlayers(subscribedPlayers);
-        setCurator(subscribedPlayers[0].userName)
+        setCurator(subscribedPlayers[0].userName);
         localStorage.setItem("curator", subscribedPlayers[0].userName);
         localStorage.setItem("roundDuration", data["roundDuration"]);
         localStorage.setItem("#players", subscribedPlayers.length);
         console.log(subscribedPlayers);
-
       });
       notifyLobbyJoin(lobbyId);
       subscribeChallenge();
@@ -63,7 +63,6 @@ const Lobbies = () => {
         navigate(`/lobbies/${lobbyId}/games/${challenge.roundNr}`);
       });
     }
-
   }, [lobbyId, navigate]);
 
   const startGame = async () => {
@@ -82,14 +81,13 @@ const Lobbies = () => {
   };
 
   let playersList = <LobbyContainer />;
-  let notification = <div/>
 
   if (players) {
     const fillPlayers = () => {
       const rows = [];
       for (let i = 0; i < 5 - players.length; i++) {
         rows.push(
-          <div className="player row">
+          <div className="player row" key={i}>
             <div></div>
             <div></div>
           </div>
@@ -98,21 +96,14 @@ const Lobbies = () => {
       return rows;
     };
 
-    if (players.length > 1 && localStorage.getItem("curator") !== localStorage.getItem("userName")){
-        notification = (<div>Wait for the lobby creator to start the game</div>)
-    }
-    else{
-        notification = (<div>Fill this wall with your masterpieces</div>)
-    }
-
     playersList = (
       <div>
-        <LobbyBanner players={players} curator={curator}/>
+        <LobbyBanner players={players} curator={curator} />
         <div className="player down">
           <div className="player round">Round 0</div>
           <div className="player left">
             {players.map((player) => (
-              <div className="player row">
+              <div className="player row" key={player.id}>
                 <div>{player.userName}</div>
                 <div>0</div>
               </div>
@@ -129,7 +120,7 @@ const Lobbies = () => {
             >
               Start the game
             </Button>
-            {notification}
+            <Notification players={players} />
           </div>
         </div>
       </div>
