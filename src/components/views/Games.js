@@ -98,7 +98,10 @@ const Games = () => {
     <div className="game">
       <img className="game image" src={image} alt="" />
       <div className="game input">
-        <Timer func={() => submitPrompt(keywordsInput)} />
+        <Timer
+            func={() => submitPrompt(keywordsInput)}
+            seconds = {localStorage.getItem("roundDuration") % 60}
+            minutes = {Math.floor(localStorage.getItem("roundDuration") / 60)}/>
         <div className="game input-style">
           {localStorage.getItem("challengeStyle")}
         </div>
