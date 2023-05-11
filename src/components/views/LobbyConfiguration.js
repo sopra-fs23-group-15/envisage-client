@@ -9,7 +9,6 @@ import Player from "models/Player";
 import Lobby from "models/Lobby";
 import Select from "react-select";
 
-
 const options_rounds = [
             { value: '1', label: "1 round" },
             { value: '2', label: "2 rounds" },
@@ -86,18 +85,40 @@ const LobbyConfiguration = () => {
     return (
         <BaseContainer>
             <div className="login container">
-                <div>Hello {userName}</div>
-                <div>On this page you can configure your lobby</div>
-                <div>Set the number of rounds:</div>
-                <div>
-                    <Select className = "login select" options= {options_rounds} onChange={handleChangeRounds}/>
+                <div>Welcome to Envisage</div>
+                <div>Join a game now</div>
+                <div className="login selectiontitle">Please set the number of rounds</div>
+                <div className="login selectionbar">
+                    <Select className = "login react-select-container"
+                    options= {options_rounds}
+                    onChange={handleChangeRounds}
+                    theme={(theme) => ({
+                       ...theme,
+                       borderRadius: 0,
+                       colors: {
+                         ...theme.colors,
+                         primary25: 'gainsboro',
+                         primary: 'rebeccaPurple',
+                       },
+                     })}/>
                 </div>
-                <div>Set the time for one round:</div>
-                <div>
-                    <Select className = "login select" options= {options_time} onChange={handleChangeTime}/>
+                <div className="login selectiontitle">Please set the timer for each round</div>
+                <div className="login selectionbar">
+                    <Select className="login react-select-container"
+                    options= {options_time}
+                    onChange={handleChangeTime}
+                    theme={(theme) => ({
+                       ...theme,
+                       borderRadius: 0,
+                       colors: {
+                         ...theme.colors,
+                         primary25: 'gainsboro',
+                         primary: 'rebeccaPurple',
+                       },
+                     })}/>
                 </div>
                 <Button disabled={!rounds} onClick={() => createLobby()}>
-                    Create the lobby
+                    Save and start a game
                 </Button>
             </div>
             <Slider />
