@@ -24,14 +24,26 @@ const options_time = [
   { value: "90", label: "1.5 minutes" },
 ];
 
+const options_category = [
+    { value: "random", label: "random" },
+    { value: "abstract art", label: "abstract art" },
+    { value: "landscape", label: "landscape" },
+    { value: "portrait", label: "portrait" },
+    { value: "postcard", label: "postcard" },
+    { value: "still life", label: "still life" },
+];
+
 const LobbyConfiguration = () => {
   const userName = localStorage.getItem("userName");
   const [rounds, setRounds] = useState("");
   const [time, setTime] = useState("");
   const navigate = useNavigate();
+  const [category, setCategory] = useState("random")
 
   const createLobby = () => {
-    try {
+      localStorage.setItem("category", category)
+
+      try {
       const roundDurationInSeconds = time;
       const noOfRounds = rounds;
       const requestBody = JSON.stringify({
@@ -81,12 +93,16 @@ const LobbyConfiguration = () => {
     setTime(selectedOption["value"]);
   };
 
+    const handleChangeCategory = (selectedOption) => {
+        setCategory(selectedOption["value"]);
+    };
 
     return (
         <BaseContainer>
             <div className="login container">
                 <div>Welcome to Envisage</div>
                 <div>Join a game now</div>
+                <div></div>
                 <div className="login selectiontitle">Please set the number of rounds</div>
                 <div className="login selectionbar">
                     <Select className = "login react-select-container"
@@ -116,6 +132,21 @@ const LobbyConfiguration = () => {
                          primary: 'rebeccaPurple',
                        },
                      })}/>
+                </div>
+                <div className="login selectiontitle">Please choose a starting category</div>
+                <div className="login selectionbar">
+                    <Select className="login react-select-container"
+                            options= {options_category}
+                            onChange={handleChangeCategory}
+                            theme={(theme) => ({
+                                ...theme,
+                                borderRadius: 0,
+                                colors: {
+                                    ...theme.colors,
+                                    primary25: 'gainsboro',
+                                    primary: 'rebeccaPurple',
+                                },
+                            })}/>
                 </div>
                 <Button disabled={!rounds} onClick={() => createLobby()}>
                     Save and start a game
