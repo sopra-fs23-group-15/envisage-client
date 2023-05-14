@@ -103,6 +103,21 @@ const LobbyConfiguration = () => {
                 <div>Welcome to Envisage</div>
                 <div>Join a game now</div>
                 <div></div>
+                <div className="login selectiontitle">Please choose a starting category</div>
+                <div className="login selectionbar">
+                    <Select className="login react-select-container"
+                            options= {options_category}
+                            onChange={handleChangeCategory}
+                            theme={(theme) => ({
+                                ...theme,
+                                borderRadius: 0,
+                                colors: {
+                                    ...theme.colors,
+                                    primary25: 'gainsboro',
+                                    primary: 'rebeccaPurple',
+                                },
+                            })}/>
+                </div>
                 <div className="login selectiontitle">Please set the number of rounds</div>
                 <div className="login selectionbar">
                     <Select className = "login react-select-container"
@@ -132,21 +147,6 @@ const LobbyConfiguration = () => {
                          primary: 'rebeccaPurple',
                        },
                      })}/>
-                </div>
-                <div className="login selectiontitle">Please choose a starting category</div>
-                <div className="login selectionbar">
-                    <Select className="login react-select-container"
-                            options= {options_category}
-                            onChange={handleChangeCategory}
-                            theme={(theme) => ({
-                                ...theme,
-                                borderRadius: 0,
-                                colors: {
-                                    ...theme.colors,
-                                    primary25: 'gainsboro',
-                                    primary: 'rebeccaPurple',
-                                },
-                            })}/>
                 </div>
                 <Button disabled={!rounds} onClick={() => createLobby()}>
                     Save and start a game
