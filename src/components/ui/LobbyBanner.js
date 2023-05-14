@@ -15,7 +15,7 @@ const LobbyBanner = (props) => {
         You are in the <span>{lobbyId}</span> museum space
       </h3>
       <h3>
-        You exhibition curator is: <span>{props.curator}</span>
+        Your exhibition curator is: <span>{props.curator}</span>
       </h3>
       <h3
         style={
@@ -48,12 +48,12 @@ const LobbyBanner = (props) => {
       <h5>
         2. With <span>a given image and a style requirement</span>, your task is
         to{" "}
-        <span>use keywords to describe the image as creative as possible.</span>
+        <span>use keywords to describe the image as creatively as possible.</span>
       </h5>
       <h5>
         3. The style requirement such as{" "}
         <span style={{ fontStyle: "oblique" }}>"Pablo Picasso"</span> can be
-        directly used as a keyword in your description. Or if you happen to be a
+        directly used as a keyword in your description or if you happen to be a
         story master of art history, feel free to tweak it into something more
         informative and fun!
       </h5>
