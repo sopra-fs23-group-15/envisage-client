@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { api, handleError } from "helpers/api";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "components/ui/Button";
-import { Timer } from "components/ui/Timer";
+// import { Timer } from "components/ui/Timer";
+// import CountdownTimer from "components/ui/Timer2";
 import "styles/views/Game.scss";
 import { connect, isConnected, subscribe } from "../../helpers/stomp";
 
@@ -15,7 +16,7 @@ const Games = () => {
   const [keywordsInput, setKeywordsInput] = useState("");
   const [charCount, setCharCount] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
-
+  const [remainingSeconds, setRemainingSeconds] = useState(60);
   const handleInputChange = (e) => {
     const inputText = e.target.value;
     const inputCharCount = inputText.length;
@@ -29,7 +30,7 @@ const Games = () => {
   const inputStyle = {
     border: charCount > MAX_CHARS ? "2px solid red" : "",
   };
-
+  
   useEffect(() => {
     console.log("Connected Lobbies: " + isConnected());
 
@@ -62,7 +63,16 @@ const Games = () => {
       }
     }
     fetchImage();
-  }, [lobbyId]);
+    if (remainingSeconds <= 0) {
+      submitPrompt(keywordsInput);
+    } else {
+      const timer = setTimeout(() => {
+        setRemainingSeconds((prevSeconds) => prevSeconds - 1);
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [lobbyId, remainingSeconds]);
 
   const submitPrompt = (keywords) => {
     if (isSubmitted === false) {
@@ -98,11 +108,13 @@ const Games = () => {
     <div className="game">
       <img className="game image" src={image} alt="" />
       <div className="game input">
-        <Timer
+        {/* <Timer
           func={() => submitPrompt(keywordsInput)}
           seconds={localStorage.getItem("roundDuration") % 60}
           minutes={Math.floor(localStorage.getItem("roundDuration") / 60)}
-        />
+        /> */}
+        <div className="game timer">{remainingSeconds}</div>
+        {/* <CountdownTimer onComplete={() => submitPrompt(keywordsInput)} seconds={60}/> */}
         <div className="game input-style">
           {localStorage.getItem("challengeStyle")}
         </div>
