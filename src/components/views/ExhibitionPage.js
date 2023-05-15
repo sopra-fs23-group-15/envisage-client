@@ -16,6 +16,9 @@ const ExhibitionPage = () => {
     localStorage.removeItem("lobbyId");
     navigate("landingPage");
   };
+  const visitWinningImages = async() => {
+    navigate(`/lobbies/${lobbyId}/winningimages`);
+  };
   const lobbyId = localStorage.getItem("lobbyId");
   const username = localStorage.getItem("userName");
   console.log(username);
@@ -59,6 +62,7 @@ const ExhibitionPage = () => {
       <h1>Welcome to the exhibition</h1>
       <div className="image-container">{imageList}</div>
       <div className="buttons">
+        <Button onClick={() => visitWinningImages()}>See Winning Images</Button>
         <Button onClick={() => goMain()}>Logout</Button>
         <Button className="button2">Restart</Button>
       </div>

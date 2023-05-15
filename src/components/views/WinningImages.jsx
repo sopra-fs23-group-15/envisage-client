@@ -18,7 +18,7 @@ const WinningImages = () => {
   };
   const lobbyId = localStorage.getItem("lobbyId");
   // const username = localStorage.getItem("userName");
-  console.log(username);
+  // console.log(username);
   useEffect(() => {
     try {
       async function fetch() {
