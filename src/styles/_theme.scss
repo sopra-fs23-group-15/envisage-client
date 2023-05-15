@@ -39,12 +39,17 @@ $breakpoints: (
   }
 }
 @mixin md {
-  @media (min-width: 1280px) {
+  @media (max-aspect-ratio: 1/1) {
     @content;
   }
 }
-@mixin landscape {
+@mixin landingLandscape {
   @media (max-aspect-ratio: 1920/1283) {
+    @content;
+  }
+}
+@mixin lobbyLandscape {
+  @media (max-aspect-ratio: 1920/1080) {
     @content;
   }
 }
