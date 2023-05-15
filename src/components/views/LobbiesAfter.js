@@ -58,7 +58,7 @@ const LobbiesAfter = () => {
   const startGame = async () => {
     try {
       await api.post(`/lobbies/${lobbyId}/games/rounds`);
-      getChallengeForRound(lobbyId, currentRound + 1);
+      getChallengeForRound(lobbyId, currentRound + 1, localStorage.getItem("category"));
     } catch (error) {
       console.error(
         `Something went wrong while initiating the next round: \n${handleError(
