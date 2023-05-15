@@ -26,7 +26,7 @@
         position: absolute;
         margin-top: 1em;
         width: 25%;
-        height: 12.5em;
+        min-height: 12.5em;
         background-color: rgba($primary, 0.45);
         border-radius: 1em;
     }
