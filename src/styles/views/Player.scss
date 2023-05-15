@@ -6,12 +6,12 @@ h3 {
 h3:nth-child(2){
     margin-bottom: 1em;
 }
-span {
-    color: $secondary;
-}
 h5{
     margin: 0;
     margin-bottom: 0.5rem;
+}
+span {
+    color: $secondary;
 }
 
 .player {
@@ -77,6 +77,10 @@ h5{
         flex-direction: column;
         flex-grow: 1;
         width: 10%;
+        & > * {
+            justify-content: center;
+            align-items: center;
+        }
     }
     &.special {
         font-weight: bold;
@@ -86,6 +90,7 @@ h5{
         padding-top: 1em;
         padding-bottom: 1em;
         background-size: cover;
+        background-position: top;
         border-radius: 1em;
         width: 100%;
         aspect-ratio: 7/5;
