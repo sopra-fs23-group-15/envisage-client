@@ -16,7 +16,14 @@ const Games = () => {
   const [keywordsInput, setKeywordsInput] = useState("");
   const [charCount, setCharCount] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [remainingSeconds, setRemainingSeconds] = useState(60);
+
+  const [seconds, setSeconds] = useState(localStorage.getItem("roundDuration") % 60);
+  const [minutes, setMinutes] = useState(Math.floor(localStorage.getItem("roundDuration") / 60));
+  // const [remainingTime, setRemainingTime] = useState({
+  //   minutes: Math.floor(localStorage.getItem("roundDuration") / 60),
+  //   seconds: localStorage.getItem("roundDuration") % 60,
+  // });
+  console.log(minutes, seconds);
   const handleInputChange = (e) => {
     const inputText = e.target.value;
     const inputCharCount = inputText.length;
@@ -63,16 +70,50 @@ const Games = () => {
       }
     }
     fetchImage();
-    if (remainingSeconds <= 0) {
-      submitPrompt(keywordsInput);
-    } else {
-      const timer = setTimeout(() => {
-        setRemainingSeconds((prevSeconds) => prevSeconds - 1);
-      }, 1000);
+    // if (remainingSeconds <= 0) {
+    //   submitPrompt(keywordsInput);
+    // } else {
+    //   const timer = setTimeout(() => {
+    //     setRemainingSeconds((prevSeconds) => prevSeconds - 1);
+    //   }, 1000);
 
-      return () => clearTimeout(timer);
+    //   return () => clearTimeout(timer);
+    // }
+    // if (minutes === 0 && seconds === 0) {
+    //   submitPrompt(keywordsInput);
+    // } else {
+      const timer = setTimeout(() => {
+    //     if (seconds > 0) {
+    //       setSeconds((seconds) => seconds - 1);
+          
+    //       // setRemainingTime((prevTime) => ({
+    //       //   ...prevTime,
+    //       //   seconds: prevTime.seconds - 1,
+    //       // }));
+    //     } else if (minutes > 0) {
+    //       setMinutes((minutes) => minutes - 1);
+    //       setSeconds(59);
+    //       // setRemainingTime((prevTime) => ({
+    //       //   minutes: prevTime.minutes - 1,
+    //       //   seconds: 59,
+    //       // }));
+    //     }
+    //   }, 1000);
+
+    //   return () => clearTimeout(timer);
+    
+      if (seconds > 0) {
+        setSeconds((seconds) => seconds - 1);
+      } else if (minutes > 0) {
+        setMinutes((minutes) => minutes - 1);
+        setSeconds(59);
+      }
+    }, 1000);
+    if (minutes === 0 && seconds === 1) {
+      submitPrompt(keywordsInput);
     }
-  }, [lobbyId, remainingSeconds]);
+    return () => clearTimeout(timer);
+  }, [seconds, minutes]);
 
   const submitPrompt = (keywords) => {
     if (isSubmitted === false) {
@@ -113,7 +154,9 @@ const Games = () => {
           seconds={localStorage.getItem("roundDuration") % 60}
           minutes={Math.floor(localStorage.getItem("roundDuration") / 60)}
         /> */}
-        <div className="game timer">{remainingSeconds}</div>
+        <div className="game timer">
+        0{minutes}:{seconds > 9 ? "" : "0"}{seconds}
+        </div>
         {/* <CountdownTimer onComplete={() => submitPrompt(keywordsInput)} seconds={60}/> */}
         <div className="game input-style">
           {localStorage.getItem("challengeStyle")}
