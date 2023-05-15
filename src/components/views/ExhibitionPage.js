@@ -46,9 +46,13 @@ const ExhibitionPage = () => {
 
   if (imgs) {
     imageList = (
-      <div className="image-container">
+      <div className=" exhibition image-container">
         {imgs.map((image) => (
-          <ImageComponent url={true} image={image.image} />
+          <ImageComponent
+            className="exhibition"
+            url={true}
+            image={image.image}
+          />
         ))}
       </div>
     );
@@ -57,7 +61,7 @@ const ExhibitionPage = () => {
   return (
     <LobbyContainer>
       {imageList}
-      <div className="button-container">
+      <div className="exhibition button-container">
         <>
           <h3>
             Hello <span>{userName}</span>! Welcome to your solo exhibition
