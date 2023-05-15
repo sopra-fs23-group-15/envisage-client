@@ -50,6 +50,7 @@ const LobbyCreation = () => {
         const lobbyId = lobby.pin;
         localStorage.setItem("lobbyId", parseInt(lobbyId));
         console.log("LobbyId in Storage: " + localStorage.getItem("lobbyId"));
+        localStorage.setItem("category", "random")
         await addPlayer(lobbyId);
       });
     } catch (error) {

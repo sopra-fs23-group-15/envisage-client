@@ -68,7 +68,7 @@ const Lobbies = () => {
   const startGame = async () => {
     try {
       await api.post("/lobbies/" + lobbyId + "/games");
-      getChallengeForRound(lobbyId, 1);
+      getChallengeForRound(lobbyId, 1, localStorage.getItem("category"));
     } catch (error) {
       console.error(
         `Something went wrong while starting the game: \n${handleError(error)}`

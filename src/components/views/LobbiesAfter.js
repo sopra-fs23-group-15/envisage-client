@@ -13,8 +13,8 @@ const LobbiesAfter = () => {
   const [winner, setWinner] = useState("");
   const { lobbyId } = useParams();
   const { state } = useLocation();
+  const [currentRound, setCurrentRound] = useState(null);
   const [allvotes, setAllvotes] = useState(false);
-
   useEffect(() => {
     async function fetchScores() {
       try {
@@ -23,6 +23,7 @@ const LobbiesAfter = () => {
           `/lobbies/${lobbyId}/games/${state.currentRound}/winners`
         );
         setPlayerScores(scoresResponse.data.playerScores);
+        setCurrentRound(scoresResponse.data.rounds.length);
         setWinner(winnerResponse.data.image);
         console.log(scoresResponse);
 
@@ -49,7 +50,6 @@ const LobbiesAfter = () => {
         );
       }
     }
-    // fetchScores();
     let interval;
     interval = setInterval(fetchScores, 5000);
     return () => clearInterval(interval);
@@ -58,7 +58,7 @@ const LobbiesAfter = () => {
   const startGame = async () => {
     try {
       await api.post(`/lobbies/${lobbyId}/games/rounds`);
-      getChallengeForRound(lobbyId, state.currentRound + 1);
+      getChallengeForRound(lobbyId, currentRound + 1, localStorage.getItem("category"));
     } catch (error) {
       console.error(
         `Something went wrong while initiating the next round: \n${handleError(
