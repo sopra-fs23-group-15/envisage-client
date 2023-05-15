@@ -32,10 +32,10 @@ const Slider = () => {
       <div className="slider label">
         "Captain America jumps into a big splash of water, David Hockney style"
       </div>
-      <div className="slider left-arrow" onClick={goToLeft}>
+      <div className="slider left-arrow" onClick={() => goToLeft()}>
         ❮
       </div>
-      <div className="slider right-arrow" onClick={goToRight}>
+      <div className="slider right-arrow" onClick={() => goToRight()}>
         ❯
       </div>
       <div
