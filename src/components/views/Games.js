@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { api, handleError } from "helpers/api";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "components/ui/Button";
-import { Timer } from "components/ui/Timer";
 import "styles/views/Game.scss";
 import { connect, isConnected, subscribe } from "../../helpers/stomp";
 
@@ -15,6 +14,10 @@ const Games = () => {
   const [keywordsInput, setKeywordsInput] = useState("");
   const [charCount, setCharCount] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [remainingTime, setRemainingTime] = useState({
+    minutes: Math.floor(localStorage.getItem("roundDuration") / 60),
+    seconds: localStorage.getItem("roundDuration") % 60,
+  });
 
   const handleInputChange = (e) => {
     const inputText = e.target.value;
@@ -29,7 +32,7 @@ const Games = () => {
   const inputStyle = {
     border: charCount > MAX_CHARS ? "2px solid red" : "",
   };
-
+  
   useEffect(() => {
     console.log("Connected Lobbies: " + isConnected());
 
@@ -62,7 +65,24 @@ const Games = () => {
       }
     }
     fetchImage();
-  }, [lobbyId]);
+
+      const timer = setTimeout(() => {
+        if (remainingTime.seconds > 0) {          
+          setRemainingTime((prevTime) => ({
+            ...prevTime,
+            seconds: prevTime.seconds - 1,
+          }));
+        } else if (remainingTime.minutes > 0) {
+          setRemainingTime((prevTime) => ({
+            minutes: prevTime.minutes - 1,
+            seconds: 59,
+          }));
+        }
+      }, 1000);
+
+      return () => clearTimeout(timer);
+
+  }, [remainingTime, lobbyId]);
 
   const submitPrompt = (keywords) => {
     if (isSubmitted === false) {
@@ -98,11 +118,16 @@ const Games = () => {
     <div className="game">
       <img className="game image" src={image} alt="" />
       <div className="game input">
-        <Timer
+        {/* <Timer
           func={() => submitPrompt(keywordsInput)}
           seconds={localStorage.getItem("roundDuration") % 60}
           minutes={Math.floor(localStorage.getItem("roundDuration") / 60)}
-        />
+        /> */}
+        <div className="game timer">
+        {/* 0{minutes}:{seconds > 9 ? "" : "0"}{seconds} */}
+        0{remainingTime.minutes}:{remainingTime.seconds > 9 ? "" : "0"}{remainingTime.seconds}
+        </div>
+        {/* <CountdownTimer onComplete={() => submitPrompt(keywordsInput)} seconds={60}/> */}
         <div className="game input-style">
           {localStorage.getItem("challengeStyle")}
         </div>

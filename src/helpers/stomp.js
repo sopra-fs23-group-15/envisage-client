@@ -66,8 +66,8 @@ export let notifyLobbyJoin = (lobbyId) => {
   stompClient.send("/app/lobbies/" + lobbyId + "/lobbyJoin");
 };
 
-export let getChallengeForRound = (lobbyId, roundId) => {
+export let getChallengeForRound = (lobbyId, roundId, category) => {
   stompClient.send(
-    "/app/lobbies/" + lobbyId + "/challengeForRounds/" + roundId
+    "/app/lobbies/" + lobbyId + "/challengeForRounds/" + roundId, {},category
   );
 };
