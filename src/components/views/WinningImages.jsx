@@ -8,7 +8,7 @@ import ImageComponent from "./Image";
 import "styles/views/Exhibition.scss";
 import { api } from "helpers/api";
 
-const ExhibitionPage = () => {
+const WinningImages = () => {
   const [imgs, setImgs] = useState([]);
 
   const navigate = useNavigate();
@@ -16,17 +16,14 @@ const ExhibitionPage = () => {
     localStorage.removeItem("lobbyId");
     navigate("landingPage");
   };
-  const visitWinningImages = async() => {
-    navigate(`/lobbies/${lobbyId}/winningimages`);
-  };
   const lobbyId = localStorage.getItem("lobbyId");
-  const username = localStorage.getItem("userName");
-  console.log(username);
+  // const username = localStorage.getItem("userName");
+  // console.log(username);
   useEffect(() => {
     try {
       async function fetch() {
         const response = await api.get(
-          `/lobbies/${lobbyId}/games/images/${username}`
+          `/lobbies/${lobbyId}/games/winners`
         );
         console.log(response.data);
         setImgs(response.data);
@@ -40,7 +37,7 @@ const ExhibitionPage = () => {
         </>
       );
     }
-  }, [lobbyId, username]);
+  }, [lobbyId]);
 
   let imageList = (
     <>
@@ -59,10 +56,9 @@ const ExhibitionPage = () => {
 
   return (
     <LobbyContainer>
-      <h1>Welcome to the exhibition</h1>
+      <h1>These were the winning images per round</h1>
       <div className="image-container">{imageList}</div>
       <div className="buttons">
-        <Button onClick={() => visitWinningImages()}>See Winning Images</Button>
         <Button onClick={() => goMain()}>Logout</Button>
         <Button className="button2">Restart</Button>
       </div>
@@ -70,4 +66,4 @@ const ExhibitionPage = () => {
   );
 };
 
-export default ExhibitionPage;
+export default WinningImages;

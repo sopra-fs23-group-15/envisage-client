@@ -50,6 +50,10 @@ const FinalPage = () => {
     navigate(`/lobbies/${lobbyId}/exhibitionPage`);
   };
 
+  const visitWinningImages = async() => {
+    navigate(`/lobbies/${lobbyId}/winningimages`);
+  };
+
   let playersList = (
     <>
       <Spinner
@@ -101,6 +105,7 @@ const FinalPage = () => {
           </div>
           <div className="player right">
             <Button onClick={() => visitNext()}>Visit Exhibition</Button>
+            <Button onClick={() => visitWinningImages()}>See Winning Images</Button>
           </div>
         </div>
       </div>
