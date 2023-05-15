@@ -20,14 +20,14 @@ span {
     border-radius: 0.75rem;
     &.up {
         padding: 1.5em;
-        margin-top: 6%;
-        margin-left: 20%;
+        margin-top: 5%;
+        margin-left: 17.5%;
         width: 50%;
         background-color: rgba($color: #1e1e1e, $alpha: 0.75);
     }
     &.down {
         position: relative;
-        margin-top: 3%;
+        margin-top: 1.5%;
         margin-left: 25%;
         padding: 1.5em;
         display: flex;
@@ -90,10 +90,10 @@ span {
         padding-top: 1em;
         padding-bottom: 1em;
         background-size: cover;
-        background-position: top;
+        background-position: top center;
         border-radius: 1em;
         width: 100%;
-        aspect-ratio: 7/5;
+        aspect-ratio: 16/9;
     }
     &.winner {
         font-size: 2rem;
