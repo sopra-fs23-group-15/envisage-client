@@ -6,7 +6,7 @@ import { Spinner } from "components/ui/Spinner";
 import ImageComponent from "./Image";
 
 import "styles/views/Exhibition.scss";
-import { api, handleError } from "helpers/api";
+import { api } from "helpers/api";
 
 const ExhibitionPage = () => {
   const [imgs, setImgs] = useState([]);
