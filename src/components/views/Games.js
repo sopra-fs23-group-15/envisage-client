@@ -65,7 +65,11 @@ const Games = () => {
       }
     }
     fetchImage();
-
+    
+    if (remainingTime.minutes === 0 && remainingTime.seconds === 0) {
+      submitPrompt(keywordsInput);
+    }
+    else{
       const timer = setTimeout(() => {
         if (remainingTime.seconds > 0) {          
           setRemainingTime((prevTime) => ({
@@ -81,6 +85,7 @@ const Games = () => {
       }, 1000);
 
       return () => clearTimeout(timer);
+    }
 
   }, [remainingTime, lobbyId]);
 
