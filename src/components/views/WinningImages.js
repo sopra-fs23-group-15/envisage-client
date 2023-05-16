@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import LobbyContainer from "components/ui/LobbyContainer";
 import { Button } from "components/ui/Button";
 import React, { useEffect, useState } from "react";
@@ -10,12 +10,17 @@ import { api } from "helpers/api";
 
 const WinningImages = () => {
   const [imgs, setImgs] = useState([]);
+  const { state } = useLocation();
 
   const navigate = useNavigate();
   const goMain = async () => {
     localStorage.removeItem("lobbyId");
     navigate("landingPage");
   };
+  const goToScores = async () => {
+     navigate(`/lobbies/${lobbyId}/finalResult`, {state: { currentRound: state.currentRound },});
+  };
+
   const lobbyId = localStorage.getItem("lobbyId");
   // const username = localStorage.getItem("userName");
   // console.log(username);
@@ -59,8 +64,8 @@ const WinningImages = () => {
       <h1>These were the winning images per round</h1>
       <div className="image-container">{imageList}</div>
       <div className="buttons">
+        <Button onClick={() => goToScores()}>Scoreboard</Button>
         <Button onClick={() => goMain()}>Logout</Button>
-        <Button className="button2">Restart</Button>
       </div>
     </LobbyContainer>
   );
