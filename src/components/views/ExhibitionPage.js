@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import LobbyContainer from "components/ui/LobbyContainer";
 import { Button } from "components/ui/Button";
 import React, { useEffect, useState } from "react";
@@ -6,18 +6,22 @@ import { Spinner } from "components/ui/Spinner";
 import ImageComponent from "./Image";
 
 import "styles/views/Exhibition.scss";
-import { api } from "helpers/api";
+import { api, handleError } from "helpers/api";
 
 const ExhibitionPage = () => {
   const [imgs, setImgs] = useState([]);
   const navigate = useNavigate();
+  const { state } = useLocation();
 
   const goMain = async () => {
     localStorage.removeItem("lobbyId");
     navigate("landingPage");
   };
   const visitWinningImages = async () => {
-    navigate(`/lobbies/${lobbyId}/winningimages`);
+    navigate(`/lobbies/${lobbyId}/winningimages`, {state: { currentRound: state.currentRound },});
+  };
+  const goToScores = async () => {
+    navigate(`/lobbies/${lobbyId}/finalResult`, {state: { currentRound: state.currentRound },});
   };
 
   const lobbyId = localStorage.getItem("lobbyId");
@@ -70,7 +74,9 @@ const ExhibitionPage = () => {
         <Button className="E" onClick={() => visitWinningImages()}>
           See Winning Images
         </Button>
-        <Button className="E">Restart a game</Button>
+        <Button className="E" onClick={() => goToScores()}>
+          Scoreboard
+        </Button>
         <Button className="E" onClick={() => goMain()}>
           Logout
         </Button>
