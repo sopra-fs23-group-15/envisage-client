@@ -1,15 +1,14 @@
-const ImageComponent = ({ url, image, onClick, selected }) => {
+const ImageComponent = (props) => {
   return (
     <div
-      className={`vote image-component ${selected ? "selected" : ""}`}
-      onClick={onClick}
+      className={`${props.className ?? ""} image-component ${props.selected ? "selected" : ""}`}
+      onClick={props.onClick}
     >
-      {url ? (
-        <img src={image} alt="" />
+      {props.url ? (
+        <img src={props.image} alt="" />
       ) : (
-        <img src={`data:image/jpeg;base64,${image}`} alt="" />
+        <img src={`data:image/jpeg;base64,${props.image}`} alt="" />
       )}
-      {/* {url ? <img src={`data:image/jpeg;base64,${image}`} /> : <img src={image} width={300} />} */}
     </div>
   );
 };

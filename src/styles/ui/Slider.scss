@@ -10,7 +10,7 @@
     font-weight: bold;
     text-align: right;
     color: $secondary;
-    @include landscape {
+    @include landingLandscape {
         left: 28.5vh;
         bottom: 15.5vh;
         width: 44.75vh;
@@ -32,7 +32,7 @@
         background-color: $primary;
         z-index: 1;
         opacity: 0.75;
-        @include landscape {
+        @include landingLandscape {
             bottom: 15.35vh;
         }
     }
@@ -45,7 +45,7 @@
         color: $primary;
         z-index: 1;
         cursor: pointer;
-        @include landscape {
+        @include landingLandscape {
             font-size: 5.625vh;
             padding-top: 22.5vh;
         }
@@ -58,7 +58,7 @@
         color: $primary;
         z-index: 1;
         cursor: pointer;
-        @include landscape {
+        @include landingLandscape {
             font-size: 5.625vh;
             padding-top: 22.5vh;
         }

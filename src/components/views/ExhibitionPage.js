@@ -10,48 +10,49 @@ import { api } from "helpers/api";
 
 const ExhibitionPage = () => {
   const [imgs, setImgs] = useState([]);
-
   const navigate = useNavigate();
+
   const goMain = async () => {
     localStorage.removeItem("lobbyId");
     navigate("landingPage");
   };
-  const visitWinningImages = async() => {
+  const visitWinningImages = async () => {
     navigate(`/lobbies/${lobbyId}/winningimages`);
   };
+
   const lobbyId = localStorage.getItem("lobbyId");
-  const username = localStorage.getItem("userName");
-  console.log(username);
+  const userName = localStorage.getItem("userName");
+
   useEffect(() => {
     try {
       async function fetch() {
         const response = await api.get(
-          `/lobbies/${lobbyId}/games/images/${username}`
+          `/lobbies/${lobbyId}/games/images/${userName}`
         );
         console.log(response.data);
         setImgs(response.data);
       }
       fetch();
     } catch (error) {
-      return (
-        <>
-          Not implemented yet in the backend.\n
-          {error}
-        </>
-      );
+      return { error };
     }
-  }, [lobbyId, username]);
+  }, [lobbyId, userName]);
 
   let imageList = (
     <>
       <Spinner backgroundImage={localStorage.getItem("challengeImage")} />
     </>
   );
+
   if (imgs) {
     imageList = (
-      <div>
+      <div className=" exhibition image-container">
         {imgs.map((image) => (
-          <ImageComponent url={true} image={image.image} />
+          <ImageComponent
+            className="exhibition"
+            url={true}
+            image={image.image}
+          />
         ))}
       </div>
     );
@@ -59,12 +60,20 @@ const ExhibitionPage = () => {
 
   return (
     <LobbyContainer>
-      <h1>Welcome to the exhibition</h1>
-      <div className="image-container">{imageList}</div>
-      <div className="buttons">
-        <Button onClick={() => visitWinningImages()}>See Winning Images</Button>
-        <Button onClick={() => goMain()}>Logout</Button>
-        <Button className="button2">Restart</Button>
+      {imageList}
+      <div className="exhibition button-container">
+        <>
+          <h3>
+            Hello <span>{userName}</span>! Welcome to your solo exhibition
+          </h3>
+        </>
+        <Button className="E" onClick={() => visitWinningImages()}>
+          See Winning Images
+        </Button>
+        <Button className="E">Restart a game</Button>
+        <Button className="E" onClick={() => goMain()}>
+          Logout
+        </Button>
       </div>
     </LobbyContainer>
   );
