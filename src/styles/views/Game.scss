@@ -4,19 +4,18 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-around;
-    align-content: stretch;
     background-color: mix($primary, white, 30);
     &.image {
+        width: 60vw;
         height: 100vh;
-        object-fit: contain;
-        flex-grow: 1;
+        object-fit: cover;
+        object-position: top center;
     }
     &.input {
         margin-top: 2.5vw;
+        margin-left: 2.5vw;
         flex-direction: column;
-        flex-grow: 1;
+        width: 25vw;
     }
     &.input-style {
         font-size: 1.5rem;
@@ -26,7 +25,7 @@
         text-align: center;
         justify-content: center;
         margin-top: 2em;
-        margin-bottom: 8em;
+        margin-bottom: 5em;
         padding: 0.75em;
         background-color: mix($primary, white, 85);
         border-radius: 1em;
@@ -42,9 +41,6 @@
         box-shadow: $innerShadow;
         padding: 0.5em;
         background: white;
-        width: 80%;
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
     }
     &.timer {
         font-size: 3rem;
@@ -55,7 +51,6 @@
 
 .G {
     margin-top: 1em;
-    margin-right: 10%;
+    margin-left: 70%;
     width: 30%;
-    align-self: flex-end;
 } 
