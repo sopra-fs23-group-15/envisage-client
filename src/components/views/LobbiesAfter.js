@@ -1,21 +1,58 @@
 import React, { useEffect, useState } from "react";
 import { api, handleError } from "helpers/api";
 import { Button } from "components/ui/Button";
-import { useLocation, useParams } from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import LobbyContainer from "components/ui/LobbyContainer";
 import LobbyBanner from "components/ui/LobbyBanner";
-import { getChallengeForRound } from "helpers/stomp";
+import {connect, getChallengeForRound, isConnected, subscribe} from "helpers/stomp";
 import { Spinner } from "components/ui/Spinner";
 import "styles/views/Player.scss";
+import Challenge from "../../models/Challenge";
 
 const LobbiesAfter = () => {
+  const navigate = useNavigate();
   const [playerScores, setPlayerScores] = useState(null);
   const [winner, setWinner] = useState("");
   const { lobbyId } = useParams();
   const { state } = useLocation();
   const [currentRound, setCurrentRound] = useState(null);
   const [allvotes, setAllvotes] = useState(false);
+
   useEffect(() => {
+    if (!isConnected()){
+      connect(subscribeLobby)
+    }
+
+    function subscribeLobby() {
+      subscribe(`/topic/lobbies/${lobbyId}`, (data) => {
+        let subscribedPlayers = data["players"];
+        localStorage.setItem("curator", subscribedPlayers[0].userName);
+        localStorage.setItem("roundDuration", data["roundDuration"]);
+        localStorage.setItem("#players", subscribedPlayers.length);
+        console.log(subscribedPlayers);
+      });
+      subscribeChallenge();
+    }
+
+    function subscribeChallenge() {
+      subscribe(`/topic/lobbies/${lobbyId}/challenges`, (data) => {
+        console.log(data);
+        const challenge = new Challenge();
+        challenge.durationInSeconds = data["durationInSeconds"];
+        challenge.styleRequirement = data["styleRequirement"];
+        challenge.imagePrompt = data["imagePrompt"];
+        challenge.roundNr = data["roundNr"];
+        localStorage.setItem("challengeImage", challenge.imagePrompt.image);
+        console.log(localStorage.getItem("challengeImage"));
+        localStorage.setItem(
+            "challengeStyle",
+            challenge.styleRequirement.style
+        );
+        localStorage.setItem("challengeDuration", challenge.durationInSeconds);
+        navigate(`/lobbies/${lobbyId}/games/${challenge.roundNr}`);
+      });
+    }
+
     async function fetchScores() {
       try {
         const scoresResponse = await api.get(`/lobbies/${lobbyId}/games`);
@@ -84,7 +121,7 @@ const LobbiesAfter = () => {
   if (playerScores) {
     playerScores.sort((a, b) => b.score - a.score);
 
-    const fillPlayes = () => {
+    const fillPlayers = () => {
       const rows = [];
       for (let i = 0; i < 5 - playerScores.length; i++) {
         rows.push(
@@ -112,13 +149,13 @@ const LobbiesAfter = () => {
                 <div>{playerScore.score}</div>
               </div>
             ))}
-            {fillPlayes()}
+            {fillPlayers()}
           </div>
           <div className="player right">
             <Button
               disabled={
-                localStorage.getItem("userName") !==
-                localStorage.getItem("curator")
+                  localStorage.getItem("userName") !==
+                localStorage.getItem("curator") || !allvotes
               }
               onClick={() => startGame()}
             >
