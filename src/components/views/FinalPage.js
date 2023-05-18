@@ -5,7 +5,8 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import LobbyContainer from "components/ui/LobbyContainer";
 import { Spinner } from "components/ui/Spinner";
 import "styles/views/Player.scss";
-import {getChallengeForRound} from "helpers/stomp";
+import {connect, getChallengeForRound, isConnected, subscribe} from "helpers/stomp";
+import Challenge from "../../models/Challenge";
 
 const FinalPage = () => {
   const [playerScores, setPlayerScores] = useState(null);
@@ -16,6 +17,40 @@ const FinalPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+      if (!isConnected()){
+          connect(subscribeLobby)
+      }
+
+      function subscribeLobby() {
+          subscribe(`/topic/lobbies/${lobbyId}`, (data) => {
+              let subscribedPlayers = data["players"];
+              localStorage.setItem("curator", subscribedPlayers[0].userName);
+              localStorage.setItem("roundDuration", data["roundDuration"]);
+              localStorage.setItem("#players", subscribedPlayers.length);
+              console.log(subscribedPlayers);
+          });
+          subscribeChallenge();
+      }
+
+      function subscribeChallenge() {
+          subscribe(`/topic/lobbies/${lobbyId}/challenges`, (data) => {
+              console.log(data);
+              const challenge = new Challenge();
+              challenge.durationInSeconds = data["durationInSeconds"];
+              challenge.styleRequirement = data["styleRequirement"];
+              challenge.imagePrompt = data["imagePrompt"];
+              challenge.roundNr = data["roundNr"];
+              localStorage.setItem("challengeImage", challenge.imagePrompt.image);
+              console.log(localStorage.getItem("challengeImage"));
+              localStorage.setItem(
+                  "challengeStyle",
+                  challenge.styleRequirement.style
+              );
+              localStorage.setItem("challengeDuration", challenge.durationInSeconds);
+              navigate(`/lobbies/${lobbyId}/games/${challenge.roundNr}`);
+          });
+      }
+
     async function fetchScores() {
       try {
         const response = await api.get("/lobbies/" + lobbyId + "/games");

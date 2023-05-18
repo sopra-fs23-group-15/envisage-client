@@ -3,7 +3,6 @@ import { api, handleError } from "helpers/api";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "components/ui/Button";
 import "styles/views/Game.scss";
-import { connect, isConnected, subscribe } from "../../helpers/stomp";
 
 const MAX_CHARS = 400;
 
@@ -32,19 +31,9 @@ const Games = () => {
   const inputStyle = {
     border: charCount > MAX_CHARS ? "2px solid red" : "",
   };
-  
+
   useEffect(() => {
-    console.log("Connected Lobbies: " + isConnected());
 
-    if (!isConnected()) {
-      connect(subscribeEssential);
-    }
-
-    function subscribeEssential() {
-      subscribe(`/topic/lobbies/${lobbyId}`, () => {
-        console.log("Subscribed to lobby");
-      });
-    }
     async function fetchImage() {
       try {
         const challengeImage = localStorage.getItem("challengeImage");
@@ -118,6 +107,7 @@ const Games = () => {
       }
     }
   };
+
 
   return (
     <div className="game">
