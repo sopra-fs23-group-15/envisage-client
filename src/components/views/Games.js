@@ -21,6 +21,15 @@ const Games = () => {
   const handleInputChange = (e) => {
     const inputText = e.target.value;
     const inputCharCount = inputText.length;
+
+    const regex = /^[a-zA-Z0-9 .,]*\s*$/;
+
+    if (!regex.test(inputText)) {
+      alert("Please enter only characters from a-z and numbers")
+      return
+    }
+
+
     if (inputCharCount > MAX_CHARS) {
       return;
     }
