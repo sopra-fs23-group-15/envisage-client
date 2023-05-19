@@ -8,12 +8,7 @@
   background-image: url(../../img/lobbySm.png);
   background-position: top left;
   background-size: cover;
-  @include sm {
+  @include phone {
     background-image: url(../../img/lobbyLg.png);
-    // background-size: 1280px;
-  }
-  @include md {
-    background-image: url(../../img/lobbyLg.png);
-    // background-size: 100vw;
   }
 }
