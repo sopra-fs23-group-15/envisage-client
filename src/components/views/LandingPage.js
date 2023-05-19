@@ -10,35 +10,18 @@ import "styles/views/Login.scss";
 
 const NumberInput = (props) => {
   const [inputValue, setInputValue] = useState("");
-  // const [showAlert, setShowAlert] = useState(false);
 
   const handleInputChange = (event) => {
-    // const regex = /^[0-9]*$/; // regex to allow only numbers
     const regex = /^[0-9]*\s*$/;
     const inputValue = event.target.value;
-    // if (regex.test(input)) {
-    //   setInputValue(input);
-    //   setShowAlert(false);
-    // } else {
-    //   setShowAlert(true);
-    // }
 
     if (inputValue === "" || regex.test(inputValue)) {
       setInputValue(inputValue);
       props.onChange(inputValue);
-    }
-    // else if (inputValue.length === 1) {
-    //   setInputValue("");
-    //   alert("Please enter only numbers");
-    else {
-      // setInputValue(inputValue);
+    } else {
       alert("Please enter only numbers");
     }
   };
-
-  // const handleCloseAlert = () => {
-  //   setShowAlert(false);
-  // };
 
   return (
     <div className="login field">
@@ -50,11 +33,6 @@ const NumberInput = (props) => {
         className="login input"
         placeholder={props.placeholder}
       />
-      {/* {showAlert && (
-        alert("Please enter only numbers"
-          // <button onClick={handleCloseAlert}>X</button>
-        )
-      )} */}
     </div>
   );
 };

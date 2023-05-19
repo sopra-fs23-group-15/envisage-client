@@ -76,7 +76,6 @@ const FinalPage = () => {
         );
       }
     }
-    // fetchScores();
     let interval;
     interval = setInterval(fetchScores, 5000);
     return () => clearInterval(interval);
