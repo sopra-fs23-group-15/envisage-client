@@ -11,9 +11,6 @@ const TextArea = (props) => {
     props.func(e.target.value);
     const inputText = e.target.value;
     const inputCharCount = inputText.length;
-    // if (inputCharCount > MAX_CHARS) { //works by not allowing user to write more than 50 at all
-    //   return;
-    // }
     setText(inputText);
     setCharCount(inputCharCount);
     setIsOverLimit(charCount > MAX_CHARS);
@@ -23,14 +20,6 @@ const TextArea = (props) => {
     border: isOverLimit ? "2px solid red" : "",
     color: isOverLimit ? "red" : "black",
   };
-
-  /**const handleSubmit = (e) => {
-    e.preventDefault();
-    if (charCount > MAX_CHARS) {
-      return;
-    }
-    // code for submitting form goes here
-  };**/
 
   return (
     <>
@@ -45,10 +34,6 @@ const TextArea = (props) => {
         placeholder="tweak your keywords to make it more fun! (max 400 characters)"
       />
     </>
-    //   <p>
-    //     Character Count: {charCount}/{MAX_CHARS}
-    //   </p>
-    //   <button type="submit">Submit</button>
   );
 };
 

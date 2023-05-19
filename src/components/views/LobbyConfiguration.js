@@ -7,45 +7,27 @@ import { api, handleError } from "helpers/api";
 import { useNavigate } from "react-router-dom";
 import Player from "models/Player";
 import Lobby from "models/Lobby";
-import Select from "react-select";
 
-const options_rounds = [
-  { value: "1", label: "1 round" },
-  { value: "2", label: "2 rounds" },
-  { value: "3", label: "3 rounds" },
-  { value: "4", label: "4 rounds" },
-];
+const options_rounds = ["1 round", "2 rounds", "3 rounds",  "4 rounds", "5 rounds"];
 
-const options_time = [
-  { value: "10", label: "10 seconds" },
-  { value: "20", label: "20 seconds" },
-  { value: "30", label: "30 seconds" },
-  { value: "60", label: "1 minute" },
-  { value: "90", label: "1.5 minutes" },
-];
+const min_time = 10, max_time = 90, interval = 10;
 
-const options_category = [
-    { value: "random", label: "random" },
-    { value: "abstract art", label: "abstract art" },
-    { value: "landscape", label: "landscape" },
-    { value: "portrait", label: "portrait" },
-    { value: "postcard", label: "postcard" },
-    { value: "still life", label: "still life" },
-];
+const options_category = ["random", "abstract art", "landscape", "portrait", "postcard", "still life"];
 
 const LobbyConfiguration = () => {
   const userName = localStorage.getItem("userName");
-  const [rounds, setRounds] = useState("");
-  const [time, setTime] = useState("");
+  const rounds = useState("");
+  const [currentTimer, setCurrentTimer] = useState(min_time);
   const navigate = useNavigate();
-  const [category, setCategory] = useState("random")
+  const [currentCategory, setCurrentCategory] = useState(2)
+    const [currentRounds, setCurrentRounds] = useState(2);
 
   const createLobby = () => {
-      localStorage.setItem("category", category)
+      localStorage.setItem("category", options_category[currentCategory]);
 
       try {
-      const roundDurationInSeconds = time;
-      const noOfRounds = rounds;
+      const roundDurationInSeconds = currentTimer;
+      const noOfRounds = currentRounds;
       const requestBody = JSON.stringify({
         roundDurationInSeconds,
         noOfRounds,
@@ -85,17 +67,53 @@ const LobbyConfiguration = () => {
     }
   };
 
-  const handleChangeRounds = (selectedOption) => {
-    setRounds(selectedOption["value"]);
-  };
+  const decreaseRounds = () => {
+      if(currentRounds===0){
+          setCurrentRounds(options_rounds.length-1);
+      } else{
+          setCurrentRounds(currentRounds-1);
+      }
+  }
 
-  const handleChangeTime = (selectedOption) => {
-    setTime(selectedOption["value"]);
-  };
+  const increaseRounds = () => {
+      if(currentRounds===options_rounds.length-1){
+          setCurrentRounds(0);
+      } else{
+          setCurrentRounds(currentRounds+1);
+      }
+  }
 
-    const handleChangeCategory = (selectedOption) => {
-        setCategory(selectedOption["value"]);
-    };
+    const decreaseCategory = () => {
+        if(currentCategory===0){
+            setCurrentCategory(options_category.length-1);
+        } else{
+            setCurrentCategory(currentCategory-1);
+        }
+    }
+
+    const increaseCategory = () => {
+        if(currentCategory===options_category.length-1){
+            setCurrentCategory(0);
+        } else{
+            setCurrentCategory(currentCategory+1);
+        }
+    }
+
+    const decreaseTimer = () => {
+        if(currentTimer===min_time){
+            setCurrentTimer(max_time);
+        } else{
+            setCurrentCategory(currentTimer-interval);
+        }
+    }
+
+    const increaseTimer = () => {
+        if(currentTimer===max_time){
+            setCurrentTimer(min_time);
+        } else{
+            setCurrentTimer(currentTimer+interval);
+        }
+    }
 
     return (
         <BaseContainer>
@@ -103,50 +121,23 @@ const LobbyConfiguration = () => {
                 <div>Welcome to Envisage</div>
                 <div>Join a game now</div>
                 <div></div>
-                <div className="login selectiontitle">Please choose a starting category</div>
-                <div className="login selectionbar">
-                    <Select className="login react-select-container"
-                            options= {options_category}
-                            onChange={handleChangeCategory}
-                            theme={(theme) => ({
-                                ...theme,
-                                borderRadius: 0,
-                                colors: {
-                                    ...theme.colors,
-                                    primary25: 'gainsboro',
-                                    primary: 'rebeccaPurple',
-                                },
-                            })}/>
+                <div className="login selectiontitle"> Please choose a starting category </div>
+                <div className="login selector">
+                    <Button onClick={() => decreaseCategory()}> previous </Button>
+                    <div> {options_category[currentCategory]} </div>
+                    <Button onClick={() => increaseCategory()}> next </Button>
                 </div>
-                <div className="login selectiontitle">Please set the number of rounds</div>
-                <div className="login selectionbar">
-                    <Select className = "login react-select-container"
-                    options= {options_rounds}
-                    onChange={handleChangeRounds}
-                    theme={(theme) => ({
-                       ...theme,
-                       borderRadius: 0,
-                       colors: {
-                         ...theme.colors,
-                         primary25: 'gainsboro',
-                         primary: 'rebeccaPurple',
-                       },
-                     })}/>
+                <div className="login selectiontitle"> Please set the number of rounds </div>
+                <div className="login selector">
+                    <Button onClick={() => decreaseRounds()}>-</Button>
+                    <div> {options_rounds[currentRounds]} </div>
+                    <Button onClick={() => increaseRounds()}>+</Button>
                 </div>
-                <div className="login selectiontitle">Please set the timer for each round</div>
-                <div className="login selectionbar">
-                    <Select className="login react-select-container"
-                    options= {options_time}
-                    onChange={handleChangeTime}
-                    theme={(theme) => ({
-                       ...theme,
-                       borderRadius: 0,
-                       colors: {
-                         ...theme.colors,
-                         primary25: 'gainsboro',
-                         primary: 'rebeccaPurple',
-                       },
-                     })}/>
+                <div className="login selectiontitle"> Please set the timer for each round </div>
+                <div className="login selector">
+                    <Button onClick={() => decreaseTimer()}>-</Button>
+                    <div> {currentTimer + " seconds"} </div>
+                    <Button onClick={() => increaseTimer()}>+</Button>
                 </div>
                 <Button disabled={!rounds} onClick={() => createLobby()}>
                     Save and start a game

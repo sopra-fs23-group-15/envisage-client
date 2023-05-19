@@ -11,8 +11,8 @@ import { api } from "helpers/api";
 const WinningImages = () => {
   const [imgs, setImgs] = useState([]);
   const { state } = useLocation();
-
   const navigate = useNavigate();
+
   const goMain = async () => {
     localStorage.removeItem("lobbyId");
     navigate("landingPage");
@@ -21,9 +21,13 @@ const WinningImages = () => {
      navigate(`/lobbies/${lobbyId}/finalResult`, {state: { currentRound: state.currentRound },});
   };
 
+  const goToExhibition = async () => {
+    navigate(`/lobbies/${lobbyId}/exhibitionPage`, {state: { currentRound: state.currentRound },});
+  }
+
   const lobbyId = localStorage.getItem("lobbyId");
-  // const username = localStorage.getItem("userName");
-  // console.log(username);
+  const userName = localStorage.getItem("userName");
+
   useEffect(() => {
     try {
       async function fetch() {
@@ -51,9 +55,9 @@ const WinningImages = () => {
   );
   if (imgs) {
     imageList = (
-      <div>
+      <div className= " exhibition image-container">
         {imgs.map((image) => (
-          <ImageComponent url={true} image={image.image} />
+          <ImageComponent className = "exhibition" url={true} image={image.image} />
         ))}
       </div>
     );
@@ -61,11 +65,16 @@ const WinningImages = () => {
 
   return (
     <LobbyContainer>
-      <h1>These were the winning images per round</h1>
-      <div className="image-container">{imageList}</div>
-      <div className="buttons">
-        <Button onClick={() => goToScores()}>Scoreboard</Button>
-        <Button onClick={() => goMain()}>Logout</Button>
+      {imageList}
+      <div className="exhibition button-container">
+        <>
+          <h3>
+            Hello <span>{userName}</span>! Visit the winning images
+          </h3>
+        </>
+        <Button className = "E" onClick={() => goToExhibition()}>Visit Exhibition</Button>
+        <Button className = "E" onClick={() => goToScores()}>Scoreboard</Button>
+        <Button className = "E" onClick={() => goMain()}>Logout</Button>
       </div>
     </LobbyContainer>
   );

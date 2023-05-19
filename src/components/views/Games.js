@@ -3,7 +3,6 @@ import { api, handleError } from "helpers/api";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "components/ui/Button";
 import "styles/views/Game.scss";
-import { connect, isConnected, subscribe } from "../../helpers/stomp";
 
 const MAX_CHARS = 400;
 
@@ -32,19 +31,9 @@ const Games = () => {
   const inputStyle = {
     border: charCount > MAX_CHARS ? "2px solid red" : "",
   };
-  
+
   useEffect(() => {
-    console.log("Connected Lobbies: " + isConnected());
 
-    if (!isConnected()) {
-      connect(subscribeEssential);
-    }
-
-    function subscribeEssential() {
-      subscribe(`/topic/lobbies/${lobbyId}`, () => {
-        console.log("Subscribed to lobby");
-      });
-    }
     async function fetchImage() {
       try {
         const challengeImage = localStorage.getItem("challengeImage");
@@ -119,20 +108,14 @@ const Games = () => {
     }
   };
 
+
   return (
     <div className="game">
       <img className="game image" src={image} alt="" />
       <div className="game input">
-        {/* <Timer
-          func={() => submitPrompt(keywordsInput)}
-          seconds={localStorage.getItem("roundDuration") % 60}
-          minutes={Math.floor(localStorage.getItem("roundDuration") / 60)}
-        /> */}
         <div className="game timer">
-        {/* 0{minutes}:{seconds > 9 ? "" : "0"}{seconds} */}
         0{remainingTime.minutes}:{remainingTime.seconds > 9 ? "" : "0"}{remainingTime.seconds}
         </div>
-        {/* <CountdownTimer onComplete={() => submitPrompt(keywordsInput)} seconds={60}/> */}
         <div className="game input-style">
           {localStorage.getItem("challengeStyle")}
         </div>
