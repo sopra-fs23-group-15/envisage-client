@@ -7,19 +7,20 @@ import { Button } from "components/ui/Button";
 import Slider from "components/ui/Slider";
 import { disconnect, isConnected } from "helpers/stomp";
 import "styles/views/Login.scss";
+import Alert from '@mui/material/Alert';
 
 const NumberInput = (props) => {
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (event) => {
-    const regex = /^[0-9]*\s*$/;
+    const regex = /^\d*\s*$/;
     const inputValue = event.target.value;
 
     if (inputValue === "" || regex.test(inputValue)) {
       setInputValue(inputValue);
       props.onChange(inputValue);
     } else {
-      alert("Please enter only numbers");
+        return (<Alert>Please enter only numbers.</Alert>);
     }
   };
 
@@ -82,9 +83,7 @@ const LandingPage = () => {
       localStorage.setItem("lobbyId", parseInt(lobbyId));
       navigate(`/lobbies/${lobbyId}`);
     } catch (error) {
-      alert(
-        `Something went wrong when joining the lobby: \n${handleError(error)}`
-      );
+        return (<Alert>Something went wrong when joining the lobby: \n${handleError(error)}</Alert>);
     }
   };
 

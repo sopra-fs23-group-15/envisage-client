@@ -14,6 +14,7 @@ import {
 import Challenge from "models/Challenge";
 import { Notification } from "components/ui/Notification";
 import "styles/views/Player.scss";
+import Alert from '@mui/material/Alert';
 
 const Lobbies = () => {
   const navigate = useNavigate();
@@ -69,13 +70,9 @@ const Lobbies = () => {
       await api.post("/lobbies/" + lobbyId + "/games");
       getChallengeForRound(lobbyId, 1, localStorage.getItem("category"));
     } catch (error) {
-      console.error(
-        `Something went wrong while starting the game: \n${handleError(error)}`
-      );
-      console.error("Details:", error);
-      alert(
-        "Something went wrong while starting the game! See the console for details."
-      );
+       console.error(`Something went wrong while starting the game: \n${handleError(error)}`);
+       console.error("Details:", error);
+       return (<Alert>Something went wrong while starting the game! See the console for details.</Alert>);
     }
   };
 

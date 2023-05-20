@@ -7,6 +7,7 @@ import { Spinner } from "components/ui/Spinner";
 import "styles/views/Player.scss";
 import {connect, getChallengeForRound, isConnected, subscribe} from "helpers/stomp";
 import Challenge from "../../models/Challenge";
+import Alert from '@mui/material/Alert';
 
 const FinalPage = () => {
   const [playerScores, setPlayerScores] = useState(null);
@@ -64,16 +65,9 @@ const FinalPage = () => {
           setAllvotes(true);
         }
       } catch (error) {
-        console.error(
-          `something went wrong while fetching the users: \n${handleError(
-            error
-          )}`
-        );
-        console.error("details:", error);
-
-        alert(
-          "something went wrong while fetching the users! see the console for details."
-        );
+          console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
+          console.error("details:", error);
+          return (<Alert>Something went wrong while fetching the users! see the console for details.</Alert>);
       }
     }
     let interval;
@@ -99,13 +93,9 @@ const FinalPage = () => {
               await api.post("/lobbies/" + lobbyId + "/games/restarts");
               getChallengeForRound(lobbyId, 1, localStorage.getItem("category"));
             } catch (error) {
-              console.error(
-                `Something went wrong while starting the game: \n${handleError(error)}`
-              );
-              console.error("Details:", error);
-              alert(
-                "Something went wrong while restarting the game! See the console for details."
-              );
+                console.error(`Something went wrong while starting the game: \n${handleError(error)}`);
+                console.error("Details:", error);
+                return (<Alert>Something went wrong while restarting the game! See the console for details.</Alert>);
             }
       }
 
