@@ -6,7 +6,7 @@ import { Spinner } from "components/ui/Spinner";
 import ImageComponent from "./Image";
 
 import "styles/views/Exhibition.scss";
-import { api } from "helpers/api";
+import {api, handleError} from "helpers/api";
 
 const WinningImages = () => {
   const [imgs, setImgs] = useState([]);
@@ -27,7 +27,7 @@ const WinningImages = () => {
 
   const lobbyId = localStorage.getItem("lobbyId");
   const userName = localStorage.getItem("userName");
-  // console.log(username);
+
   useEffect(() => {
     try {
       async function fetch() {
@@ -39,11 +39,12 @@ const WinningImages = () => {
       }
       fetch();
     } catch (error) {
-      return (
-        <>
-          Not implemented yet in the backend.\n
-          {error}
-        </>
+      console.error(
+          `Something went wrong while starting the game: \n${handleError(error)}`
+      );
+      console.error("Details:", error);
+      alert(
+          "Something went wrong while fetching the winning images! See the console for details."
       );
     }
   }, [lobbyId]);

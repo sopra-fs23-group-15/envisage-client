@@ -22,10 +22,10 @@ const Games = () => {
     const inputText = e.target.value;
     const inputCharCount = inputText.length;
 
-    const regex = /^[a-zA-Z0-9 .,]*\s*$/;
+    const regex = /^[a-zA-Z0-9 .,?!()\n]*\s*$/;
 
     if (!regex.test(inputText)) {
-      alert("Please enter only characters from a-z and numbers")
+      alert("Please don't enter any special characters.")
       return
     }
 
