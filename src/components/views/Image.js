@@ -1,7 +1,9 @@
 const ImageComponent = (props) => {
   return (
     <div
-      className={`${props.className ?? ""} image-component ${props.selected ? "selected" : ""}`}
+      className={`${props.className ?? ""} image-component ${
+        props.selected ? "selected" : ""
+      }`}
       onClick={props.onClick}
     >
       {props.url ? (

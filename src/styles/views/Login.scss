@@ -48,13 +48,18 @@
       text-align: center;
       margin-bottom: 5rem;
   }
+  &.container > :nth-child(10) {
+    margin-top: 1em;
+    width: 90%;
+}
   &.form-container {
     border-radius: 0.75em;
     transition: opacity 0.5s ease, transform 0.5s ease;
   }
   &.input {
     width: 100%;
-    height: 30px;
+    height: 2em;
+    margin-bottom: 0.5em;
     border: none;
     border-radius: $borderRadius;
     background: transparentize(white, 0.15);
@@ -87,15 +92,39 @@
     }
     }
 
-    &.selectionbar{
-        margin-bottom: 10%;
-    }
-
     &.selectiontitle{
-        font-size: 13px;
+      width: 90%;
+      text-align: left;
+      margin-bottom: -0.5em;
     }
 
-    &.react-select-container{
-        color: $primary;
+    &.selector{
+      color: $primary;
+      background-color: white;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      width: 90%;
+      margin-bottom: 0.5em;
+      padding: 0.5em;
+      border-radius: 1em;
+      box-shadow: $innerShadow;
     }
+}
+
+.L{
+  position: absolute;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  &.L {
+    left: 25%;
+  }
+  &.R {
+    left: auto;
+    right: 25%;
+
+  }
+
 }

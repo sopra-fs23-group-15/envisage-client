@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { api, handleError } from "helpers/api";
 import { Button } from "components/ui/Button";
-import {useLocation, useNavigate, useParams} from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import LobbyContainer from "components/ui/LobbyContainer";
 import LobbyBanner from "components/ui/LobbyBanner";
-import {connect, getChallengeForRound, isConnected, subscribe} from "helpers/stomp";
+import {
+  connect,
+  getChallengeForRound,
+  isConnected,
+  subscribe,
+} from "helpers/stomp";
 import { Spinner } from "components/ui/Spinner";
 import "styles/views/Player.scss";
 import Challenge from "../../models/Challenge";
@@ -19,8 +24,8 @@ const LobbiesAfter = () => {
   const [allvotes, setAllvotes] = useState(false);
 
   useEffect(() => {
-    if (!isConnected()){
-      connect(subscribeLobby)
+    if (!isConnected()) {
+      connect(subscribeLobby);
     }
 
     function subscribeLobby() {
@@ -45,8 +50,8 @@ const LobbiesAfter = () => {
         localStorage.setItem("challengeImage", challenge.imagePrompt.image);
         console.log(localStorage.getItem("challengeImage"));
         localStorage.setItem(
-            "challengeStyle",
-            challenge.styleRequirement.style
+          "challengeStyle",
+          challenge.styleRequirement.style
         );
         localStorage.setItem("challengeDuration", challenge.durationInSeconds);
         navigate(`/lobbies/${lobbyId}/games/${challenge.roundNr}`);
@@ -95,7 +100,11 @@ const LobbiesAfter = () => {
   const startGame = async () => {
     try {
       await api.post(`/lobbies/${lobbyId}/games/rounds`);
-      getChallengeForRound(lobbyId, currentRound + 1, localStorage.getItem("category"));
+      getChallengeForRound(
+        lobbyId,
+        currentRound + 1,
+        localStorage.getItem("category")
+      );
     } catch (error) {
       console.error(
         `Something went wrong while initiating the next round: \n${handleError(
@@ -154,8 +163,8 @@ const LobbiesAfter = () => {
           <div className="player right">
             <Button
               disabled={
-                  localStorage.getItem("userName") !==
-                localStorage.getItem("curator") || !allvotes
+                localStorage.getItem("userName") !==
+                  localStorage.getItem("curator") || !allvotes
               }
               onClick={() => startGame()}
             >

@@ -18,10 +18,14 @@ const ExhibitionPage = () => {
     navigate("landingPage");
   };
   const visitWinningImages = async () => {
-    navigate(`/lobbies/${lobbyId}/winningimages`, {state: { currentRound: state.currentRound },});
+    navigate(`/lobbies/${lobbyId}/winningimages`, {
+      state: { currentRound: state.currentRound },
+    });
   };
   const goToScores = async () => {
-    navigate(`/lobbies/${lobbyId}/finalResult`, {state: { currentRound: state.currentRound },});
+    navigate(`/lobbies/${lobbyId}/finalResult`, {
+      state: { currentRound: state.currentRound },
+    });
   };
 
   const lobbyId = localStorage.getItem("lobbyId");
