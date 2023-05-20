@@ -5,17 +5,31 @@
     flex-direction: row;
     flex-wrap: wrap;
     background-color: mix($primary, white, 30);
+    @include phone {
+        font-size: 0.75rem;
+        flex-direction: column;
+    }
     &.image {
-        width: 60vw;
+        width: 70vw;
         height: 100vh;
         object-fit: cover;
         object-position: top center;
+        @include phone {
+            aspect-ratio: 5/4;
+            width: 100%;
+            height: auto;
+        }
     }
     &.input {
         margin-top: 2.5vw;
         margin-left: 2.5vw;
         flex-direction: column;
         width: 25vw;
+        @include phone {
+            width: 90%;
+            height: 100vh;
+            margin-left: 5%;
+        }
     }
     &.input-style {
         font-size: 1.5rem;
@@ -29,6 +43,12 @@
         padding: 0.75em;
         background-color: mix($primary, white, 85);
         border-radius: 1em;
+        @include phone {
+            font-size: 1rem;
+            margin-top: 0.75em;
+            margin-bottom: 20%;
+            padding: 0.5em;
+        }
     }
     &.input-label {
         font-weight: bold;
@@ -41,11 +61,17 @@
         box-shadow: $innerShadow;
         padding: 0.5em;
         background: white;
+        @include phone {
+            height: 20%
+        }
     }
     &.timer {
         font-size: 3rem;
         font-weight: bold;
         color: $secondary;
+        @include phone {
+            font-size: 1.75rem;
+        }
     }
 }
 

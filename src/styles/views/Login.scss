@@ -25,6 +25,7 @@
     @include phone {
       color: white;
       background-color: rgba($primary, 0.25);
+      aspect-ratio: 5/8;
       width: 90%;
       left: 5%;
     }
@@ -88,6 +89,7 @@
     text-align: left;
     padding: 1em;
     @include phone {
+      left: 26vw;
       visibility: visible;
     }
     }

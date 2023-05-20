@@ -32,7 +32,7 @@ const options_category = [
 const LobbyConfiguration = () => {
   const userName = localStorage.getItem("userName");
   const rounds = useState("");
-  const [currentTimer, setCurrentTimer] = useState(min_time);
+  const [currentTimer, setCurrentTimer] = useState(60);
   const navigate = useNavigate();
   const [currentCategory, setCurrentCategory] = useState(2);
   const [currentRounds, setCurrentRounds] = useState(2);
@@ -145,7 +145,7 @@ const LobbyConfiguration = () => {
             disabled={currentCategory === 0}
             onClick={() => decreaseCategory()}
           >
-            ⬅
+            ❮
           </Button>
           <div> {options_category[currentCategory]} </div>
           <Button
@@ -153,7 +153,7 @@ const LobbyConfiguration = () => {
             disabled={currentCategory === options_category.length - 1}
             onClick={() => increaseCategory()}
           >
-            ➡
+            ❯
           </Button>
         </div>
         <div className="login selectiontitle">
@@ -201,6 +201,11 @@ const LobbyConfiguration = () => {
         </Button>
       </div>
       <Slider />
+      <p className="login manifesto">
+        "Captain America jumps into a splash of water, David Hockney style"
+        <br />
+        How to draw this : ⇨
+      </p>
     </BaseContainer>
   );
 };
