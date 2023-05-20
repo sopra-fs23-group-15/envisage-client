@@ -9,7 +9,6 @@ import Player from "models/Player";
 import Lobby from "models/Lobby";
 import { disconnect, isConnected } from "helpers/stomp";
 import "styles/views/Login.scss";
-import Alert from '@mui/material/Alert';
 
 const FormField = (props) => {
   return (
@@ -55,7 +54,9 @@ const LobbyCreation = () => {
         await addPlayer(lobbyId);
       });
     } catch (error) {
-        return (<Alert>Something went wrong when joining the lobby: \n${handleError(error)}</Alert>);
+      alert(
+        `Something went wrong when joining the lobby: \n${handleError(error)}`
+      );
     }
   };
 
@@ -70,7 +71,9 @@ const LobbyCreation = () => {
       localStorage.setItem("userName", userName);
       navigate(`/lobbies/${lobbyId}`);
     } catch (error) {
-        return (<Alert>Something went wrong when joining the lobby: \n${handleError(error)}</Alert>);
+      alert(
+        `Something went wrong when joining the lobby: \n${handleError(error)}`
+      );
     }
   };
 

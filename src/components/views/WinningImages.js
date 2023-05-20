@@ -6,8 +6,7 @@ import { Spinner } from "components/ui/Spinner";
 import ImageComponent from "./Image";
 
 import "styles/views/Exhibition.scss";
-import {api, handleError} from "helpers/api";
-import Alert from '@mui/material/Alert';
+import { api } from "helpers/api";
 
 const WinningImages = () => {
   const [imgs, setImgs] = useState([]);
@@ -40,7 +39,12 @@ const WinningImages = () => {
       }
       fetch();
     } catch (error) {
-        return (<Alert>Something went wrong when opening the exhibition: \n${handleError(error)}</Alert>);
+      return (
+        <>
+          Not implemented yet in the backend.\n
+          {error}
+        </>
+      );
     }
   }, [lobbyId]);
 

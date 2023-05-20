@@ -6,7 +6,6 @@ import VoteBox from "components/ui/VoteBox";
 import { Spinner } from "components/ui/Spinner";
 import "styles/views/Vote.scss";
 import Lobby from "../../models/Lobby";
-import Alert from '@mui/material/Alert';
 
 const VotePage = () => {
   const [imgs, setImgs] = useState(null);
@@ -50,7 +49,11 @@ const VotePage = () => {
       const lobby = new Lobby(responseLobby.data);
       return lobby.numberOfRounds;
     } catch (error) {
-        return (<Alert>Something went wrong during fetching the lobby: \n${handleError(error)}</Alert>);
+      alert(
+        `Something went wrong during fetching the lobby: \n${handleError(
+          error
+        )}`
+      );
     }
   };
 
@@ -80,7 +83,9 @@ const VotePage = () => {
           });
         }
       } catch (error) {
-          return (<Alert>Something went wrong during the update: \n${handleError(error)}</Alert>);
+        alert(
+          `Something went wrong during the update: \n${handleError(error)}`
+        );
       }
     }
   };

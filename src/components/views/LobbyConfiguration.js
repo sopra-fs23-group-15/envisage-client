@@ -7,7 +7,6 @@ import { api, handleError } from "helpers/api";
 import { useNavigate } from "react-router-dom";
 import Player from "models/Player";
 import Lobby from "models/Lobby";
-import Alert from '@mui/material/Alert';
 
 const options_rounds = ["1 round", "2 rounds", "3 rounds",  "4 rounds", "5 rounds"];
 
@@ -44,7 +43,9 @@ const LobbyConfiguration = () => {
         await addPlayer(lobbyId);
       });
     } catch (error) {
-          return (<Alert>Something went wrong when joining the lobby: \n${handleError(error)}</Alert>);
+      alert(
+        `Something went wrong when joining the lobby: \n${handleError(error)}`
+      );
     }
   };
 
@@ -60,7 +61,9 @@ const LobbyConfiguration = () => {
 
       navigate(`/lobbies/${lobbyId}`);
     } catch (error) {
-        return (<Alert>Something went wrong when joining the lobby: \n${handleError(error)}</Alert>);
+      alert(
+        `Something went wrong when joining the lobby: \n${handleError(error)}`
+      );
     }
   };
 

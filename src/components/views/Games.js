@@ -3,7 +3,6 @@ import { api, handleError } from "helpers/api";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "components/ui/Button";
 import "styles/views/Game.scss";
-import Alert from '@mui/material/Alert';
 
 const MAX_CHARS = 400;
 
@@ -43,9 +42,15 @@ const Games = () => {
           localStorage.getItem("player") !== localStorage.getItem("curator")
         );
       } catch (error) {
-          console.error(`Something went wrong while fetching the image: \n${handleError(error)}`);
-          console.error("Details:", error);
-          return (<Alert severity="error">Something went wrong while fetching the image! See the console for details.</Alert>);
+        console.error(
+          `Something went wrong while fetching the image: \n${handleError(
+            error
+          )}`
+        );
+        console.error("Details:", error);
+        alert(
+          "Something went wrong while fetching the image! See the console for details."
+        );
       }
     }
     fetchImage();
@@ -90,9 +95,15 @@ const Games = () => {
         );
         navigate(`/lobbies/${lobbyId}/games/${roundId}/votePage`);
       } catch (error) {
-          console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
-          console.error("Details:", error);
-          return (<Alert severity="error">Something went wrong while fetching the users! See the console for details.</Alert>);
+        console.error(
+          `Something went wrong while fetching the users: \n${handleError(
+            error
+          )}`
+        );
+        console.error("Details:", error);
+        alert(
+          "Something went wrong while fetching the users! See the console for details."
+        );
       }
     }
   };

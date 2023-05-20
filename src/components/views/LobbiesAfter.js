@@ -8,7 +8,6 @@ import {connect, getChallengeForRound, isConnected, subscribe} from "helpers/sto
 import { Spinner } from "components/ui/Spinner";
 import "styles/views/Player.scss";
 import Challenge from "../../models/Challenge";
-import Alert from '@mui/material/Alert';
 
 const LobbiesAfter = () => {
   const navigate = useNavigate();
@@ -57,7 +56,9 @@ const LobbiesAfter = () => {
     async function fetchScores() {
       try {
         const scoresResponse = await api.get(`/lobbies/${lobbyId}/games`);
-        const winnerResponse = await api.get(`/lobbies/${lobbyId}/games/${state.currentRound}/winners`);
+        const winnerResponse = await api.get(
+          `/lobbies/${lobbyId}/games/${state.currentRound}/winners`
+        );
         setPlayerScores(scoresResponse.data.playerScores);
         setCurrentRound(scoresResponse.data.rounds.length);
         setWinner(winnerResponse.data.image);
@@ -74,9 +75,16 @@ const LobbiesAfter = () => {
           setAllvotes(true);
         }
       } catch (error) {
-         console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
-         console.error("details:", error);
-         return (<Alert>Something went wrong while fetching the users! see the console for details.</Alert>);
+        console.error(
+          `something went wrong while fetching the users: \n${handleError(
+            error
+          )}`
+        );
+        console.error("details:", error);
+
+        alert(
+          "something went wrong while fetching the users! see the console for details."
+        );
       }
     }
     let interval;
@@ -89,9 +97,15 @@ const LobbiesAfter = () => {
       await api.post(`/lobbies/${lobbyId}/games/rounds`);
       getChallengeForRound(lobbyId, currentRound + 1, localStorage.getItem("category"));
     } catch (error) {
-       console.error(`Something went wrong while initiating the next round: \n${handleError(error)}`);
-       console.error("Details:", error);
-       return (<Alert>Something went wrong while initiating the next round! See the console for details.</Alert>);
+      console.error(
+        `Something went wrong while initiating the next round: \n${handleError(
+          error
+        )}`
+      );
+      console.error("Details:", error);
+      alert(
+        "Something went wrong while initiating the next round! See the console for details."
+      );
     }
   };
 
