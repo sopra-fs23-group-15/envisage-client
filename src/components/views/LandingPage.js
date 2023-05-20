@@ -120,9 +120,11 @@ const LandingPage = () => {
           </Button>
         </div>
       </div>
-      <div className="login manifesto">
-        Use imagination to compete with your AI generated masterpieces
-      </div>
+      <p className="login manifesto">
+        "Captain America jumps into a splash of water, David Hockney style"
+        <br />
+        How to draw this : ⇨
+      </p>
     </BaseContainer>
   );
 };
