@@ -59,6 +59,7 @@ npm run dev
 ```
 
 # Illustrations: 
+The following is a representation of how players would interact with the webapp by showing the possibilities of how they move from one view/state to the other.
 ```mermaid
 stateDiagram-v2
     [*] --> LandingPage
@@ -83,6 +84,13 @@ stateDiagram-v2
     WinningImages --> Restart
     Logout --> [*]
 ```
+The most important views of the webapp are -
+Landing Page:
+Lobby:
+Game:
+Vote:
+Winner:
+Exhibition:
 
 # Roadmap: 
 * Friend Mode vs Anyone in the World mode where people could choose to only play with friends (need lobby id) or with anyone (no need for lobbyid, but then waiting lobbies need to be published on some view), 
