@@ -5,10 +5,11 @@
   width: 100%;
   height: 100%;
   background-repeat: no-repeat;
-  background-image: url(../../img/lobbySm.png);
+  background-image: url(../../img/lobbyLg.png);
   background-position: top left;
   background-size: cover;
   @include phone {
-    background-image: url(../../img/lobbyLg.png);
+    background-image: url(../../img/lobbySm.png);
+    background-position: top left;
   }
 }
