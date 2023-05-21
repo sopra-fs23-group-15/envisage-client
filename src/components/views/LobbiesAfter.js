@@ -10,7 +10,6 @@ import {
   isConnected,
   subscribe,
 } from "helpers/stomp";
-import { Spinner } from "components/ui/Spinner";
 import "styles/views/Player.scss";
 import Challenge from "../../models/Challenge";
 
@@ -46,7 +45,7 @@ const LobbiesAfter = () => {
         challenge.styleRequirement = data["styleRequirement"];
         challenge.imagePrompt = data["imagePrompt"];
         challenge.roundNr = data["roundNr"];
-        challenge.category = data["category"]
+        challenge.category = data["category"];
         localStorage.setItem("challengeImage", challenge.imagePrompt.image);
         localStorage.setItem("category", challenge.category);
         localStorage.setItem(
@@ -117,14 +116,7 @@ const LobbiesAfter = () => {
     }
   };
 
-  let playersList = (
-    <>
-      <Spinner
-        backgroundImage={"url(img/lobbyLg)"}
-        manifesto={`Leaderboard after round ${state.currentRound} comes in 5 seconds`}
-      />
-    </>
-  );
+  let playersList = <LobbyContainer />;
 
   if (playerScores) {
     playerScores.sort((a, b) => b.score - a.score);

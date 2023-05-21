@@ -132,7 +132,7 @@ const WinningImages = () => {
       <div className="exhibition button-container">
         <>
           <h3>
-            Hello <span>{userName}</span>! Visit the winning images
+            Hello <span>{userName}</span>! Welcome to the house of honors!
           </h3>
         </>
         <Button className="E" onClick={() => goToExhibition()}>
