@@ -42,7 +42,7 @@ const LobbyConfiguration = () => {
 
     try {
       const roundDurationInSeconds = currentTimer;
-      const noOfRounds = currentRounds;
+      const noOfRounds = options_rounds[currentRounds].split(" ")[0];
       const requestBody = JSON.stringify({
         roundDurationInSeconds,
         noOfRounds,
@@ -103,7 +103,7 @@ const LobbyConfiguration = () => {
   };
 
   const increaseTimer = () => {
-      setCurrentTimer(currentTimer + interval);
+      setCurrentTimer(currentTimer+interval);
   };
 
   return (
