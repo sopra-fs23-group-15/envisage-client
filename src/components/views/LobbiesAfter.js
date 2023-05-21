@@ -92,7 +92,7 @@ const LobbiesAfter = () => {
       }
     }
     let interval;
-    interval = setInterval(fetchScores, 5000);
+    interval = setInterval(fetchScores, 1000);
     return () => clearInterval(interval);
   }, [lobbyId, state.currentRound, navigate]);
 
