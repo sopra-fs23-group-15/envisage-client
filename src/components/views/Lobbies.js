@@ -61,7 +61,6 @@ const Lobbies = () => {
           "challengeStyle",
           challenge.styleRequirement.style
         );
-        localStorage.setItem("challengeDuration", challenge.durationInSeconds);
         navigate(`/lobbies/${lobbyId}/games/${challenge.roundNr}`);
       });
     }

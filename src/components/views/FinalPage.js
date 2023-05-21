@@ -8,8 +8,8 @@ import "styles/views/Player.scss";
 import {
   connect,
   getChallengeForRound,
-  isConnected,
-  subscribe,
+  isConnected, notifyLobbyJoin,
+  subscribe, unsubscribe,
 } from "helpers/stomp";
 import Challenge from "../../models/Challenge";
 
@@ -48,13 +48,10 @@ const FinalPage = () => {
         challenge.category = data["category"]
         localStorage.setItem("challengeImage", challenge.imagePrompt.image);
         localStorage.setItem("category", challenge.category);
-        console.log(localStorage.getItem("challengeImage"));
-        console.log(localStorage.getItem("category"))
         localStorage.setItem(
           "challengeStyle",
           challenge.styleRequirement.style
         );
-        localStorage.setItem("challengeDuration", challenge.durationInSeconds);
         navigate(`/lobbies/${lobbyId}/games/${challenge.roundNr}`);
       });
     }
@@ -87,7 +84,7 @@ const FinalPage = () => {
     let interval;
     interval = setInterval(fetchScores, 5000);
     return () => clearInterval(interval);
-  }, [lobbyId, state.currentRound]);
+  }, [lobbyId, state.currentRound, navigate]);
 
   const visitNext = async () => {
     navigate(`/lobbies/${lobbyId}/exhibitionPage`, {
@@ -102,13 +99,23 @@ const FinalPage = () => {
   };
 
   const goMain = async () => {
+    localStorage.removeItem("curator");
+    localStorage.removeItem("roundDuration");
+    localStorage.removeItem("#players");
+    localStorage.removeItem("challengeImage");
+    localStorage.removeItem("category");
+    localStorage.removeItem("userName");
     localStorage.removeItem("lobbyId");
+    localStorage.removeItem("player");
+    unsubscribe(`/topic/lobbies/${lobbyId}/challenges`);
+    unsubscribe(`/topic/lobbies/${lobbyId}`);
     navigate("landingPage");
   };
 
   const restartGame = async () => {
     try {
       await api.post("/lobbies/" + lobbyId + "/games/restarts");
+      notifyLobbyJoin(lobbyId);
       getChallengeForRound(lobbyId, 1, localStorage.getItem("category"));
     } catch (error) {
       console.error(

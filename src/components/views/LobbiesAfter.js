@@ -56,7 +56,6 @@ const LobbiesAfter = () => {
           "challengeStyle",
           challenge.styleRequirement.style
         );
-        localStorage.setItem("challengeDuration", challenge.durationInSeconds);
         navigate(`/lobbies/${lobbyId}/games/${challenge.roundNr}`);
       });
     }
@@ -98,7 +97,7 @@ const LobbiesAfter = () => {
     let interval;
     interval = setInterval(fetchScores, 5000);
     return () => clearInterval(interval);
-  }, [lobbyId, state.currentRound]);
+  }, [lobbyId, state.currentRound, navigate]);
 
   const startGame = async () => {
     try {
