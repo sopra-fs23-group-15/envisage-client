@@ -1,46 +1,106 @@
-# SoPra FS23 - Client Template with build pack
+# Introduction
+ENVISAGE, our multiplayer AI game that combines creativity, fine arts knowledge, and friendly competition. With our webapp, you and your friends can generate unique images using AI technology. Whether you're an artist or simply seeking entertainment, our game offers hours of fun and inspiration. Visit our webapp now to curate your creative masterpieces!
+OR
+Looking for a fun and exciting way to challenge your friends while also unleashing your creativity and knowledge of fine arts? Look no further than our new multiplayer AI game - ENVISAGE! 
+With our webapp, you and your friends can compete against each other to generate unique and creative images using the latest in AI technology. Whether you're a seasoned artist or just looking for a fun way to pass the time, our game is sure to provide hours of entertainment and inspiration. So why wait? Visit our webapp today and be your own curator of your creative masterpieces!
 
-## Getting started
+# Technologies used
+React, CSS (from scratch), HTML, stomp (websockets), GCP - hosting platform, GitHub Actions - Continuous Integration and Deployment
 
-Read and go through these Tutorials. It will make your life easier:)
-
-- Read the React [Docs](https://reactjs.org/docs/getting-started.html)
-- Do this React [Getting Started](https://reactjs.org/tutorial/tutorial.html) Tutorial (it doesn’t assume any existing React knowledge)
-- Get an Understanding of [CSS](https://www.w3schools.com/Css/), [SCSS](https://sass-lang.com/documentation/syntax), and [HTML](https://www.w3schools.com/html/html_intro.asp)!
-
-Next, there are two other technologies that you should look at:
-
-* [react-router-dom](https://reacttraining.com/react-router/web/guides/quick-start) offers declarative routing for React. It is a collection of navigational components that fit nicely with the application. 
-* [react-hooks](https://reactrouter.com/web/api/Hooks) let you access the router's state and perform navigation from inside your components.
-
-## Prerequisites and Installation
-For your local development environment, you will need Node.js. You can download it [here](https://nodejs.org). All other dependencies, including React, get installed with:
-
-```npm install```
-
-Run this command before you start your application for the first time. Next, you can start the app with:
-
-```npm run dev```
-
-Now you can open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-Notice that the page will reload if you make any edits. You will also see any lint errors in the console (use Google Chrome).
-
-### Testing
-Testing is optional, and you can run the tests with `npm run test`.
-This launches the test runner in an interactive watch mode. See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-> For macOS user running into a 'fsevents' error: https://github.com/jest-community/vscode-jest/issues/423
-
-### Build
-Finally, `npm run build` builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance: the build is minified, and the filenames include hashes.<br>
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-## Learn More
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+# High-level components: 
+1. [Landing Page](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/LandingPage.js): This is the page users are greeted with when they want to play our game or click the url for our webapp. From this page users can either join an existing lobby or create a new lobby.
+2. [Lobbies](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/Lobbies.js) [[Lobby creation](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/LobbyCreation.js), [Lobby configuration](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/LobbyConfiguration.js),[Lobby after](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/LobbiesAfter.js)]: This view and the views in the brackets are similar to each other and handle various cases of the lobby view while paying the game. Lobby is essentially a collection of players, games and rounds. Different lobbies are separate from each other. LobbyCreation allows you to create a (default) lobby. LobbyConfiguration allows you to configure your lobby before you create it. Once the minimum number of players join the lobby the lobby creator can start the game. Until then they are in the lobby waiting area. Players also wait in the lobby waiting area during the process of voting - LobbiesAfter view. Unless everyone votes the game does not move forward.
+3. [Game View](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/Games.js) [[Vote View](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/VotePage.js), [Final View](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/FinalPage.js)]: Game is the most important component. It handles the timer, prompt submission and getting the challenge object. After one round until all the players have submitted their prompt, Game view navigates to Voting view where players can vote for the images they like (except their own). In this fashion, after the configured number of rounds (from Lobby configuration) are played, the players see the Final view where they see the winner and the scoreboard.
+4. [Exhibition View](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/ExhibitionPage.js) [[Winning Images view](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/WinningImages.js)]: This is the view that players can navigate to if they want to see the images that they created. WinningImages view is another similar view that players can navigate to if they instead want to see the winning images from each round.
 
 
-> Thanks to Lucas Pelloni and Kyrill Hux for working on the template.
+# Launch & Deployment: 
+**GCP Deployment**
+
+1. Create two projects for your client and server apps in the Google Cloud web interface.
+After successful creation of the projects, make sure to perform
+the following steps for the client and server projects, respectively.
+2. Using the navigation menu in the top left (select “More Products”), navigate to “IAM &
+Admin > Service Accounts” in your Google Cloud dashboard. Create a new service account
+and grant it “Editor” role. Next, create a key (“Actions > Manage keys > Add key > Create
+new key”) for this service account with type “JSON”.
+3. Navigate to “App Engine” and create a new “Application”. Make sure to pick a suitable
+region (e.g., “europe-west6”) and select the service account from the previous step.
+4. Next, navigate to “APIs & Services”. Enable the “Cloud Build API” and the “App Engine
+Admin API”.
+5. On GitHub, for both client and server repositories, go to “Settings > Secret and variables >
+Actions > New repository secret” tab from the menu on the left and add the content of the
+downloaded JSON service account key as GCP_SERVICE_CREDENTIALS.
+6. At this point, when you push code to your “main” branch on GitHub, it will try to automatically deploy to Google App Engine. The GitHub action which pushes your code to Google
+Cloud is configured in .github/workflows/main.yml.
+7. After your first deployment attempt, you can monitor its progress under “Actions” on
+GitHub and under “Cloud Build” on the Google Cloud Platform.
+8. Once the server is deployed successfully, make sure to copy the URL of the server applica-
+tion from the Google App Engine dashboard, add it to src/helpers/getDomain.js in
+the client repository, and re(-deploy) the client. If the server URL is incorrect or missing,
+you might see an alert “The server cannot be reached. Did you start it?” when trying to
+login.
+9. On Google Cloud, invite your team members by navigating to “IAM & Admin > IAM >
+Grant Access”. Enter the email addresses of your peers as “New Principals”.
+
+**Dalle API Key**
+
+* Add as a secret key to GitHub on the server side - current approach: Settings -> Secrets & Variables -> Actions -> New Repository Secret
+
+* Another option is to use Google Secret Manager
+
+**Local Development**
+
+```bash
+git clone git@github.com:sopra-fs23-group-15/envisage-client.git
+cd envisage-client
+npm install
+npm run dev
+```
+
+# Illustrations: 
+The following is a representation of how players would interact with the webapp by showing the possibilities of how they move from one view/state to the other.
+```mermaid
+stateDiagram-v2
+    [*] --> LandingPage
+    LandingPage --> LobbyCreation
+    LobbyCreation --> LandingPage
+    LobbyCreation --> LobbyConfiguration
+    LobbyConfiguration --> Lobby(WaitingArea)
+    LandingPage --> Lobby(WaitingArea)
+    LobbyCreation --> Lobby(WaitingArea)
+    Lobby(WaitingArea) --> Game
+    Game --> Vote
+    Lobby(After) --> Game
+    Vote --> Lobby(After)
+    Lobby(After) --> Winner
+    Winner --> Exhibition
+    Exhibition --> Restart
+    Exhibition --> Logout
+    Winner --> WinningImages
+    Restart --> Game
+    Logout --> LandingPage
+    WinningImages --> Logout
+    WinningImages --> Restart
+    Logout --> [*]
+```
+The most important views of the webapp are -
+| View | Screenshot |
+| --- | --- |
+| Landing Page | ![Landing page](src/img/docs/landing.png) |
+| Lobby | ![Lobby page](src/img/docs/lobby.png) |
+| Game | ![Game page](src/img/docs/game.png) |
+| Vote | ![Vote Page](src/img/docs/vote.png) |
+| Winner | ![Winner Page](src/img/docs/winner.png) |
+| Exhibition | ![Exhibition](src/img/docs/exhibition.png) |
+
+# Roadmap: 
+* Friend Mode vs Anyone in the World mode where people could choose to only play with friends (need lobby id) or with anyone (no need for lobbyid, but then waiting lobbies need to be published on some view), 
+* Ability to download your images, 
+* Save Login info and generated images in persistent database, 
+
+# Authors and acknowledgment: 
+Marion Andermatt - @marion-an, Moritz Mohn - @moritzmohn, Nikita Amitabh - @nikita-uzh, Shantam Raj - @armsp, Xue Wang - @xueswang
+
+# License: 
+[Apache-2.0 license](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/LICENSE)

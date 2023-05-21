@@ -52,13 +52,15 @@ const Lobbies = () => {
         challenge.styleRequirement = data["styleRequirement"];
         challenge.imagePrompt = data["imagePrompt"];
         challenge.roundNr = data["roundNr"];
+        challenge.category = data["category"]
         localStorage.setItem("challengeImage", challenge.imagePrompt.image);
+        localStorage.setItem("category", challenge.category);
         console.log(localStorage.getItem("challengeImage"));
+        console.log(localStorage.getItem("category"))
         localStorage.setItem(
           "challengeStyle",
           challenge.styleRequirement.style
         );
-        localStorage.setItem("challengeDuration", challenge.durationInSeconds);
         navigate(`/lobbies/${lobbyId}/games/${challenge.roundNr}`);
       });
     }

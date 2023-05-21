@@ -21,6 +21,15 @@ const Games = () => {
   const handleInputChange = (e) => {
     const inputText = e.target.value;
     const inputCharCount = inputText.length;
+
+    const regex = /^[a-zA-Z0-9 .,?!()\n]*\s*$/;
+
+    if (!regex.test(inputText)) {
+      alert("Please don't enter any special characters.")
+      return
+    }
+
+
     if (inputCharCount > MAX_CHARS) {
       return;
     }

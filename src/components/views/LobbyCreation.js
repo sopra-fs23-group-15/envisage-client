@@ -67,7 +67,6 @@ const LobbyCreation = () => {
 
       const player = new Player(response.data);
       localStorage.setItem("player", JSON.stringify(player));
-      localStorage.setItem("creator", player.lobbyCreator);
       localStorage.setItem("userName", userName);
       navigate(`/lobbies/${lobbyId}`);
     } catch (error) {
@@ -113,7 +112,7 @@ const LobbyCreation = () => {
       <p className="login manifesto">
         "Captain America jumps into a splash of water, David Hockney style"
         <br />
-        How to draw this : ⇨
+        How you would draw this in the game : ⇨
       </p>
     </BaseContainer>
   );

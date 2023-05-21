@@ -34,7 +34,6 @@ const LobbiesAfter = () => {
         localStorage.setItem("curator", subscribedPlayers[0].userName);
         localStorage.setItem("roundDuration", data["roundDuration"]);
         localStorage.setItem("#players", subscribedPlayers.length);
-        console.log(subscribedPlayers);
       });
       subscribeChallenge();
     }
@@ -47,13 +46,13 @@ const LobbiesAfter = () => {
         challenge.styleRequirement = data["styleRequirement"];
         challenge.imagePrompt = data["imagePrompt"];
         challenge.roundNr = data["roundNr"];
+        challenge.category = data["category"]
         localStorage.setItem("challengeImage", challenge.imagePrompt.image);
-        console.log(localStorage.getItem("challengeImage"));
+        localStorage.setItem("category", challenge.category);
         localStorage.setItem(
           "challengeStyle",
           challenge.styleRequirement.style
         );
-        localStorage.setItem("challengeDuration", challenge.durationInSeconds);
         navigate(`/lobbies/${lobbyId}/games/${challenge.roundNr}`);
       });
     }
@@ -93,9 +92,9 @@ const LobbiesAfter = () => {
       }
     }
     let interval;
-    interval = setInterval(fetchScores, 5000);
+    interval = setInterval(fetchScores, 1000);
     return () => clearInterval(interval);
-  }, [lobbyId, state.currentRound]);
+  }, [lobbyId, state.currentRound, navigate]);
 
   const startGame = async () => {
     try {
