@@ -85,12 +85,14 @@ stateDiagram-v2
     Logout --> [*]
 ```
 The most important views of the webapp are -
-Landing Page:
-Lobby:
-Game:
-Vote:
-Winner:
-Exhibition:
+| View | Screenshot |
+| --- | --- |
+| Landing Page | ![Landing page](src/img/docs/landing.png) |
+| Lobby | ![Lobby page](src/img/docs/lobby.png) |
+| Game | ![Game page](src/img/docs/game.png) |
+| Vote | ![Vote Page](src/img/docs/vote.png) |
+| Winner | ![Winner Page](src/img/docs/winner.png) |
+| Exhibition | ![Exhibition](src/img/docs/exhibition.png) |
 
 # Roadmap: 
 * Friend Mode vs Anyone in the World mode where people could choose to only play with friends (need lobby id) or with anyone (no need for lobbyid, but then waiting lobbies need to be published on some view), 
