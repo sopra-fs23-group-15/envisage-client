@@ -67,7 +67,6 @@ const LobbyCreation = () => {
 
       const player = new Player(response.data);
       localStorage.setItem("player", JSON.stringify(player));
-      localStorage.setItem("creator", player.lobbyCreator);
       localStorage.setItem("userName", userName);
       navigate(`/lobbies/${lobbyId}`);
     } catch (error) {

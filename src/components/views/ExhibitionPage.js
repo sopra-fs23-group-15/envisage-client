@@ -7,6 +7,8 @@ import ImageComponent from "./Image";
 
 import "styles/views/Exhibition.scss";
 import { api } from "helpers/api";
+import {connect, isConnected, subscribe} from "../../helpers/stomp";
+import Challenge from "../../models/Challenge";
 
 const ExhibitionPage = () => {
   const [imgs, setImgs] = useState([]);
@@ -32,6 +34,39 @@ const ExhibitionPage = () => {
   const userName = localStorage.getItem("userName");
 
   useEffect(() => {
+    if (!isConnected()) {
+      connect(subscribeLobby);
+    }
+
+    function subscribeLobby() {
+      subscribe(`/topic/lobbies/${lobbyId}`, (data) => {
+        let subscribedPlayers = data["players"];
+        localStorage.setItem("curator", subscribedPlayers[0].userName);
+        localStorage.setItem("roundDuration", data["roundDuration"]);
+        localStorage.setItem("#players", subscribedPlayers.length);
+      });
+      subscribeChallenge();
+    }
+
+    function subscribeChallenge() {
+      subscribe(`/topic/lobbies/${lobbyId}/challenges`, (data) => {
+        console.log(data);
+        const challenge = new Challenge();
+        challenge.durationInSeconds = data["durationInSeconds"];
+        challenge.styleRequirement = data["styleRequirement"];
+        challenge.imagePrompt = data["imagePrompt"];
+        challenge.roundNr = data["roundNr"];
+        challenge.category = data["category"]
+        localStorage.setItem("challengeImage", challenge.imagePrompt.image);
+        localStorage.setItem("category", challenge.category);
+        localStorage.setItem(
+            "challengeStyle",
+            challenge.styleRequirement.style
+        );
+        navigate(`/lobbies/${lobbyId}/games/${challenge.roundNr}`);
+      });
+    }
+
     try {
       async function fetch() {
         const response = await api.get(
@@ -44,7 +79,7 @@ const ExhibitionPage = () => {
     } catch (error) {
       return { error };
     }
-  }, [lobbyId, userName]);
+  }, [lobbyId, userName, navigate]);
 
   let imageList = (
     <>
