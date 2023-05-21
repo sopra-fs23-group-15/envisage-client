@@ -3,13 +3,14 @@ import { api, handleError } from "helpers/api";
 import { Button } from "components/ui/Button";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import LobbyContainer from "components/ui/LobbyContainer";
-import { Spinner } from "components/ui/Spinner";
 import "styles/views/Player.scss";
 import {
   connect,
   getChallengeForRound,
-  isConnected, notifyLobbyJoin,
-  subscribe, unsubscribe,
+  isConnected,
+  notifyLobbyJoin,
+  subscribe,
+  unsubscribe,
 } from "helpers/stomp";
 import Challenge from "../../models/Challenge";
 
@@ -44,7 +45,7 @@ const FinalPage = () => {
         challenge.styleRequirement = data["styleRequirement"];
         challenge.imagePrompt = data["imagePrompt"];
         challenge.roundNr = data["roundNr"];
-        challenge.category = data["category"]
+        challenge.category = data["category"];
         localStorage.setItem("challengeImage", challenge.imagePrompt.image);
         localStorage.setItem("category", challenge.category);
         localStorage.setItem(
@@ -99,16 +100,14 @@ const FinalPage = () => {
   };
 
   const goMain = () => {
-    try{
-      api.delete(`/lobbies/${lobbyId}/${localStorage.getItem("userName")}`)
+    try {
+      api.delete(`/lobbies/${lobbyId}/${localStorage.getItem("userName")}`);
     } catch (error) {
       console.error(
-          `Something went wrong while leaving the game: \n${handleError(error)}`
+        `Something went wrong while leaving the game: \n${handleError(error)}`
       );
       console.error("Details:", error);
-      alert(
-          "Something went wrong while leaving the game."
-      );
+      alert("Something went wrong while leaving the game.");
     }
     localStorage.removeItem("curator");
     localStorage.removeItem("roundDuration");
@@ -130,7 +129,9 @@ const FinalPage = () => {
       getChallengeForRound(lobbyId, 1, localStorage.getItem("category"));
     } catch (error) {
       console.error(
-        `Something went wrong while restarting the game: \n${handleError(error)}`
+        `Something went wrong while restarting the game: \n${handleError(
+          error
+        )}`
       );
       console.error("Details:", error);
       alert(
@@ -140,14 +141,7 @@ const FinalPage = () => {
     }
   };
 
-  let playersList = (
-    <>
-      <Spinner
-        backgroundImage={"url(img/lobbyLg)"}
-        manifesto="Leaderboard after final round comes in 5 seconds"
-      />
-    </>
-  );
+  let playersList = <LobbyContainer />;
 
   if (playerScores) {
     playerScores.sort((a, b) => b.score - a.score);
@@ -196,10 +190,7 @@ const FinalPage = () => {
             <Button className="E" onClick={() => visitWinningImages()}>
               See Winning Images
             </Button>
-            <Button
-              className="E"
-              onClick={() => restartGame()}
-            >
+            <Button className="E" onClick={() => restartGame()}>
               Restart a game
             </Button>
             <Button className="E" onClick={() => goMain()}>
