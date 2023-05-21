@@ -7,7 +7,7 @@ import ImageComponent from "./Image";
 
 import "styles/views/Exhibition.scss";
 import {api, handleError} from "helpers/api";
-import {connect, isConnected, subscribe} from "../../helpers/stomp";
+import {connect, isConnected, subscribe, unsubscribe} from "../../helpers/stomp";
 import Challenge from "../../models/Challenge";
 
 const WinningImages = () => {
@@ -15,10 +15,31 @@ const WinningImages = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
 
-  const goMain = async () => {
+  const goMain = () => {
+    try{
+      api.delete(`/lobbies/${lobbyId}/${localStorage.getItem("userName")}`)
+    } catch (error) {
+      console.error(
+          `Something went wrong while leaving the game: \n${handleError(error)}`
+      );
+      console.error("Details:", error);
+      alert(
+          "Something went wrong while leaving the game."
+      );
+    }
+    localStorage.removeItem("curator");
+    localStorage.removeItem("roundDuration");
+    localStorage.removeItem("#players");
+    localStorage.removeItem("challengeImage");
+    localStorage.removeItem("category");
+    localStorage.removeItem("userName");
     localStorage.removeItem("lobbyId");
+    localStorage.removeItem("player");
+    unsubscribe(`/topic/lobbies/${lobbyId}/challenges`);
+    unsubscribe(`/topic/lobbies/${lobbyId}`);
     navigate("landingPage");
   };
+
   const goToScores = async () => {
     navigate(`/lobbies/${lobbyId}/finalResult`, {
       state: { currentRound: state.currentRound },
