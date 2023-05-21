@@ -17,7 +17,7 @@ const images = [
 ];
 
 const Slider = () => {
-  const [currentImg, setCurrentImg] = useState(2);
+  const [currentImg, setCurrentImg] = useState(4);
   const [tutorial, setTutorial] = useState(false);
 
   const goToLeft = () => {
@@ -42,7 +42,7 @@ const Slider = () => {
       ></div>
       <p className="slider label-before" style={tutorial? {visibility: "hidden"} : {visibility: "visible"}}>How would you draw it in the game?</p>
       <p className="slider label-after" style={tutorial? {visibility: "visible"} : {visibility: "hidden"}}>
-        Step 1: <span>Describe the image</span> about Captain America in a short phrase such as <span>"Captain America jumping water"</span>
+        Step 1: <span>Describe the image</span> about Captain America in a short phrase such as <span>"Captain America jumps in water"</span>
         <br />
         Step 2: Have a look at the <span>drawing style</span> we provided{` (could be an artist's name such as)`} <span>David Hockney</span>
         <br />
