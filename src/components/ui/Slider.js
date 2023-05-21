@@ -43,7 +43,7 @@ const Slider = () => {
       <p className="slider label">
         "Captain America jumps into a splash of water, David Hockney style"
         <br />
-        How to draw this :
+          How you would draw this in the game :
       </p>
       <p className="slider switch" onClick={() => onTutorial()}>
         {tutorial ? "ⓧ" : "⇨"}

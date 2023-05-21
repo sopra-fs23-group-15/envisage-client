@@ -82,51 +82,27 @@ const LobbyConfiguration = () => {
   };
 
   const decreaseRounds = () => {
-    if (currentRounds === 0) {
-      setCurrentRounds(options_rounds.length - 1);
-    } else {
-      setCurrentRounds(currentRounds - 1);
-    }
+      setCurrentRounds(currentRounds-1);
   };
 
   const increaseRounds = () => {
-    if (currentRounds === options_rounds.length - 1) {
-      setCurrentRounds(0);
-    } else {
-      setCurrentRounds(currentRounds + 1);
-    }
+      setCurrentRounds(currentRounds+1);
   };
 
   const decreaseCategory = () => {
-    if (currentCategory === 0) {
-      setCurrentCategory(options_category.length - 1);
-    } else {
-      setCurrentCategory(currentCategory - 1);
-    }
+      setCurrentCategory(currentCategory-1);
   };
 
   const increaseCategory = () => {
-    if (currentCategory === options_category.length - 1) {
-      setCurrentCategory(0);
-    } else {
-      setCurrentCategory(currentCategory + 1);
-    }
+      setCurrentCategory(currentCategory+1);
   };
 
   const decreaseTimer = () => {
-    if (currentTimer === min_time) {
-      setCurrentTimer(max_time);
-    } else {
-      setCurrentTimer(currentTimer - interval);
-    }
+      setCurrentTimer(currentTimer-interval);
   };
 
   const increaseTimer = () => {
-    if (currentTimer === max_time) {
-      setCurrentTimer(min_time);
-    } else {
       setCurrentTimer(currentTimer + interval);
-    }
   };
 
   return (
@@ -149,7 +125,7 @@ const LobbyConfiguration = () => {
           <div> {options_category[currentCategory]} </div>
           <Button
             className="L R"
-            disabled={currentCategory === options_category.length - 1}
+            disabled={currentCategory === options_category.length-1}
             onClick={() => increaseCategory()}
           >
             ❯
@@ -169,7 +145,7 @@ const LobbyConfiguration = () => {
           <div> {options_rounds[currentRounds]} </div>
           <Button
             className="L R"
-            disabled={currentRounds === options_rounds.length - 1}
+            disabled={currentRounds === options_rounds.length-1}
             onClick={() => increaseRounds()}
           >
             +
@@ -203,7 +179,7 @@ const LobbyConfiguration = () => {
       <p className="login manifesto">
         "Captain America jumps into a splash of water, David Hockney style"
         <br />
-        How to draw this : ⇨
+        How you would draw this in the game : ⇨
       </p>
     </BaseContainer>
   );
