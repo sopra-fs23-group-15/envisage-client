@@ -34,7 +34,6 @@ const LobbiesAfter = () => {
         localStorage.setItem("curator", subscribedPlayers[0].userName);
         localStorage.setItem("roundDuration", data["roundDuration"]);
         localStorage.setItem("#players", subscribedPlayers.length);
-        console.log(subscribedPlayers);
       });
       subscribeChallenge();
     }
@@ -50,8 +49,6 @@ const LobbiesAfter = () => {
         challenge.category = data["category"]
         localStorage.setItem("challengeImage", challenge.imagePrompt.image);
         localStorage.setItem("category", challenge.category);
-        console.log(localStorage.getItem("challengeImage"));
-        console.log(localStorage.getItem("category"))
         localStorage.setItem(
           "challengeStyle",
           challenge.styleRequirement.style

@@ -7,6 +7,8 @@ import ImageComponent from "./Image";
 
 import "styles/views/Exhibition.scss";
 import {api, handleError} from "helpers/api";
+import {connect, isConnected, subscribe} from "../../helpers/stomp";
+import Challenge from "../../models/Challenge";
 
 const WinningImages = () => {
   const [imgs, setImgs] = useState([]);
@@ -33,6 +35,39 @@ const WinningImages = () => {
   const userName = localStorage.getItem("userName");
 
   useEffect(() => {
+    if (!isConnected()) {
+      connect(subscribeLobby);
+    }
+
+    function subscribeLobby() {
+      subscribe(`/topic/lobbies/${lobbyId}`, (data) => {
+        let subscribedPlayers = data["players"];
+        localStorage.setItem("curator", subscribedPlayers[0].userName);
+        localStorage.setItem("roundDuration", data["roundDuration"]);
+        localStorage.setItem("#players", subscribedPlayers.length);
+      });
+      subscribeChallenge();
+    }
+
+    function subscribeChallenge() {
+      subscribe(`/topic/lobbies/${lobbyId}/challenges`, (data) => {
+        console.log(data);
+        const challenge = new Challenge();
+        challenge.durationInSeconds = data["durationInSeconds"];
+        challenge.styleRequirement = data["styleRequirement"];
+        challenge.imagePrompt = data["imagePrompt"];
+        challenge.roundNr = data["roundNr"];
+        challenge.category = data["category"]
+        localStorage.setItem("challengeImage", challenge.imagePrompt.image);
+        localStorage.setItem("category", challenge.category);
+        localStorage.setItem(
+            "challengeStyle",
+            challenge.styleRequirement.style
+        );
+        navigate(`/lobbies/${lobbyId}/games/${challenge.roundNr}`);
+      });
+    }
+
     try {
       async function fetch() {
         const response = await api.get(`/lobbies/${lobbyId}/games/winners`);
@@ -49,7 +84,7 @@ const WinningImages = () => {
           "Something went wrong while fetching the winning images! See the console for details."
       );
     }
-  }, [lobbyId]);
+  }, [lobbyId, navigate]);
 
   let imageList = (
     <>
