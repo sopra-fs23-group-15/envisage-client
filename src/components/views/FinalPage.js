@@ -5,7 +5,12 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import LobbyContainer from "components/ui/LobbyContainer";
 import { Spinner } from "components/ui/Spinner";
 import "styles/views/Player.scss";
-import {connect, getChallengeForRound, isConnected, subscribe} from "helpers/stomp";
+import {
+  connect,
+  getChallengeForRound,
+  isConnected,
+  subscribe,
+} from "helpers/stomp";
 import Challenge from "../../models/Challenge";
 
 const FinalPage = () => {
@@ -17,39 +22,39 @@ const FinalPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-      if (!isConnected()){
-          connect(subscribeLobby)
-      }
+    if (!isConnected()) {
+      connect(subscribeLobby);
+    }
 
-      function subscribeLobby() {
-          subscribe(`/topic/lobbies/${lobbyId}`, (data) => {
-              let subscribedPlayers = data["players"];
-              localStorage.setItem("curator", subscribedPlayers[0].userName);
-              localStorage.setItem("roundDuration", data["roundDuration"]);
-              localStorage.setItem("#players", subscribedPlayers.length);
-              console.log(subscribedPlayers);
-          });
-          subscribeChallenge();
-      }
+    function subscribeLobby() {
+      subscribe(`/topic/lobbies/${lobbyId}`, (data) => {
+        let subscribedPlayers = data["players"];
+        localStorage.setItem("curator", subscribedPlayers[0].userName);
+        localStorage.setItem("roundDuration", data["roundDuration"]);
+        localStorage.setItem("#players", subscribedPlayers.length);
+        console.log(subscribedPlayers);
+      });
+      subscribeChallenge();
+    }
 
-      function subscribeChallenge() {
-          subscribe(`/topic/lobbies/${lobbyId}/challenges`, (data) => {
-              console.log(data);
-              const challenge = new Challenge();
-              challenge.durationInSeconds = data["durationInSeconds"];
-              challenge.styleRequirement = data["styleRequirement"];
-              challenge.imagePrompt = data["imagePrompt"];
-              challenge.roundNr = data["roundNr"];
-              localStorage.setItem("challengeImage", challenge.imagePrompt.image);
-              console.log(localStorage.getItem("challengeImage"));
-              localStorage.setItem(
-                  "challengeStyle",
-                  challenge.styleRequirement.style
-              );
-              localStorage.setItem("challengeDuration", challenge.durationInSeconds);
-              navigate(`/lobbies/${lobbyId}/games/${challenge.roundNr}`);
-          });
-      }
+    function subscribeChallenge() {
+      subscribe(`/topic/lobbies/${lobbyId}/challenges`, (data) => {
+        console.log(data);
+        const challenge = new Challenge();
+        challenge.durationInSeconds = data["durationInSeconds"];
+        challenge.styleRequirement = data["styleRequirement"];
+        challenge.imagePrompt = data["imagePrompt"];
+        challenge.roundNr = data["roundNr"];
+        localStorage.setItem("challengeImage", challenge.imagePrompt.image);
+        console.log(localStorage.getItem("challengeImage"));
+        localStorage.setItem(
+          "challengeStyle",
+          challenge.styleRequirement.style
+        );
+        localStorage.setItem("challengeDuration", challenge.durationInSeconds);
+        navigate(`/lobbies/${lobbyId}/games/${challenge.roundNr}`);
+      });
+    }
 
     async function fetchScores() {
       try {
@@ -82,32 +87,36 @@ const FinalPage = () => {
   }, [lobbyId, state.currentRound]);
 
   const visitNext = async () => {
-    navigate(`/lobbies/${lobbyId}/exhibitionPage`, {state: { currentRound: state.currentRound },});
+    navigate(`/lobbies/${lobbyId}/exhibitionPage`, {
+      state: { currentRound: state.currentRound },
+    });
   };
 
-  const visitWinningImages = async() => {
-    navigate(`/lobbies/${lobbyId}/winningimages`, {state: { currentRound: state.currentRound },});
+  const visitWinningImages = async () => {
+    navigate(`/lobbies/${lobbyId}/winningimages`, {
+      state: { currentRound: state.currentRound },
+    });
   };
 
   const goMain = async () => {
-      localStorage.removeItem("lobbyId");
-      navigate("landingPage");
-    };
+    localStorage.removeItem("lobbyId");
+    navigate("landingPage");
+  };
 
-  const restartGame = async() => {
-        try {
-              await api.post("/lobbies/" + lobbyId + "/games/restarts");
-              getChallengeForRound(lobbyId, 1, localStorage.getItem("category"));
-            } catch (error) {
-              console.error(
-                `Something went wrong while starting the game: \n${handleError(error)}`
-              );
-              console.error("Details:", error);
-              alert(
-                "Something went wrong while restarting the game! See the console for details."
-              );
-            }
-      }
+  const restartGame = async () => {
+    try {
+      await api.post("/lobbies/" + lobbyId + "/games/restarts");
+      getChallengeForRound(lobbyId, 1, localStorage.getItem("category"));
+    } catch (error) {
+      console.error(
+        `Something went wrong while starting the game: \n${handleError(error)}`
+      );
+      console.error("Details:", error);
+      alert(
+        "Something went wrong while restarting the game! See the console for details."
+      );
+    }
+  };
 
   let playersList = (
     <>
@@ -159,15 +168,25 @@ const FinalPage = () => {
             {fillPlayes()}
           </div>
           <div className="player right">
-            <Button className="E" onClick={() => visitNext()}>Visit Exhibition</Button>
-            <Button className="E" onClick={() => visitWinningImages()}>See Winning Images</Button>
-            <Button
-                disabled={localStorage.getItem("userName") !== localStorage.getItem("curator")}
-                className="E"
-                onClick={() => restartGame()}>
-                Restart a game
+            <Button className="E" onClick={() => visitNext()}>
+              Visit Exhibition
             </Button>
-            <Button className="E" onClick={() => goMain()}>Logout</Button>
+            <Button className="E" onClick={() => visitWinningImages()}>
+              See Winning Images
+            </Button>
+            <Button
+              disabled={
+                localStorage.getItem("userName") !==
+                localStorage.getItem("curator")
+              }
+              className="E"
+              onClick={() => restartGame()}
+            >
+              Restart a game
+            </Button>
+            <Button className="E" onClick={() => goMain()}>
+              Logout
+            </Button>
           </div>
         </div>
       </div>

@@ -3,18 +3,22 @@
 .slider {
     aspect-ratio: 100/128;
     position: absolute;
+    margin: 0;
     left: 19.05vw;
-    margin-top: 3.925vw;
-    width: 29.85vw;
-    font-size: 0.75rem;
+    top: 3.925vw;
+    width: 29.9vw;
+    font-size: 1vw;
     font-weight: bold;
-    text-align: right;
+    text-align: left;
     color: $secondary;
     @include landingLandscape {
         left: 28.5vh;
-        bottom: 15.5vh;
+        top: 5.874vh;
         width: 44.75vh;
-        font-size: 1.875vh;
+        font-size: 1.495vh;
+    }
+    @include phone {
+        visibility: hidden;
     }
     &.inner {
         width: 100%;
@@ -26,41 +30,71 @@
     }
     &.label {
         font-style: oblique;
-        height: 4em;
         padding: 1em;
-        margin-top: 3.887vw;
+        top: 36.7vw;
+        height: 5.5vw;
         background-color: $primary;
-        z-index: 1;
+        // z-index: 1;
         opacity: 0.75;
         @include landingLandscape {
-            bottom: 15.35vh;
+            top: 54.9vh;
+            height: 8.228vh;
         }
     }
     &.left-arrow{
+        width: fit-content;
         font-size: 3.75vw;
         text-align:left;
-        padding-top: 15vw;
+        top: 17.5vw;
         &:hover {color: mix($primary, white, 90);}
         &:active {transform: translateY(2px);}
         color: $primary;
-        z-index: 1;
+        // z-index: 1;
         cursor: pointer;
         @include landingLandscape {
             font-size: 5.625vh;
-            padding-top: 22.5vh;
+            top: 26.18vh;
         }
     }
-    &.right-arrow{
+    &.right-arrow {
+        width: fit-content;
         font-size: 3.75vw;
-        padding-top: 15vw;
+        text-align: left;
+        top: 17.5vw;
+        left: 47vw;
         &:hover {color: mix($primary, white, 90);}
         &:active {transform: translateY(2px);}
         color: $primary;
-        z-index: 1;
+        // z-index: 1;
         cursor: pointer;
         @include landingLandscape {
             font-size: 5.625vh;
-            padding-top: 22.5vh;
+            top: 26.18vh;
+            left: 70.312vh;
         }
+    }
+    &.tutorial {
+        background-image: url(../../img/game_page.png);
+        background-size: contain;
+        aspect-ratio: 1920/1080;
+        border-radius: 2em;
+        width: 125%;
+        top: 25vw;
+        left: 35vw;
+        @include landingLandscape {
+            top: 37.4vh;
+            left: 52.36vh;
+        }
+    }
+    &.switch {
+        width: fit-content;
+        cursor: pointer;
+        top: 39.9vw;
+        left: 31.25vw;
+        @include landingLandscape {
+            top: 59.69vh;
+            left: 46.75vh;
+        }
+
     }
   }

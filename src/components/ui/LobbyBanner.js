@@ -48,7 +48,9 @@ const LobbyBanner = (props) => {
       <h5>
         2. With <span>a given image and a style requirement</span>, your task is
         to{" "}
-        <span>use keywords to describe the image as creatively as possible.</span>
+        <span>
+          use keywords to describe the image as creatively as possible.
+        </span>
       </h5>
       <h5>
         3. The style requirement such as{" "}

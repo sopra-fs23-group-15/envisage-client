@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { api, handleError } from "helpers/api";
-import {useNavigate, useParams} from "react-router-dom";
-import {Button} from "components/ui/Button";
+import { useNavigate, useParams } from "react-router-dom";
+import { Button } from "components/ui/Button";
 import LobbyContainer from "components/ui/LobbyContainer";
 import LobbyBanner from "components/ui/LobbyBanner";
 import {

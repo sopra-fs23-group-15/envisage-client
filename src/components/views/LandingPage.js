@@ -12,7 +12,7 @@ const NumberInput = (props) => {
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (event) => {
-    const regex = /^[0-9]*\s*$/;
+    const regex = /^\d*\s*$/;
     const inputValue = event.target.value;
 
     if (inputValue === "" || regex.test(inputValue)) {
@@ -120,9 +120,11 @@ const LandingPage = () => {
           </Button>
         </div>
       </div>
-      <div className="login manifesto">
-        Use imagination to compete with your AI generated masterpieces
-      </div>
+      <p className="login manifesto">
+        "Captain America jumps into a splash of water, David Hockney style"
+        <br />
+        How you would draw this in the game : ⇨
+      </p>
     </BaseContainer>
   );
 };

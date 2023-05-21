@@ -21,6 +21,15 @@ const Games = () => {
   const handleInputChange = (e) => {
     const inputText = e.target.value;
     const inputCharCount = inputText.length;
+
+    const regex = /^[a-zA-Z0-9 .,?!()\n]*\s*$/;
+
+    if (!regex.test(inputText)) {
+      alert("Please don't enter any special characters.")
+      return
+    }
+
+
     if (inputCharCount > MAX_CHARS) {
       return;
     }
@@ -33,7 +42,6 @@ const Games = () => {
   };
 
   useEffect(() => {
-
     async function fetchImage() {
       try {
         const challengeImage = localStorage.getItem("challengeImage");
@@ -54,13 +62,12 @@ const Games = () => {
       }
     }
     fetchImage();
-    
+
     if (remainingTime.minutes === 0 && remainingTime.seconds === 0) {
       submitPrompt(keywordsInput);
-    }
-    else{
+    } else {
       const timer = setTimeout(() => {
-        if (remainingTime.seconds > 0) {          
+        if (remainingTime.seconds > 0) {
           setRemainingTime((prevTime) => ({
             ...prevTime,
             seconds: prevTime.seconds - 1,
@@ -75,7 +82,6 @@ const Games = () => {
 
       return () => clearTimeout(timer);
     }
-
   }, [remainingTime, lobbyId]);
 
   const submitPrompt = (keywords) => {
@@ -108,13 +114,13 @@ const Games = () => {
     }
   };
 
-
   return (
     <div className="game">
       <img className="game image" src={image} alt="" />
       <div className="game input">
         <div className="game timer">
-        0{remainingTime.minutes}:{remainingTime.seconds > 9 ? "" : "0"}{remainingTime.seconds}
+          0{remainingTime.minutes}:{remainingTime.seconds > 9 ? "" : "0"}
+          {remainingTime.seconds}
         </div>
         <div className="game input-style">
           {localStorage.getItem("challengeStyle")}

@@ -6,7 +6,7 @@ import { Spinner } from "components/ui/Spinner";
 import ImageComponent from "./Image";
 
 import "styles/views/Exhibition.scss";
-import { api } from "helpers/api";
+import {api, handleError} from "helpers/api";
 
 const WinningImages = () => {
   const [imgs, setImgs] = useState([]);
@@ -18,12 +18,16 @@ const WinningImages = () => {
     navigate("landingPage");
   };
   const goToScores = async () => {
-     navigate(`/lobbies/${lobbyId}/finalResult`, {state: { currentRound: state.currentRound },});
+    navigate(`/lobbies/${lobbyId}/finalResult`, {
+      state: { currentRound: state.currentRound },
+    });
   };
 
   const goToExhibition = async () => {
-    navigate(`/lobbies/${lobbyId}/exhibitionPage`, {state: { currentRound: state.currentRound },});
-  }
+    navigate(`/lobbies/${lobbyId}/exhibitionPage`, {
+      state: { currentRound: state.currentRound },
+    });
+  };
 
   const lobbyId = localStorage.getItem("lobbyId");
   const userName = localStorage.getItem("userName");
@@ -31,19 +35,18 @@ const WinningImages = () => {
   useEffect(() => {
     try {
       async function fetch() {
-        const response = await api.get(
-          `/lobbies/${lobbyId}/games/winners`
-        );
+        const response = await api.get(`/lobbies/${lobbyId}/games/winners`);
         console.log(response.data);
         setImgs(response.data);
       }
       fetch();
     } catch (error) {
-      return (
-        <>
-          Not implemented yet in the backend.\n
-          {error}
-        </>
+      console.error(
+          `Something went wrong while starting the game: \n${handleError(error)}`
+      );
+      console.error("Details:", error);
+      alert(
+          "Something went wrong while fetching the winning images! See the console for details."
       );
     }
   }, [lobbyId]);
@@ -55,9 +58,13 @@ const WinningImages = () => {
   );
   if (imgs) {
     imageList = (
-      <div className= " exhibition image-container">
+      <div className=" exhibition image-container">
         {imgs.map((image) => (
-          <ImageComponent className = "exhibition" url={true} image={image.image} />
+          <ImageComponent
+            className="exhibition"
+            url={true}
+            image={image.image}
+          />
         ))}
       </div>
     );
@@ -72,9 +79,15 @@ const WinningImages = () => {
             Hello <span>{userName}</span>! Visit the winning images
           </h3>
         </>
-        <Button className = "E" onClick={() => goToExhibition()}>Visit Exhibition</Button>
-        <Button className = "E" onClick={() => goToScores()}>Scoreboard</Button>
-        <Button className = "E" onClick={() => goMain()}>Logout</Button>
+        <Button className="E" onClick={() => goToExhibition()}>
+          Visit Exhibition
+        </Button>
+        <Button className="E" onClick={() => goToScores()}>
+          Scoreboard
+        </Button>
+        <Button className="E" onClick={() => goMain()}>
+          Logout
+        </Button>
       </div>
     </LobbyContainer>
   );
