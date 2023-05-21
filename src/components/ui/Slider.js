@@ -40,18 +40,17 @@ const Slider = () => {
         className="slider inner"
         style={{ backgroundImage: `url(${images[currentImg].img})` }}
       ></div>
-      <p className="slider label">
-        "Captain America jumps into a splash of water, David Hockney style"
+      <p className="slider label-before" style={tutorial? {visibility: "hidden"} : {visibility: "visible"}}>How would you draw it in the game?</p>
+      <p className="slider label-after" style={tutorial? {visibility: "visible"} : {visibility: "hidden"}}>
+        Step 1: <span>Describe the image</span> about Captain America in a short phrase such as <span>"Captain America jumping water"</span>
         <br />
-          How you would draw this in the game :
+        Step 2: Have a look at the <span>drawing style</span> we provided{` (could be an artist's name such as)`} <span>David Hockney</span>
+        <br />
+        Add flavors and voilà: <span>"Captain America doing a big splash in the river of stars, David Hockney style"</span>
       </p>
       <p className="slider switch" onClick={() => onTutorial()}>
         {tutorial ? "ⓧ" : "⇨"}
       </p>
-      <div
-        className="slider tutorial"
-        style={tutorial ? { visibility: "visible" } : { visibility: "hidden" }}
-      ></div>
       <div className="slider left-arrow" onClick={() => goToLeft()}>
         ❮
       </div>
