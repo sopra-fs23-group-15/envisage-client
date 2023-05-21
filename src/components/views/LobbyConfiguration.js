@@ -204,7 +204,7 @@ const LobbyConfiguration = () => {
       <p className="login manifesto">
         "Captain America jumps into a splash of water, David Hockney style"
         <br />
-        How to draw this : ⇨
+        How you would draw this in the game : ⇨
       </p>
     </BaseContainer>
   );
