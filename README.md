@@ -70,9 +70,11 @@ The most important views of the webapp are -
 | Landing Page | ![Landing page](src/img/docs/landingpage.png) |
 | Lobby | ![Lobby page](src/img/docs/lobby.png) |
 | Game | ![Game page](src/img/docs/game.png) |
-| Vote | ![Vote Page](src/img/docs/vote.png) |
-| Winner | ![Winner Page](src/img/docs/winner.png) |
+| Voting | ![Vote Page](src/img/docs/vote.png) |
+| Scoreboard | ![Vote Page](src/img/docs/vote.png) |
+| Winner Announcement | ![Winner Page](src/img/docs/winner.png) |
 | Exhibition | ![Exhibition](src/img/docs/exhibition.png) |
+| Winning Images | ![Exhibition](src/img/docs/winningimages.png) |
 
 ## Roadmap 
 * Play with anyone in the world by introducing waiting lobbies
