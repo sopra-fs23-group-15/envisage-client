@@ -100,7 +100,13 @@ The most important views of the webapp are -
 * Save Login info and generated images in persistent database, 
 
 # Authors and acknowledgment: 
-Marion Andermatt - @marion-an, Moritz Mohn - @moritzmohn, Nikita Amitabh - @nikita-uzh, Shantam Raj - @armsp, Xue Wang - @xueswang
+* Marion Andermatt - [marion-an](https://github.com/marion-an)
+* Moritz Mohn - [moritzmohn](https://github.com/moritzmohn)
+* Nikita Amitabh - [nikita-uzh](https://github.com/nikita-uzh)
+* Shantam Raj - [armsp](https://github.com/armsp)
+* Xue Wang - [xueswang](https://github.com/xueswang)
+
+We would also like to thank our mentor Valentin Hollenstein - [v4lentin1879](https://github.com/v4lentin1879) for supporting us throughout the project.
 
 # License: 
 [Apache-2.0 license](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/LICENSE)
