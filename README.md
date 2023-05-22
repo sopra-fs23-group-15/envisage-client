@@ -2,7 +2,7 @@
 
 ![envisageAsBanner](src/img/docs/logoAsBanner.png)
 
-## Introduction 🖼️
+## Introduction 
 In our game ENVISAGE, you and your friends can compete against each other over multiple rounds to create the best AI generated masterpieces. At the beginning of the first round, you are given a picture from the category you choose and an image style as a requirement. 
 Your task is to generate an image as close as possible to the requirements. At the end of each round, you get to vote on your favorite picture (not your own!) and the best picture is given as the prompt for the next round with a different style requirement. The process continues till the final round is completed and a winner is declared based on the accumulated votes.
 
@@ -13,68 +13,86 @@ Your task is to generate an image as close as possible to the requirements. At t
 * Hosted on GCP
 
 ## High-level components
-1. [Landing Page](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/LandingPage.js): This is the page users are greeted with when they want to play our game or click the url for our webapp. From this page users can either join an existing lobby or create a new lobby.
-2. [Lobbies](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/Lobbies.js) [[Lobby creation](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/LobbyCreation.js), [Lobby configuration](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/LobbyConfiguration.js),[Lobby after](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/LobbiesAfter.js)]: This view and the views in the brackets are similar to each other and handle various cases of the lobby view while paying the game. Lobby is essentially a collection of players, games and rounds. Different lobbies are separate from each other. LobbyCreation allows you to create a (default) lobby. LobbyConfiguration allows you to configure your lobby before you create it. Once the minimum number of players join the lobby the lobby creator can start the game. Until then they are in the lobby waiting area. Players also wait in the lobby waiting area during the process of voting - LobbiesAfter view. Unless everyone votes the game does not move forward.
-3. [Game View](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/Games.js) [[Vote View](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/VotePage.js), [Final View](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/FinalPage.js)]: Game is the most important component. It handles the timer, prompt submission and getting the challenge object. After one round until all the players have submitted their prompt, Game view navigates to Voting view where players can vote for the images they like (except their own). In this fashion, after the configured number of rounds (from Lobby configuration) are played, the players see the Final view where they see the winner and the scoreboard.
-4. [Exhibition View](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/ExhibitionPage.js) [[Winning Images view](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/WinningImages.js)]: This is the view that players can navigate to if they want to see the images that they created. WinningImages view is another similar view that players can navigate to if they instead want to see the winning images from each round.
+### [Landing Page](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/LandingPage.js): 
+This is the page users land on when they want to play our game or click the url for our webapp. From this page users can either join an existing lobby or create a new lobby.
+### [Lobbies](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/Lobbies.js) [[Lobby creation](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/LobbyCreation.js), [Lobby configuration](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/LobbyConfiguration.js), [Lobby after](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/LobbiesAfter.js)]: 
+This view and the views in the brackets are similar to each other and handle various cases of the lobby view while playing the game. Lobby is essentially a collection of players, games and rounds. Different lobbies are separate from each other. LobbyCreation allows you to create a (default) lobby. LobbyConfiguration allows you to configure your lobby before you create it. Once the minimum number of players join the lobby the lobby creator can start the game. Until then they are in the lobby waiting area. Players also wait in the lobby waiting area during the process of voting - LobbiesAfter view. Unless everyone votes the game does not move forward.
+### [Game View](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/Games.js) [[Vote View](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/VotePage.js), [Final View](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/FinalPage.js)]: 
+Game is the most important component. It handles the timer, prompt submission and getting the challenge object. After one round until all the players have submitted their prompt, Game view navigates to Voting view where players can vote for the images they like (except their own). In this fashion, after the configured number of rounds (from Lobby configuration) are played, the players see the Final view where they see the winner and the scoreboard.
+### [Exhibition View](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/ExhibitionPage.js) [[Winning Images view](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/WinningImages.js)]: 
+This is the view that players can navigate to if they want to see the images that they created. WinningImages view is another similar view that players can navigate to if they instead want to see the winning images from each round.
 
 
 ## Launch & Deployment
-**GCP Deployment**
-1. Create two projects for your client and server apps in the Google Cloud web interface.
-After successful creation of the projects, make sure to perform
-the following steps for the client and server projects, respectively.
-2. Using the navigation menu in the top left (select “More Products”), navigate to “IAM &
-Admin > Service Accounts” in your Google Cloud dashboard. Create a new service account
-and grant it “Editor” role. Next, create a key (“Actions > Manage keys > Add key > Create
-new key”) for this service account with type “JSON”.
-3. Navigate to “App Engine” and create a new “Application”. Make sure to pick a suitable
-region (e.g., “europe-west6”) and select the service account from the previous step.
-4. Next, navigate to “APIs & Services”. Enable the “Cloud Build API” and the “App Engine
-Admin API”.
-5. On GitHub, for both client and server repositories, go to “Settings > Secret and variables >
-Actions > New repository secret” tab from the menu on the left and add the content of the
-downloaded JSON service account key as GCP_SERVICE_CREDENTIALS.
-6. At this point, when you push code to your “main” branch on GitHub, it will try to automatically deploy to Google App Engine. The GitHub action which pushes your code to Google
-Cloud is configured in .github/workflows/main.yml.
-7. After your first deployment attempt, you can monitor its progress under “Actions” on
-GitHub and under “Cloud Build” on the Google Cloud Platform.
-8. Once the server is deployed successfully, make sure to copy the URL of the server applica-
-tion from the Google App Engine dashboard, add it to src/helpers/getDomain.js in
-the client repository, and re(-deploy) the client. If the server URL is incorrect or missing,
-you might see an alert “The server cannot be reached. Did you start it?” when trying to
-login.
-9. On Google Cloud, invite your team members by navigating to “IAM & Admin > IAM >
-Grant Access”. Enter the email addresses of your peers as “New Principals”.
+### Prerequisites
+Clone the client repository:
 
-**Dalle API Key**
-* Add as a secret key to GitHub on the server side - current approach: Settings -> Secrets & Variables -> Actions -> New Repository Secret
-* Another option is to use Google Secret Manager
+```git clone git@github.com:sopra-fs23-group-15/envisage-client.git```
 
-**Local Development**
-```bash
-git clone git@github.com:sopra-fs23-group-15/envisage-client.git
-cd envisage-client
-npm install
-npm run dev
-```
+For your local development environment, you will need [Node.js](https://nodejs.org). All other dependencies, including React, get installed with:
+
+```npm install```
+
+Run this command before you start your application for the first time. Next, you can start the app with:
+
+```npm run dev```
+
+After these steps you can open [http://localhost:3000](http://localhost:3000) in your browser to view it.
+
+**_Use different browsers to play the game locally_**
+
+### Testing
+Run the tests with:
+
+```npm run test```
+
+> For macOS user running into a 'fsevents' error: https://github.com/jest-community/vscode-jest/issues/423
+
+### Build
+Run ```npm run build``` to build the app.
+
+### Deployment
+The app is hosted on Google App Engine. A push to the main will automatically lead to the deployment to the Google App Engine.
 
 ## Illustrations
-The following diagram shows the flow of our interface.
+The following diagram shows the flow of our interfaces.
 
-![viewflow_diagram](src/img/docs/viewflow_diagram.png)
+<p align="center">
+  <img src="src/img/docs/viewflow_diagram.png" width="800">
+</p>
 
-The most important views of the webapp are -
-| View | Screenshot |
-| --- | --- |
-| Landing Page | ![Landing page](src/img/docs/landingpage.png) |
-| Lobby | ![Lobby page](src/img/docs/lobby.png) |
-| Game | ![Game page](src/img/docs/game.png) |
-| Voting | ![Vote Page](src/img/docs/vote.png) |
-| Scoreboard | ![Vote Page](src/img/docs/scoreboard.png) |
-| Winner Announcement | ![Winner Page](src/img/docs/winner.png) |
-| Winning Images | ![Exhibition](src/img/docs/winningimages.png) |
-| Exhibition | ![Exhibition](src/img/docs/exhibition.png) |
+<p align="center">
+  <img src="src/img/docs/landingpage.png">
+</p>
+
+<p align="center">
+  <img src="src/img/docs/lobby.png">
+</p>
+
+<p align="center">
+  <img src="src/img/docs/game.png">
+</p>
+
+<p align="center">
+  <img src="src/img/docs/vote.png">
+</p>
+
+<p align="center">
+  <img src="src/img/docs/scoreboard.png">
+</p>
+
+<p align="center">
+  <img src="src/img/docs/winner.png">
+</p>
+
+<p align="center">
+  <img src="src/img/docs/winningimages.png">
+</p>
+
+<p align="center">
+  <img src="src/img/docs/exhibition.png">
+</p>
+
 
 
 ## Roadmap 
@@ -90,7 +108,7 @@ The most important views of the webapp are -
 * Shantam Raj - [armsp](https://github.com/armsp)
 * Xue Wang - [xueswang](https://github.com/xueswang)
 
-We would also like to thank our mentor Valentin Hollenstein - [v4lentin1879](https://github.com/v4lentin1879) for supporting us throughout the project.
+We would like to thank our mentor Valentin Hollenstein - [v4lentin1879](https://github.com/v4lentin1879) for supporting us throughout the project.
 
 ## License
-[Apache-2.0 license](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/LICENSE)
+This project is licensed under [Apache-2.0 license](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/LICENSE)
