@@ -25,7 +25,7 @@ const VotePage = () => {
     }
 
     let interval;
-    interval = setInterval(fetch, 5000);
+    interval = setInterval(fetch, 1000);
     return () => clearInterval(interval);
   }, [lobbyId, roundId]);
 

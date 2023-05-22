@@ -8,6 +8,7 @@
     @include phone {
         font-size: 0.75rem;
         flex-direction: column;
+        height: min-content;
     }
     &.image {
         width: 70vw;
@@ -27,7 +28,7 @@
         width: 25vw;
         @include phone {
             width: 90%;
-            height: 100vh;
+            height: calc(100vh - 80vw);
             margin-left: 5%;
         }
     }
@@ -62,7 +63,7 @@
         padding: 0.5em;
         background: white;
         @include phone {
-            height: 20%
+            height: 40%
         }
     }
     &.timer {

@@ -7,6 +7,7 @@
         position: absolute;
         display: flex;
         flex-direction: row;
+        flex-wrap: 1;
         width: 60vw;
         top: 3vw;
         left: 21.25vw;
@@ -17,10 +18,13 @@
             left: 37.78vh;
             gap: 3.11vh;
         }
-    
-        & > * {
-            flex-wrap: 1;
-            flex-grow: 1;
+        @include phone {
+            top: -2.75%;
+            left: 2.5%;
+            width: 100%;
+            & > * {
+                flex-grow: 1;
+            }
         }
     }
     
@@ -39,12 +43,16 @@
                 width: 27.56vh;
                 height: 27.56vh;
             }
+            @include phone {
+                width: 35vw;
+                height: 35vw;
+            }
         }
     }
 
     &.button-container {
         position: absolute;
-        bottom: 12.5%;
+        bottom: 5%;
         right: 2.5%;
         display: flex;
         flex-direction: column;
@@ -55,12 +63,19 @@
         height: 12.5em;
         background-color: rgba($primary, 0.45);
         border-radius: 1em;
+        @include phone {
+            width: 75%;
+            bottom: 1.25%;
+        }
     }
 }
 
 .E {
     margin: 0.5em;
-    width: 50%;
+    width: 60%;
+    @include phone {
+        width: 75%;
+    }
 }
 
 h3{

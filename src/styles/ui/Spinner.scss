@@ -87,9 +87,13 @@
 
 .background {
     background-size: cover;
+    background-position: top center;
     position: fixed;
     opacity: 0.7;
     width: 100vw;
     height: 100vh;
     z-index: -1;
+    @include phone {
+        background-position: center center;
+    }
 }
