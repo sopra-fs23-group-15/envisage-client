@@ -13,7 +13,7 @@ import {
   unsubscribe,
 } from "helpers/stomp";
 import Challenge from "../../models/Challenge";
-import Alert from '@MUI/material/Alert';
+import Alert from '@mui/material/Alert';
 
 const FinalPage = () => {
   const [playerScores, setPlayerScores] = useState(null);
