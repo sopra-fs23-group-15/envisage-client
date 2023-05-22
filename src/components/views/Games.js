@@ -14,9 +14,10 @@ const Games = () => {
   const [charCount, setCharCount] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [remainingTime, setRemainingTime] = useState({
-    minutes: Math.floor(localStorage.getItem("roundDuration") / 60),
-    seconds: localStorage.getItem("roundDuration") % 60,
+    minutes: Math.floor(localStorage.getItem("remainingTime") / 60),
+    seconds: localStorage.getItem("remainingTime") % 60,
   });
+  const roundDuration = localStorage.getItem("roundDuration");
 
   const handleInputChange = (e) => {
     const inputText = e.target.value;
@@ -72,11 +73,13 @@ const Games = () => {
             ...prevTime,
             seconds: prevTime.seconds - 1,
           }));
+          localStorage.setItem("remainingTime", remainingTime.seconds + remainingTime.minutes * 60 - 1);
         } else if (remainingTime.minutes > 0) {
           setRemainingTime((prevTime) => ({
             minutes: prevTime.minutes - 1,
             seconds: 59,
           }));
+          localStorage.setItem("remainingTime", remainingTime.seconds + remainingTime.minutes * 60 - 1);
         }
       }, 1000);
 
@@ -85,6 +88,7 @@ const Games = () => {
   }, [remainingTime, lobbyId]);
 
   const submitPrompt = (keywords) => {
+    localStorage.setItem("remainingTime", roundDuration);
     if (isSubmitted === false) {
       setIsSubmitted(true);
       try {
