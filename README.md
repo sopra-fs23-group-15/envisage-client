@@ -71,7 +71,7 @@ The most important views of the webapp are -
 | Lobby | ![Lobby page](src/img/docs/lobby.png) |
 | Game | ![Game page](src/img/docs/game.png) |
 | Voting | ![Vote Page](src/img/docs/vote.png) |
-| Scoreboard | ![Vote Page](src/img/docs/vote.png) |
+| Scoreboard | ![Vote Page](src/img/docs/scoreboard.png) |
 | Winner Announcement | ![Winner Page](src/img/docs/winner.png) |
 | Winning Images | ![Exhibition](src/img/docs/winningimages.png) |
 | Exhibition | ![Exhibition](src/img/docs/exhibition.png) |
