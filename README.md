@@ -92,10 +92,10 @@ The most important views of the webapp are -
 | Exhibition | ![Exhibition](src/img/docs/exhibition.png) |
 
 # Roadmap 
-* Friend Mode vs Anyone in the World mode where people could choose to only play with friends (need lobby id) or with anyone (no need for lobbyid, but then waiting lobbies need to be published on some view)
+* Play with anyone in the world by introducing waiting lobbies
 * Ability to download your images
-* Save Login info and generated images in persistent database
-* Disappearing Mode (images disappear after a while and are not displayed for the whole round duration)
+* Accounts to save player stats and their generated images
+* Disappearing Mode (images disappear after a while and are not displayed for the entire round duration)
 
 # Authors and acknowledgment 
 * Marion Andermatt - [marion-an](https://github.com/marion-an)
