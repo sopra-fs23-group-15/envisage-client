@@ -6,15 +6,37 @@ import { Spinner } from "components/ui/Spinner";
 import ImageComponent from "./Image";
 
 import "styles/views/Exhibition.scss";
-import { api } from "helpers/api";
+import {api, handleError} from "helpers/api";
+import {connect, isConnected, subscribe, unsubscribe} from "../../helpers/stomp";
+import Challenge from "../../models/Challenge";
 
 const ExhibitionPage = () => {
   const [imgs, setImgs] = useState([]);
   const navigate = useNavigate();
   const { state } = useLocation();
 
-  const goMain = async () => {
+  const goMain = () => {
+    try{
+      api.delete(`/lobbies/${lobbyId}/${localStorage.getItem("userName")}`)
+    } catch (error) {
+      console.error(
+          `Something went wrong while leaving the game: \n${handleError(error)}`
+      );
+      console.error("Details:", error);
+      alert(
+          "Something went wrong while leaving the game."
+      );
+    }
+    localStorage.removeItem("curator");
+    localStorage.removeItem("roundDuration");
+    localStorage.removeItem("#players");
+    localStorage.removeItem("challengeImage");
+    localStorage.removeItem("category");
+    localStorage.removeItem("userName");
     localStorage.removeItem("lobbyId");
+    localStorage.removeItem("player");
+    unsubscribe(`/topic/lobbies/${lobbyId}/challenges`);
+    unsubscribe(`/topic/lobbies/${lobbyId}`);
     navigate("landingPage");
   };
   const visitWinningImages = async () => {
@@ -32,6 +54,39 @@ const ExhibitionPage = () => {
   const userName = localStorage.getItem("userName");
 
   useEffect(() => {
+    if (!isConnected()) {
+      connect(subscribeLobby);
+    }
+
+    function subscribeLobby() {
+      subscribe(`/topic/lobbies/${lobbyId}`, (data) => {
+        let subscribedPlayers = data["players"];
+        localStorage.setItem("curator", subscribedPlayers[0].userName);
+        localStorage.setItem("roundDuration", data["roundDuration"]);
+        localStorage.setItem("#players", subscribedPlayers.length);
+      });
+      subscribeChallenge();
+    }
+
+    function subscribeChallenge() {
+      subscribe(`/topic/lobbies/${lobbyId}/challenges`, (data) => {
+        console.log(data);
+        const challenge = new Challenge();
+        challenge.durationInSeconds = data["durationInSeconds"];
+        challenge.styleRequirement = data["styleRequirement"];
+        challenge.imagePrompt = data["imagePrompt"];
+        challenge.roundNr = data["roundNr"];
+        challenge.category = data["category"]
+        localStorage.setItem("challengeImage", challenge.imagePrompt.image);
+        localStorage.setItem("category", challenge.category);
+        localStorage.setItem(
+            "challengeStyle",
+            challenge.styleRequirement.style
+        );
+        navigate(`/lobbies/${lobbyId}/games/${challenge.roundNr}`);
+      });
+    }
+
     try {
       async function fetch() {
         const response = await api.get(
@@ -44,7 +99,7 @@ const ExhibitionPage = () => {
     } catch (error) {
       return { error };
     }
-  }, [lobbyId, userName]);
+  }, [lobbyId, userName, navigate]);
 
   let imageList = (
     <>

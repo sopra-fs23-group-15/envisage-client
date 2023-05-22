@@ -3,13 +3,14 @@ import { api, handleError } from "helpers/api";
 import { Button } from "components/ui/Button";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import LobbyContainer from "components/ui/LobbyContainer";
-import { Spinner } from "components/ui/Spinner";
 import "styles/views/Player.scss";
 import {
   connect,
   getChallengeForRound,
   isConnected,
+  notifyLobbyJoin,
   subscribe,
+  unsubscribe,
 } from "helpers/stomp";
 import Challenge from "../../models/Challenge";
 import Alert from '@MUI/material/Alert';
@@ -33,7 +34,6 @@ const FinalPage = () => {
         localStorage.setItem("curator", subscribedPlayers[0].userName);
         localStorage.setItem("roundDuration", data["roundDuration"]);
         localStorage.setItem("#players", subscribedPlayers.length);
-        console.log(subscribedPlayers);
       });
       subscribeChallenge();
     }
@@ -46,13 +46,13 @@ const FinalPage = () => {
         challenge.styleRequirement = data["styleRequirement"];
         challenge.imagePrompt = data["imagePrompt"];
         challenge.roundNr = data["roundNr"];
+        challenge.category = data["category"];
         localStorage.setItem("challengeImage", challenge.imagePrompt.image);
-        console.log(localStorage.getItem("challengeImage"));
+        localStorage.setItem("category", challenge.category);
         localStorage.setItem(
           "challengeStyle",
           challenge.styleRequirement.style
         );
-        localStorage.setItem("challengeDuration", challenge.durationInSeconds);
         navigate(`/lobbies/${lobbyId}/games/${challenge.roundNr}`);
       });
     }
@@ -60,6 +60,7 @@ const FinalPage = () => {
     async function fetchScores() {
       try {
         const response = await api.get("/lobbies/" + lobbyId + "/games");
+        console.log(response);
         setPlayerScores(response.data.playerScores);
 
         let votes = 0;
@@ -84,9 +85,9 @@ const FinalPage = () => {
       }
     }
     let interval;
-    interval = setInterval(fetchScores, 5000);
+    interval = setInterval(fetchScores, 1000);
     return () => clearInterval(interval);
-  }, [lobbyId, state.currentRound]);
+  }, [lobbyId, state.currentRound, navigate]);
 
   const visitNext = async () => {
     navigate(`/lobbies/${lobbyId}/exhibitionPage`, {
@@ -100,34 +101,49 @@ const FinalPage = () => {
     });
   };
 
-  const goMain = async () => {
+  const goMain = () => {
+    try {
+      api.delete(`/lobbies/${lobbyId}/${localStorage.getItem("userName")}`);
+    } catch (error) {
+      console.error(
+        `Something went wrong while leaving the game: \n${handleError(error)}`
+      );
+      console.error("Details:", error);
+      alert("Something went wrong while leaving the game.");
+    }
+    localStorage.removeItem("curator");
+    localStorage.removeItem("roundDuration");
+    localStorage.removeItem("#players");
+    localStorage.removeItem("challengeImage");
+    localStorage.removeItem("category");
+    localStorage.removeItem("userName");
     localStorage.removeItem("lobbyId");
+    localStorage.removeItem("player");
+    unsubscribe(`/topic/lobbies/${lobbyId}/challenges`);
+    unsubscribe(`/topic/lobbies/${lobbyId}`);
     navigate("landingPage");
   };
 
   const restartGame = async () => {
     try {
       await api.post("/lobbies/" + lobbyId + "/games/restarts");
+      notifyLobbyJoin(lobbyId);
       getChallengeForRound(lobbyId, 1, localStorage.getItem("category"));
     } catch (error) {
       console.error(
-        `Something went wrong while starting the game: \n${handleError(error)}`
+        `Something went wrong while restarting the game: \n${handleError(
+          error
+        )}`
       );
       console.error("Details:", error);
       alert(
-        "Something went wrong while restarting the game! See the console for details."
+        "Not enough players are left in your lobby to restart the game." +
+          "If you want to play again, create a new lobby."
       );
     }
   };
 
-  let playersList = (
-    <>
-      <Spinner
-        backgroundImage={"url(img/lobbyLg)"}
-        manifesto="Leaderboard after final round comes in 5 seconds"
-      />
-    </>
-  );
+  let playersList = <LobbyContainer />;
 
   if (playerScores) {
     playerScores.sort((a, b) => b.score - a.score);
@@ -176,14 +192,7 @@ const FinalPage = () => {
             <Button className="E" onClick={() => visitWinningImages()}>
               See Winning Images
             </Button>
-            <Button
-              disabled={
-                localStorage.getItem("userName") !==
-                localStorage.getItem("curator")
-              }
-              className="E"
-              onClick={() => restartGame()}
-            >
+            <Button className="E" onClick={() => restartGame()}>
               Restart a game
             </Button>
             <Button className="E" onClick={() => goMain()}>

@@ -121,8 +121,8 @@ const LandingPage = () => {
         </div>
       </div>
       <p className="login manifesto">
-        "Captain America jumps into a splash of water, David Hockney style"
-        <br />
+        {/* "Captain America jumps into a splash of water, David Hockney style"
+        <br /> */}
         How you would draw this in the game : ⇨
       </p>
     </BaseContainer>
