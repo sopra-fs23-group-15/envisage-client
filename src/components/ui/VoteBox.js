@@ -8,7 +8,7 @@ const VoteBox = (props) => {
         className="vote box-click"
         onClick={() => {
           props.renderFalse();
-          props.handleImageClick();
+          // props.handleImageClick();
         }}
       >
         ⓧ

@@ -18,7 +18,7 @@ const images = [
 
 const Slider = () => {
   const [currentImg, setCurrentImg] = useState(4);
-  const [tutorial, setTutorial] = useState(false);
+  const [tutorial, setTutorial] = useState(0);
 
   const goToLeft = () => {
     const newIndex = currentImg === 0 ? images.length - 1 : currentImg - 1;
@@ -30,8 +30,12 @@ const Slider = () => {
     setCurrentImg(newIndex);
   };
 
-  const onTutorial = () => {
-    setTutorial((prev) => !prev);
+  const switchTutorial = () => {
+    if (tutorial < 3) {
+      setTutorial((prev) => prev + 1);
+    } else {
+      setTutorial(0);
+    }
   };
 
   return (
@@ -40,16 +44,44 @@ const Slider = () => {
         className="slider inner"
         style={{ backgroundImage: `url(${images[currentImg].img})` }}
       ></div>
-      <p className="slider label-before" style={tutorial? {visibility: "hidden"} : {visibility: "visible"}}>How would you draw it in the game?</p>
-      <p className="slider label-after" style={tutorial? {visibility: "visible"} : {visibility: "hidden"}}>
-        Step 1: <span>Describe the image</span> about Captain America in a short phrase such as <span>"Captain America jumps in water"</span>
-        <br />
-        Step 2: Have a look at the <span>drawing style</span> we provided{` (could be an artist's name such as)`} <span>David Hockney</span>
-        <br />
-        Add flavors and voilà: <span>"Captain America doing a big splash in the river of stars, David Hockney style"</span>
+      <p
+        className="slider label-before"
+        style={tutorial ? { visibility: "hidden" } : { visibility: "visible" }}
+      >
+        How would you draw it in the game?
       </p>
-      <p className="slider switch" onClick={() => onTutorial()}>
-        {tutorial ? "ⓧ" : "⇨"}
+      <p
+        className="slider label-after"
+        style={
+          tutorial === 1 ? { visibility: "visible" } : { visibility: "hidden" }
+        }
+      >
+        Step 1: <span>Describe the image</span> about Captain America in a short
+        phrase such as <span>"Captain America jumps in water"</span>
+      </p>
+      <p
+        className="slider label-after"
+        style={
+          tutorial === 2 ? { visibility: "visible" } : { visibility: "hidden" }
+        }
+      >
+        Step 2: Have a look at the <span>drawing style</span> we provided
+        {` (could be an artist's name such as)`} <span>David Hockney</span>
+      </p>
+      <p
+        className="slider label-after"
+        style={
+          tutorial === 3 ? { visibility: "visible" } : { visibility: "hidden" }
+        }
+      >
+        Add flavors and voilà:{" "}
+        <span>
+          "Captain America doing a big splash in the river of stars, David
+          Hockney style"
+        </span>
+      </p>
+      <p className="slider switch" onClick={() => switchTutorial()}>
+        {tutorial === 3 ? "ⓧ" : "⇨"}
       </p>
       <div className="slider left-arrow" onClick={() => goToLeft()}>
         ❮

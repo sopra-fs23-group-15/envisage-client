@@ -118,6 +118,9 @@ span {
         &.right > :first-child {
             width: 60%;
             margin-bottom: 1em;
+            @include phone {
+                width: 100%;
+            }
         }
     }
     &.special {
