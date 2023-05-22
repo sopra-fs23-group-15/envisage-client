@@ -1,11 +1,12 @@
 # Introduction
-ENVISAGE, our multiplayer AI game that combines creativity, fine arts knowledge, and friendly competition. With our webapp, you and your friends can generate unique images using AI technology. Whether you're an artist or simply seeking entertainment, our game offers hours of fun and inspiration. Visit our webapp now to curate your creative masterpieces!
-OR
-Looking for a fun and exciting way to challenge your friends while also unleashing your creativity and knowledge of fine arts? Look no further than our new multiplayer AI game - ENVISAGE! 
-With our webapp, you and your friends can compete against each other to generate unique and creative images using the latest in AI technology. Whether you're a seasoned artist or just looking for a fun way to pass the time, our game is sure to provide hours of entertainment and inspiration. So why wait? Visit our webapp today and be your own curator of your creative masterpieces!
+In our game ENVISAGE, you and your friends can compete against each other over multiple rounds to create the best AI generated masterpieces. At the beginning of the first round, you are given a picture from the category you choose and an image style as a requirement. 
+Your task is to generate an image as close as possible to the requirements. At the end of each round, you get to vote on your favorite picture (not your own!) and the best picture is given as the prompt for the next round with a different style requirement. The process continues till the final round is completed and a winner is declared based on the accumulated votes.
 
 # Technologies used
-React, CSS (from scratch), HTML, stomp (websockets), GCP - hosting platform, GitHub Actions - Continuous Integration and Deployment
+* Frontend: React, CSS, HTML
+* Backend: Stomp (websockets)
+* API: DALL-E, Met Collection API
+* Hosted on GCP
 
 # High-level components: 
 1. [Landing Page](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/LandingPage.js): This is the page users are greeted with when they want to play our game or click the url for our webapp. From this page users can either join an existing lobby or create a new lobby.
@@ -16,7 +17,6 @@ React, CSS (from scratch), HTML, stomp (websockets), GCP - hosting platform, Git
 
 # Launch & Deployment: 
 **GCP Deployment**
-
 1. Create two projects for your client and server apps in the Google Cloud web interface.
 After successful creation of the projects, make sure to perform
 the following steps for the client and server projects, respectively.
@@ -44,13 +44,10 @@ login.
 Grant Access”. Enter the email addresses of your peers as “New Principals”.
 
 **Dalle API Key**
-
 * Add as a secret key to GitHub on the server side - current approach: Settings -> Secrets & Variables -> Actions -> New Repository Secret
-
 * Another option is to use Google Secret Manager
 
 **Local Development**
-
 ```bash
 git clone git@github.com:sopra-fs23-group-15/envisage-client.git
 cd envisage-client
