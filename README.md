@@ -1,6 +1,4 @@
 # Introduction
-ENVISAGE, our multiplayer AI game that combines creativity, fine arts knowledge, and friendly competition. With our webapp, you and your friends can generate unique images using AI technology. Whether you're an artist or simply seeking entertainment, our game offers hours of fun and inspiration. Visit our webapp now to curate your creative masterpieces!
-OR
 Looking for a fun and exciting way to challenge your friends while also unleashing your creativity and knowledge of fine arts? Look no further than our new multiplayer AI game - ENVISAGE! 
 With our webapp, you and your friends can compete against each other to generate unique and creative images using the latest in AI technology. Whether you're a seasoned artist or just looking for a fun way to pass the time, our game is sure to provide hours of entertainment and inspiration. So why wait? Visit our webapp today and be your own curator of your creative masterpieces!
 
