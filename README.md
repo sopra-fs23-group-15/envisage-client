@@ -73,8 +73,9 @@ The most important views of the webapp are -
 | Voting | ![Vote Page](src/img/docs/vote.png) |
 | Scoreboard | ![Vote Page](src/img/docs/vote.png) |
 | Winner Announcement | ![Winner Page](src/img/docs/winner.png) |
-| Exhibition | ![Exhibition](src/img/docs/exhibition.png) |
 | Winning Images | ![Exhibition](src/img/docs/winningimages.png) |
+| Exhibition | ![Exhibition](src/img/docs/exhibition.png) |
+
 
 ## Roadmap 
 * Play with anyone in the world by introducing waiting lobbies
