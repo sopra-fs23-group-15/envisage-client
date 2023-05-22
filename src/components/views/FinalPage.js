@@ -12,6 +12,7 @@ import {
   subscribe,
 } from "helpers/stomp";
 import Challenge from "../../models/Challenge";
+import Alert from '@MUI/material/Alert';
 
 const FinalPage = () => {
   const [playerScores, setPlayerScores] = useState(null);
@@ -76,9 +77,10 @@ const FinalPage = () => {
         );
         console.error("details:", error);
 
-        alert(
+        /*alert(
           "something went wrong while fetching the users! see the console for details."
-        );
+        ); */
+        <Alert>Something went wrong while fetching the users! see the console for details.</Alert>
       }
     }
     let interval;
