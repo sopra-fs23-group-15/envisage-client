@@ -90,6 +90,7 @@
     padding: 1em;
     @include phone {
       left: 26vw;
+      width: calc(100vw - 26vw);
       visibility: visible;
     }
     }

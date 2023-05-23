@@ -155,24 +155,45 @@ const FinalPage = () => {
       return rows;
     };
 
+    let records = playerScores.map((playerScore) => playerScore.score);
+    let noneWinners = records.slice(1).filter((n) => ![records[0]].includes(n));
+    let winners = playerScores.slice(
+      0,
+      playerScores.length - noneWinners.length
+    );
+    noneWinners = playerScores.filter((n) => !winners.includes(n));
+
     playersList = (
       <div>
         <div
-          className="player winner"
+          className="player winner-before"
+          style={
+            allvotes ? { visibility: "hidden" } : { visibility: "visible" }
+          }
+        >
+          Hang on a second... Please wait until everyone has voted to see the
+          final winner!
+        </div>
+        <div
+          className="player winner-after"
           style={
             allvotes ? { visibility: "visible" } : { visibility: "hidden" }
           }
         >
-          {playerScores[0].score === playerScores[1].score ||
-          (playerScores[0].score === playerScores[1].score) ===
-            playerScores[2].score
-            ? `Congratulations to our multiple winners, what a day!`
+          {winners.length > 1
+            ? `We have multiple winners, what a wonderful day!`
             : `Congratulations! ${playerScores[0].player} is our winner`}
         </div>
         <div className="player down">
           <div className="player round"></div>
           <div className="player left">
-            {playerScores.map((playerScore) => (
+            {winners.map((playerScore) => (
+              <div className="player row winner">
+                <div>{playerScore.player}</div>
+                <div>{playerScore.score}</div>
+              </div>
+            ))}
+            {noneWinners.map((playerScore) => (
               <div className="player row">
                 <div>{playerScore.player}</div>
                 <div>{playerScore.score}</div>
