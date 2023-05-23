@@ -7,9 +7,11 @@ import { Button } from "components/ui/Button";
 import Slider from "components/ui/Slider";
 import { disconnect, isConnected } from "helpers/stomp";
 import "styles/views/Login.scss";
+import Alert from "@mui/material/Alert";
 
 const NumberInput = (props) => {
   const [inputValue, setInputValue] = useState("");
+  let [alert, setAlert] = useState(<div className="alertMsg"></div>);
 
   const handleInputChange = (event) => {
     const regex = /^\d*\s*$/;
@@ -19,7 +21,7 @@ const NumberInput = (props) => {
       setInputValue(inputValue);
       props.onChange(inputValue);
     } else {
-      alert("Please enter only numbers");
+      setAlert(<Alert className="alertMsg" severity="error">Please enter only numbers.</Alert>);
     }
   };
 
@@ -62,6 +64,7 @@ const LandingPage = () => {
   const [userName, setUsername] = useState("");
   const [lobbyId, setLobbyId] = useState("");
   const navigate = useNavigate();
+  let [alert, setAlert] = useState(<div className="adduser alert"></div>)
 
   useEffect(() => {
     if (isConnected()) {
@@ -72,6 +75,7 @@ const LandingPage = () => {
     setLobbyId(pin);
   };
   const addUser = async () => {
+
     try {
       const requestBody = JSON.stringify({ userName });
       console.log(requestBody);
@@ -82,9 +86,7 @@ const LandingPage = () => {
       localStorage.setItem("lobbyId", parseInt(lobbyId));
       navigate(`/lobbies/${lobbyId}`);
     } catch (error) {
-      alert(
-        `Something went wrong when joining the lobby: \n${handleError(error)}`
-      );
+      setAlert(<Alert className="adduser alert" severity="error">Something went wrong when joining the lobby: \n${handleError(error)}></Alert>);
     }
   };
 
@@ -121,8 +123,6 @@ const LandingPage = () => {
         </div>
       </div>
       <p className="login manifesto">
-        {/* "Captain America jumps into a splash of water, David Hockney style"
-        <br /> */}
         How you would draw this in the game : ⇨
       </p>
     </BaseContainer>
