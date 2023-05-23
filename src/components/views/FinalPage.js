@@ -78,10 +78,7 @@ const FinalPage = () => {
         );
         console.error("details:", error);
 
-        /*alert(
-          "something went wrong while fetching the users! see the console for details."
-        ); */
-        <Alert>Something went wrong while fetching the users! see the console for details.</Alert>
+        return (<Alert>Something went wrong while fetching the users! see the console for details.</Alert>);
       }
     }
     let interval;
@@ -109,7 +106,7 @@ const FinalPage = () => {
         `Something went wrong while leaving the game: \n${handleError(error)}`
       );
       console.error("Details:", error);
-      alert("Something went wrong while leaving the game.");
+      return (<Alert>Something went wrong while leaving the game.</Alert>);
     }
     localStorage.removeItem("curator");
     localStorage.removeItem("roundDuration");
@@ -136,10 +133,8 @@ const FinalPage = () => {
         )}`
       );
       console.error("Details:", error);
-      alert(
-        "Not enough players are left in your lobby to restart the game." +
-          "If you want to play again, create a new lobby."
-      );
+      return (<Alert>Not enough players are left in your lobby to restart the game.
+        If you want to play again, create a new lobby.</Alert>);
     }
   };
 
@@ -168,9 +163,9 @@ const FinalPage = () => {
             allvotes ? { visibility: "visible" } : { visibility: "hidden" }
           }
         >
-          {playerScores[0].player === playerScores[1].player ||
-          (playerScores[0].player === playerScores[1].player) ===
-            playerScores[2].player
+          {playerScores[0].score === playerScores[1].score ||
+          (playerScores[0].score === playerScores[1].score) ===
+            playerScores[2].score
             ? `Congratulations to our multiple winners, what a day!`
             : `Congratulations! ${playerScores[0].player} is our winner`}
         </div>
