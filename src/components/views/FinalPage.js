@@ -163,13 +163,22 @@ const FinalPage = () => {
         <div
           className="player winner"
           style={
+            allvotes ? { visibility: "hidden" } : { visibility: "visible" }
+          }
+        >
+          Hang on a second... please wait until everyone has voted to see the
+          winner
+        </div>
+        <div
+          className="player winner"
+          style={
             allvotes ? { visibility: "visible" } : { visibility: "hidden" }
           }
         >
           {playerScores[0].player === playerScores[1].player ||
           (playerScores[0].player === playerScores[1].player) ===
             playerScores[2].player
-            ? `Congratulations to our multiple winners, what a day!`
+            ? `Congratulations to our multiple winners, what a wonderful day!`
             : `Congratulations! ${playerScores[0].player} is our winner`}
         </div>
         <div className="player down">
