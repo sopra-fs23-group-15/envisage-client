@@ -186,7 +186,11 @@ const LobbiesAfter = () => {
                   : { backgroundImage: "none" }
               }
             >
-              Behold the round winner!
+              {allvotes
+                ? winners.length === 1
+                  ? `Behold the round winner!`
+                  : `It's a tie for the round winner! This is the lucky randomized winning image!`
+                : `The round winner will come soon...`}
             </div>
           </div>
         </div>

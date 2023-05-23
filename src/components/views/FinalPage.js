@@ -174,8 +174,8 @@ const FinalPage = () => {
             allvotes ? { visibility: "hidden" } : { visibility: "visible" }
           }
         >
-          Hang on a second... please wait until everyone has voted to see the
-          winner
+          Hang on a second... Please wait until everyone has voted to see the
+          final winner!
         </div>
         <div
           className="player winner-after"
