@@ -30,6 +30,7 @@ const VotePage = () => {
   }, [lobbyId, roundId]);
 
   const renderTrue = (image, index) => {
+    // console.log(image);
     setSelectedImage(image);
     setSelectedIndex(index);
     setRenderBox(true);
@@ -37,11 +38,13 @@ const VotePage = () => {
 
   const renderFalse = () => {
     setRenderBox(false);
+    setSelectedImage(null);
+    setSelectedIndex(null);
   };
 
-  const handleImageClick = () => {
-    setSelectedImage(true);
-  };
+  // const handleImageClick = () => {
+  //   setSelectedImage(true);//should be false or null NOT true
+  // };
 
   const getNumberRounds = async () => {
     try {
@@ -122,13 +125,13 @@ const VotePage = () => {
                     console.log("clicked on image " + image.id);
                     console.log(image.player);
                   }}
-                  selected={selectedImage === image.image}
+                  selected={selectedIndex === image.id}
                 />
                 {renderBox && selectedIndex === image.id && (
                   <VoteBox
                     renderFalse={renderFalse}
                     handleVoteClick={handleVoteClick}
-                    handleImageClick={handleImageClick}
+                    // handleImageClick={handleImageClick}//remove selection around image
                     selectedImage={selectedImage}
                     playerName={image.player}
                     imageId={image.id}

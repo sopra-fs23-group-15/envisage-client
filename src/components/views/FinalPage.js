@@ -13,6 +13,7 @@ import {
   unsubscribe,
 } from "helpers/stomp";
 import Challenge from "../../models/Challenge";
+import Alert from '@mui/material/Alert';
 
 const FinalPage = () => {
   const [playerScores, setPlayerScores] = useState(null);
@@ -77,9 +78,7 @@ const FinalPage = () => {
         );
         console.error("details:", error);
 
-        alert(
-          "something went wrong while fetching the users! see the console for details."
-        );
+        return (<Alert>Something went wrong while fetching the users! see the console for details.</Alert>);
       }
     }
     let interval;
@@ -107,7 +106,7 @@ const FinalPage = () => {
         `Something went wrong while leaving the game: \n${handleError(error)}`
       );
       console.error("Details:", error);
-      alert("Something went wrong while leaving the game.");
+      return (<Alert>Something went wrong while leaving the game.</Alert>);
     }
     localStorage.removeItem("curator");
     localStorage.removeItem("roundDuration");
@@ -134,10 +133,8 @@ const FinalPage = () => {
         )}`
       );
       console.error("Details:", error);
-      alert(
-        "Not enough players are left in your lobby to restart the game." +
-          "If you want to play again, create a new lobby."
-      );
+      return (<Alert>Not enough players are left in your lobby to restart the game.
+        If you want to play again, create a new lobby.</Alert>);
     }
   };
 
