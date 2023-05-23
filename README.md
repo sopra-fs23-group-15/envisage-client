@@ -77,42 +77,42 @@ The following diagram shows the flow of our interfaces.
  <img src="src/img/docs/viewflow_diagram.png" width="800">
 </p>
 
-### LandingPage
+### Landing Page
 <p align="center">
   <img src="src/img/docs/landingpage.png">
 </p>
 
-### Lobbies
+### Lobby
 <p align="center">
   <img src="src/img/docs/lobby.png">
 </p>
 
-### Games
+### Game
 <p align="center">
   <img src="src/img/docs/game.png">
 </p>
 
-### VotePage
+### Voting
 <p align="center">
   <img src="src/img/docs/vote.png">
 </p>
 
-### LobbiesAfter
+### Waiting Lobby
 <p align="center">
   <img src="src/img/docs/scoreboard.png">
 </p>
 
-### FinalPage
+### Winner Announcement (Final Page)
 <p align="center">
   <img src="src/img/docs/winner.png">
 </p>
 
-### WinningImages
+### Winning Images
 <p align="center">
   <img src="src/img/docs/winningimages.png">
 </p>
 
-### ExibithionPage
+### Exibithion
 <p align="center">
   <img src="src/img/docs/exhibition.png">
 </p>
