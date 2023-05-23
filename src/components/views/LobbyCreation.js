@@ -9,6 +9,7 @@ import Player from "models/Player";
 import Lobby from "models/Lobby";
 import { disconnect, isConnected } from "helpers/stomp";
 import "styles/views/Login.scss";
+import { ManifestoBanner } from "components/ui/ManifestoBanner";
 
 const FormField = (props) => {
   return (
@@ -109,11 +110,7 @@ const LobbyCreation = () => {
         </div>
       </div>
       <Slider />
-      <p className="login manifesto">
-        {/* "Captain America jumps into a splash of water, David Hockney style"
-        <br /> */}
-        How you would draw this in the game : ⇨
-      </p>
+      <ManifestoBanner />
     </BaseContainer>
   );
 };

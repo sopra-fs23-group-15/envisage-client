@@ -1,5 +1,3 @@
-import React from "react";
-
 export const Notification = (props) => {
   if (localStorage.getItem("curator") === localStorage.getItem("userName")) {
     return (
