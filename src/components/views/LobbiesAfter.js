@@ -12,6 +12,10 @@ import {
 } from "helpers/stomp";
 import "styles/views/Player.scss";
 import Challenge from "../../models/Challenge";
+import {Collapse} from "@mui/material";
+import Alert from "@mui/material/Alert";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 
 const LobbiesAfter = () => {
   const navigate = useNavigate();
@@ -21,6 +25,8 @@ const LobbiesAfter = () => {
   const { state } = useLocation();
   const [currentRound, setCurrentRound] = useState(null);
   const [allvotes, setAllvotes] = useState(false);
+  let [alert, setAlert] = useState(<div className="alertMsg"></div>);
+  let [open, setOpen] = useState(true);
 
   useEffect(() => {
     if (!isConnected()) {
@@ -84,9 +90,22 @@ const LobbiesAfter = () => {
           )}`
         );
         console.error("details:", error);
-
-        alert(
-          "something went wrong while fetching the users! see the console for details."
+        setAlert(
+            <Collapse in={open}>
+              <Alert className="alertMsg" severity="error" action={
+                <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => {
+                      setOpen(false);
+                    }}
+                >
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>}>
+                Something went wrong while fetching the users! see the console for details.
+              </Alert>
+            </Collapse>
         );
       }
     }
@@ -110,8 +129,22 @@ const LobbiesAfter = () => {
         )}`
       );
       console.error("Details:", error);
-      alert(
-        "Something went wrong while initiating the next round! See the console for details."
+      setAlert(
+          <Collapse in={open}>
+            <Alert className="alertMsg" severity="error" action={
+              <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>}>
+              Something went wrong while initiating the next round! See the console for details.
+            </Alert>
+          </Collapse>
       );
     }
   };

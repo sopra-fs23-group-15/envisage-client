@@ -7,6 +7,10 @@ import { api, handleError } from "helpers/api";
 import { useNavigate } from "react-router-dom";
 import Player from "models/Player";
 import Lobby from "models/Lobby";
+import {Collapse} from "@mui/material";
+import Alert from "@mui/material/Alert";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 
 const options_rounds = [
   "1 round",
@@ -36,6 +40,8 @@ const LobbyConfiguration = () => {
   const navigate = useNavigate();
   const [currentCategory, setCurrentCategory] = useState(2);
   const [currentRounds, setCurrentRounds] = useState(2);
+  let [alert, setAlert] = useState(<div className="alertMsg"></div>);
+  let [open, setOpen] = useState(true);
 
   const createLobby = () => {
     localStorage.setItem("category", options_category[currentCategory]);
@@ -58,9 +64,24 @@ const LobbyConfiguration = () => {
         await addPlayer(lobbyId);
       });
     } catch (error) {
-      alert(
-        `Something went wrong when joining the lobby: \n${handleError(error)}`
-      );
+      setAlert(
+          <Collapse in={open}>
+            <Alert className="alertMsg" severity="error" action={
+              <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>}>
+              >{`Something went wrong when joining the lobby: \n${handleError(
+                error
+            )}`}
+            </Alert>
+          </Collapse>);
     }
   };
 
@@ -75,9 +96,24 @@ const LobbyConfiguration = () => {
 
       navigate(`/lobbies/${lobbyId}`);
     } catch (error) {
-      alert(
-        `Something went wrong when joining the lobby: \n${handleError(error)}`
-      );
+      setAlert(
+          <Collapse in={open}>
+            <Alert className="alertMsg" severity="error" action={
+              <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>}>
+              >{`Something went wrong when joining the lobby: \n${handleError(
+                error
+            )}`}
+            </Alert>
+          </Collapse>);
     }
   };
 

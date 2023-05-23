@@ -6,6 +6,10 @@ import VoteBox from "components/ui/VoteBox";
 import { Spinner } from "components/ui/Spinner";
 import "styles/views/Vote.scss";
 import Lobby from "../../models/Lobby";
+import {Collapse} from "@mui/material";
+import Alert from "@mui/material/Alert";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 
 const VotePage = () => {
   const [imgs, setImgs] = useState(null);
@@ -14,6 +18,8 @@ const VotePage = () => {
   const [renderBox, setRenderBox] = useState(false);
   const navigate = useNavigate();
   const { lobbyId, roundId } = useParams();
+  let [alert, setAlert] = useState(<div className="alertMsg"></div>);
+  let [open, setOpen] = useState(true);
 
   useEffect(() => {
     async function fetch() {
@@ -52,11 +58,24 @@ const VotePage = () => {
       const lobby = new Lobby(responseLobby.data);
       return lobby.numberOfRounds;
     } catch (error) {
-      alert(
-        `Something went wrong during fetching the lobby: \n${handleError(
-          error
-        )}`
-      );
+      setAlert(
+          <Collapse in={open}>
+            <Alert className="alertMsg" severity="error" action={
+              <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>}>
+              >{`Something went wrong when fetching the lobby: \n${handleError(
+                error
+            )}`}
+            </Alert>
+          </Collapse>);
     }
   };
 
@@ -86,9 +105,24 @@ const VotePage = () => {
           });
         }
       } catch (error) {
-        alert(
-          `Something went wrong during the update: \n${handleError(error)}`
-        );
+        setAlert(
+            <Collapse in={open}>
+              <Alert className="adduser alert" severity="error" action={
+                <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => {
+                      setOpen(false);
+                    }}
+                >
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>}>
+                >{`Something went wrong during the update: \n${handleError(
+                  error
+              )}`}
+              </Alert>
+            </Collapse>);
       }
     }
   };

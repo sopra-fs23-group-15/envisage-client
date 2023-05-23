@@ -9,6 +9,10 @@ import Player from "models/Player";
 import Lobby from "models/Lobby";
 import { disconnect, isConnected } from "helpers/stomp";
 import "styles/views/Login.scss";
+import {Collapse} from "@mui/material";
+import Alert from "@mui/material/Alert";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 
 const FormField = (props) => {
   return (
@@ -33,6 +37,8 @@ FormField.propTypes = {
 const LobbyCreation = () => {
   const [userName, setUsername] = useState("");
   const navigate = useNavigate();
+  let [alert, setAlert] = useState(<div className="alertMsg"></div>);
+  let [open, setOpen] = useState(true);
 
   useEffect(() => {
     if (isConnected()) {
@@ -54,9 +60,24 @@ const LobbyCreation = () => {
         await addPlayer(lobbyId);
       });
     } catch (error) {
-      alert(
-        `Something went wrong when joining the lobby: \n${handleError(error)}`
-      );
+      setAlert(
+          <Collapse in={open}>
+            <Alert className="alertMsg" severity="error" action={
+              <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>}>
+              >{`Something went wrong when joining the lobby: \n${handleError(
+                error
+            )}`}
+            </Alert>
+          </Collapse>);
     }
   };
 
@@ -70,9 +91,24 @@ const LobbyCreation = () => {
       localStorage.setItem("userName", userName);
       navigate(`/lobbies/${lobbyId}`);
     } catch (error) {
-      alert(
-        `Something went wrong when joining the lobby: \n${handleError(error)}`
-      );
+      setAlert(
+          <Collapse in={open}>
+            <Alert className="alertMsg" severity="error" action={
+              <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>}>
+              >{`Something went wrong when joining the lobby: \n${handleError(
+                error
+            )}`}
+            </Alert>
+          </Collapse>);
     }
   };
 

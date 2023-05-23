@@ -14,14 +14,18 @@ import {
 } from "helpers/stomp";
 import Challenge from "../../models/Challenge";
 import Alert from '@mui/material/Alert';
+import {Collapse} from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 
 const FinalPage = () => {
   const [playerScores, setPlayerScores] = useState(null);
   const [allvotes, setAllvotes] = useState(false);
   const { lobbyId } = useParams();
   const { state } = useLocation();
-
   const navigate = useNavigate();
+  let [alert, setAlert] = useState(<div className="alertMsg"></div>);
+  let [open, setOpen] = useState(true);
 
   useEffect(() => {
     if (!isConnected()) {
@@ -77,8 +81,23 @@ const FinalPage = () => {
           )}`
         );
         console.error("details:", error);
-
-        return (<Alert>Something went wrong while fetching the users! see the console for details.</Alert>);
+        setAlert(
+            <Collapse in={open}>
+              <Alert className="alertMsg" severity="error" action={
+                <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => {
+                      setOpen(false);
+                    }}
+                >
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>}>
+                Something went wrong while fetching the users! see the console for details.
+              </Alert>
+            </Collapse>
+        );
       }
     }
     let interval;
@@ -106,7 +125,23 @@ const FinalPage = () => {
         `Something went wrong while leaving the game: \n${handleError(error)}`
       );
       console.error("Details:", error);
-      return (<Alert>Something went wrong while leaving the game.</Alert>);
+      setAlert(
+          <Collapse in={open}>
+            <Alert className="alertMsg" severity="error" action={
+              <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>}>
+              Something went wrong while leaving the game.
+            </Alert>
+          </Collapse>
+      );
     }
     localStorage.removeItem("curator");
     localStorage.removeItem("roundDuration");
@@ -133,8 +168,24 @@ const FinalPage = () => {
         )}`
       );
       console.error("Details:", error);
-      return (<Alert>Not enough players are left in your lobby to restart the game.
-        If you want to play again, create a new lobby.</Alert>);
+      setAlert(
+          <Collapse in={open}>
+            <Alert className="alertMsg" severity="error" action={
+              <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>}>
+              Not enough players are left in your lobby to restart the game.
+              If you want to play again, create a new lobby.
+            </Alert>
+          </Collapse>
+      );
     }
   };
 
