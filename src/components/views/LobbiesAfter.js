@@ -12,10 +12,7 @@ import {
 } from "helpers/stomp";
 import "styles/views/Player.scss";
 import Challenge from "../../models/Challenge";
-import {Collapse} from "@mui/material";
-import Alert from "@mui/material/Alert";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
+import {AlertMessage} from "../ui/AlertMessage";
 
 const LobbiesAfter = () => {
   const navigate = useNavigate();
@@ -26,7 +23,6 @@ const LobbiesAfter = () => {
   const [currentRound, setCurrentRound] = useState(null);
   const [allvotes, setAllvotes] = useState(false);
   let [alert, setAlert] = useState(<div className="alertMsg"></div>);
-  let [open, setOpen] = useState(true);
 
   useEffect(() => {
     if (!isConnected()) {
@@ -85,28 +81,12 @@ const LobbiesAfter = () => {
         }
       } catch (error) {
         console.error(
-          `something went wrong while fetching the users: \n${handleError(
+          `Something went wrong while fetching the users: \n${handleError(
             error
           )}`
         );
         console.error("details:", error);
-        setAlert(
-            <Collapse in={open}>
-              <Alert className="alertMsg" severity="error" action={
-                <IconButton
-                    aria-label="close"
-                    color="inherit"
-                    size="small"
-                    onClick={() => {
-                      setOpen(false);
-                    }}
-                >
-                  <CloseIcon fontSize="inherit" />
-                </IconButton>}>
-                Something went wrong while fetching the users! see the console for details.
-              </Alert>
-            </Collapse>
-        );
+        setAlert(<AlertMessage error={`Something went wrong while fetching the users: \n${handleError(error)}`}/>);
       }
     }
     let interval;
@@ -129,23 +109,7 @@ const LobbiesAfter = () => {
         )}`
       );
       console.error("Details:", error);
-      setAlert(
-          <Collapse in={open}>
-            <Alert className="alertMsg" severity="error" action={
-              <IconButton
-                  aria-label="close"
-                  color="inherit"
-                  size="small"
-                  onClick={() => {
-                    setOpen(false);
-                  }}
-              >
-                <CloseIcon fontSize="inherit" />
-              </IconButton>}>
-              Something went wrong while initiating the next round! See the console for details.
-            </Alert>
-          </Collapse>
-      );
+      setAlert(<AlertMessage error={`Something went wrong while fetching the users: \n${handleError(error)}`}/>);
     }
   };
 
@@ -199,7 +163,6 @@ const LobbiesAfter = () => {
               style={
                 allvotes
                   ? {
-                      // visibility: "visible",
                       backgroundImage: "url(" + winner + ")",
                     }
                   : { backgroundImage: "none" }

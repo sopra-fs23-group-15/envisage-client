@@ -9,17 +9,13 @@ import "styles/views/Exhibition.scss";
 import {api, handleError} from "helpers/api";
 import {connect, isConnected, subscribe, unsubscribe} from "../../helpers/stomp";
 import Challenge from "../../models/Challenge";
-import {Collapse} from "@mui/material";
-import Alert from "@mui/material/Alert";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
+import {AlertMessage} from "../ui/AlertMessage";
 
 const ExhibitionPage = () => {
   const [imgs, setImgs] = useState([]);
   const navigate = useNavigate();
   const { state } = useLocation();
   let [alert, setAlert] = useState(<div className="alertMsg"></div>);
-  let [open, setOpen] = useState(true);
 
   const goMain = () => {
     try{
@@ -29,23 +25,7 @@ const ExhibitionPage = () => {
           `Something went wrong while leaving the game: \n${handleError(error)}`
       );
       console.error("Details:", error);
-      setAlert(
-          <Collapse in={open}>
-            <Alert className="alertMsg" severity="error" action={
-              <IconButton
-                  aria-label="close"
-                  color="inherit"
-                  size="small"
-                  onClick={() => {
-                    setOpen(false);
-                  }}
-              >
-                <CloseIcon fontSize="inherit" />
-              </IconButton>}>
-              Something went wrong while leaving the game.
-            </Alert>
-          </Collapse>
-      );
+      setAlert(<AlertMessage error={`Something went wrong while leaving the game: \n${handleError(error)}`}/>);
     }
     localStorage.removeItem("curator");
     localStorage.removeItem("roundDuration");

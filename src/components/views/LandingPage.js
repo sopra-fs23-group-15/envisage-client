@@ -7,15 +7,12 @@ import { Button } from "components/ui/Button";
 import Slider from "components/ui/Slider";
 import { disconnect, isConnected } from "helpers/stomp";
 import "styles/views/Login.scss";
-import Alert from "@mui/material/Alert";
-import {Collapse} from "@mui/material";
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
+import {AlertMessage} from "../ui/AlertMessage";
 
 const NumberInput = (props) => {
   const [inputValue, setInputValue] = useState("");
-  let [alert, setAlert] = useState(<div className="alertMsg"></div>);
-  let [open, setOpen] = useState(true);
+  const [alert, setAlert] = useState(<div className="alertMsg"></div>);
+
   const handleInputChange = (event) => {
     const regex = /^\d*\s*$/;
     const inputValue = event.target.value;
@@ -23,26 +20,8 @@ const NumberInput = (props) => {
     if (inputValue === "" || regex.test(inputValue)) {
       setInputValue(inputValue);
       props.onChange(inputValue);
-      setAlert(<div className="alertMsg"></div>);
-      setOpen(true);
     } else {
-      setAlert(
-          <Collapse in={open}>
-        <Alert className="alertMsg" severity="error" action={
-          <IconButton
-              aria-label="close"
-              color="inherit"
-              size="small"
-              onClick={() => {
-                setOpen(false);
-              }}
-          >
-            <CloseIcon fontSize="inherit" />
-          </IconButton>}>
-          Please enter only numbers.
-        </Alert>
-          </Collapse>
-      );
+      setAlert(<AlertMessage error={"Please enter only numbers."}/>);
     }
   };
 
@@ -86,8 +65,7 @@ const LandingPage = () => {
   const [userName, setUsername] = useState("");
   const [lobbyId, setLobbyId] = useState("");
   const navigate = useNavigate();
-  let [alert, setAlert] = useState(<div className="adduser alert"></div>);
-  let [open, setOpen] = useState(true);
+  const [alert, setAlert] = useState(<div className="alertMsg"></div>);
 
   useEffect(() => {
     if (isConnected()) {
@@ -106,29 +84,9 @@ const LandingPage = () => {
       console.log("Connected Lobbies: " + isConnected());
       localStorage.setItem("userName", userName);
       localStorage.setItem("lobbyId", parseInt(lobbyId));
-      // reset the Alert to an empty div
-      setAlert(<div className="alertMsg"></div>);
-      setOpen(true);
       navigate(`/lobbies/${lobbyId}`);
     } catch (error) {
-      setAlert(
-          <Collapse in={open}>
-        <Alert className="adduser alert" severity="error" action={
-          <IconButton
-              aria-label="close"
-              color="inherit"
-              size="small"
-              onClick={() => {
-                setOpen(false);
-              }}
-          >
-            <CloseIcon fontSize="inherit" />
-          </IconButton>}>
-          >{`Something went wrong when joining the lobby: \n${handleError(
-            error
-        )}`}
-        </Alert>
-      </Collapse>);
+      setAlert(<AlertMessage error={`Something went wrong when trying to join the lobby: \n${handleError(error)}`}/>);
     }
   };
 
