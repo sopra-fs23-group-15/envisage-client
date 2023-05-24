@@ -7,7 +7,7 @@ import { Button } from "components/ui/Button";
 import Slider from "components/ui/Slider";
 import { disconnect, isConnected } from "helpers/stomp";
 import "styles/views/Login.scss";
-import {AlertMessage} from "../ui/AlertMessage";
+import { AlertMessage } from "../ui/AlertMessage";
 
 const NumberInput = (props) => {
   const [inputValue, setInputValue] = useState("");
@@ -21,7 +21,10 @@ const NumberInput = (props) => {
       setInputValue(inputValue);
       props.onChange(inputValue);
     } else {
-      setAlert(<AlertMessage error={"Please enter only numbers."}/>);
+      setAlert(
+        <AlertMessage error={"Please enter only numbers."} alert={setAlert} />
+      );
+      console.log(alert);
     }
   };
 
@@ -86,7 +89,14 @@ const LandingPage = () => {
       localStorage.setItem("lobbyId", parseInt(lobbyId));
       navigate(`/lobbies/${lobbyId}`);
     } catch (error) {
-      setAlert(<AlertMessage error={`Something went wrong when trying to join the lobby: \n${handleError(error)}`}/>);
+      setAlert(
+        <AlertMessage
+          error={`Something went wrong when trying to join the lobby: \n${handleError(
+            error
+          )}`}
+          alert={setAlert}
+        />
+      );
     }
   };
 
