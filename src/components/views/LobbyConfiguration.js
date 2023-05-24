@@ -61,8 +61,7 @@ const LobbyConfiguration = () => {
       });
     } catch (error) {
       setAlert(<AlertMessage error={"Something went wrong while creating the lobby."}/>);
-    }
-  };
+    };
 
   const addPlayer = async (lobbyId) => {
     try {
@@ -179,5 +178,5 @@ const LobbyConfiguration = () => {
       </p>
     </BaseContainer>
   );
-
+};
 export default LobbyConfiguration;
