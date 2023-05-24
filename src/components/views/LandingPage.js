@@ -8,6 +8,7 @@ import Slider from "components/ui/Slider";
 import { disconnect, isConnected } from "helpers/stomp";
 import "styles/views/Login.scss";
 import { AlertMessage } from "../ui/AlertMessage";
+import { ManifestoBanner } from "components/ui/ManifestoBanner";
 
 const NumberInput = (props) => {
   const [inputValue, setInputValue] = useState("");
@@ -123,8 +124,7 @@ const LandingPage = () => {
           </Button>
         </div>
       </div>
-      <p className="login manifesto">How you would draw this in the game : ⇨</p>
-      {alert}
+      <ManifestoBanner/>
     </BaseContainer>
   );
 };

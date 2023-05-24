@@ -29,7 +29,7 @@
         opacity: 0.75;
     }
     &.label-before{
-        font-size: 1.25rem;
+        font-size: 1.125rem;
         font-style: oblique;
         padding: 0.75em;
         top: 36.7vw;
@@ -42,9 +42,9 @@
         }
     }
     &.label-after{
-        font-size: 1rem;
+        font-size: 0.875rem;
         font-style: oblique;
-        padding: 0.75em;
+        padding: 0.875em;
         top: 36.7vw;
         height: 5.5vw;
         background-color: $primary;

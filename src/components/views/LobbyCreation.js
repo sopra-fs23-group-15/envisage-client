@@ -10,6 +10,7 @@ import Lobby from "models/Lobby";
 import { disconnect, isConnected } from "helpers/stomp";
 import "styles/views/Login.scss";
 import {AlertMessage} from "../ui/AlertMessage";
+import { ManifestoBanner } from "components/ui/ManifestoBanner";
 
 const FormField = (props) => {
   return (
@@ -107,9 +108,7 @@ const LobbyCreation = () => {
         </div>
       </div>
       <Slider />
-      <p className="login manifesto">
-        How you would draw this in the game : ⇨
-      </p>
+      <ManifestoBanner />
     </BaseContainer>
   );
 };

@@ -131,6 +131,14 @@ const LobbiesAfter = () => {
       return rows;
     };
 
+    let records = playerScores.map((playerScore) => playerScore.score);
+    let noneWinners = records.slice(1).filter((n) => ![records[0]].includes(n));
+    let winners = playerScores.slice(
+      0,
+      playerScores.length - noneWinners.length
+    );
+    noneWinners = playerScores.filter((n) => !winners.includes(n));
+
     playersList = (
       <div>
         <LobbyBanner
@@ -140,7 +148,13 @@ const LobbiesAfter = () => {
         <div className="player down">
           <div className="player round">Round {state.currentRound}</div>
           <div className="player left">
-            {playerScores.map((playerScore) => (
+            {winners.map((playerScore) => (
+              <div className="player row winner">
+                <div>{playerScore.player}</div>
+                <div>{playerScore.score}</div>
+              </div>
+            ))}
+            {noneWinners.map((playerScore) => (
               <div className="player row">
                 <div>{playerScore.player}</div>
                 <div>{playerScore.score}</div>
@@ -158,17 +172,24 @@ const LobbiesAfter = () => {
             >
               Start next round
             </Button>
-            <div
-              className="player special"
-              style={
-                allvotes
-                  ? {
-                      backgroundImage: "url(" + winner + ")",
-                    }
-                  : { backgroundImage: "none" }
-              }
-            >
-              Behold the round winner!
+
+            <div className="player special">
+              {allvotes
+                ? winners.length === 1
+                  ? `This image gets the most votes!`
+                  : `We have a tie for the round winner... But this image gets the most votes!`
+                : `The round winner will come soon...`}
+              <img
+                className="player special img"
+                style={
+                  allvotes
+                    ? { visibility: "visible" }
+                    : { visibility: "hidden" }
+                }
+                src={winner}
+                alt=""
+              />
+
             </div>
           </div>
         </div>

@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import Player from "models/Player";
 import Lobby from "models/Lobby";
 import {AlertMessage} from "../ui/AlertMessage";
+import { ManifestoBanner } from "components/ui/ManifestoBanner";
 
 const options_rounds = [
   "1 round",
@@ -79,27 +80,27 @@ const LobbyConfiguration = () => {
   };
 
   const decreaseRounds = () => {
-      setCurrentRounds(currentRounds-1);
+    setCurrentRounds(currentRounds - 1);
   };
 
   const increaseRounds = () => {
-      setCurrentRounds(currentRounds+1);
+    setCurrentRounds(currentRounds + 1);
   };
 
   const decreaseCategory = () => {
-      setCurrentCategory(currentCategory-1);
+    setCurrentCategory(currentCategory - 1);
   };
 
   const increaseCategory = () => {
-      setCurrentCategory(currentCategory+1);
+    setCurrentCategory(currentCategory + 1);
   };
 
   const decreaseTimer = () => {
-      setCurrentTimer(currentTimer-interval);
+    setCurrentTimer(currentTimer - interval);
   };
 
   const increaseTimer = () => {
-      setCurrentTimer(currentTimer+interval);
+    setCurrentTimer(currentTimer + interval);
   };
 
   return (
@@ -122,7 +123,7 @@ const LobbyConfiguration = () => {
           <div> {options_category[currentCategory]} </div>
           <Button
             className="L R"
-            disabled={currentCategory === options_category.length-1}
+            disabled={currentCategory === options_category.length - 1}
             onClick={() => increaseCategory()}
           >
             ❯
@@ -142,15 +143,13 @@ const LobbyConfiguration = () => {
           <div> {options_rounds[currentRounds]} </div>
           <Button
             className="L R"
-            disabled={currentRounds === options_rounds.length-1}
+            disabled={currentRounds === options_rounds.length - 1}
             onClick={() => increaseRounds()}
           >
             +
           </Button>
         </div>
-        <div className="login selectiontitle">
-          please set the timer
-        </div>
+        <div className="login selectiontitle">please set the timer</div>
         <div className="login selector">
           <Button
             className="L L"
@@ -173,9 +172,7 @@ const LobbyConfiguration = () => {
         </Button>
       </div>
       <Slider />
-      <p className="login manifesto">
-        How you would draw this in the game : ⇨
-      </p>
+      <ManifestoBanner />
     </BaseContainer>
   );
 };
