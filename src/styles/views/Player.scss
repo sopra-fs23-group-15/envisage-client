@@ -3,7 +3,7 @@
 h3 {
     margin: 0;
     @include phone {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
     }
 }
 h3:nth-child(2){
@@ -13,7 +13,7 @@ h5{
     margin: 0;
     margin-bottom: 0.5em;
     @include phone {
-        font-size: 0.65rem;
+        font-size: 0.6rem;
     }
 }
 span {
@@ -60,12 +60,12 @@ span {
         }
     }
     &.down > :first-child {
-        font-size: 2rem;
+        font-size: 1.5rem;
         position: absolute;
         bottom: 0;
         right: 0;
         @include phone {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
         }
     }
     &.left {
@@ -109,28 +109,27 @@ span {
         }
         &.right > :first-child {
             width: 60%;
-            margin-bottom: 1em;
+            margin-bottom: 0.75em;
             @include phone {
+                margin-top: 0.75em;
                 width: 75%;
             }
         }
     }
     &.special {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         font-weight: bold;
         color: white;
-        margin-top: 1em;
-        margin-bottom: 1em;
-        padding-top: 1em;
-        padding-bottom: 1em;
-        background-size: cover;
-        background-position: top center;
         border-radius: 1em;
-        width: 100%;
+        width: 90%;
+        margin-left: 5%;
+        margin-top: 1em;
         aspect-ratio: 16/9;
         @include phone {
             margin-top: 0;
-            margin-left: 10%;
-            width: 80%;
         }
     }
     &.winner-before {
@@ -172,5 +171,16 @@ span {
     font-weight: bold;
     @include phone {
         font-size: 1rem;
+    }
+}
+.player.special.img {
+    margin-top: 1em;
+    margin-left: 0;
+    width: calc(256px * 0.5);
+    height: calc(256px * 0.5);
+    @include phone {
+        margin-top: 0.5em;
+        width: calc(256px * 0.4);
+        height: calc(256px * 0.4);
     }
 }
