@@ -9,23 +9,23 @@ import "styles/views/Exhibition.scss";
 import {api, handleError} from "helpers/api";
 import {connect, isConnected, subscribe, unsubscribe} from "../../helpers/stomp";
 import Challenge from "../../models/Challenge";
+import {AlertMessage} from "../ui/AlertMessage";
 
 const WinningImages = () => {
   const [imgs, setImgs] = useState([]);
   const { state } = useLocation();
   const navigate = useNavigate();
+  let [alert, setAlert] = useState(<div className="alertMsg"></div>);
 
   const goMain = () => {
     try{
       api.delete(`/lobbies/${lobbyId}/${localStorage.getItem("userName")}`)
     } catch (error) {
       console.error(
-          `Something went wrong while leaving the game: \n${handleError(error)}`
+          `Something went wrong when leaving the game: \n${handleError(error)}`
       );
       console.error("Details:", error);
-      alert(
-          "Something went wrong while leaving the game."
-      );
+      setAlert(<AlertMessage error={`Something went wrong when leaving the game: \n${handleError(error)}`} alert={setAlert}/>);
     }
     localStorage.removeItem("curator");
     localStorage.removeItem("roundDuration");
@@ -98,12 +98,10 @@ const WinningImages = () => {
       fetch();
     } catch (error) {
       console.error(
-          `Something went wrong while starting the game: \n${handleError(error)}`
+          `Something went wrong when fetching the winning images: \n${handleError(error)}`
       );
       console.error("Details:", error);
-      alert(
-          "Something went wrong while fetching the winning images! See the console for details."
-      );
+      setAlert(<AlertMessage error={`Something went wrong when fetching the winning images: \n${handleError(error)}`} alert={setAlert}/>);
     }
   }, [lobbyId, navigate]);
 

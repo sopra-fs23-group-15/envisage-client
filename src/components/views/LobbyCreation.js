@@ -9,6 +9,7 @@ import Player from "models/Player";
 import Lobby from "models/Lobby";
 import { disconnect, isConnected } from "helpers/stomp";
 import "styles/views/Login.scss";
+import {AlertMessage} from "../ui/AlertMessage";
 import { ManifestoBanner } from "components/ui/ManifestoBanner";
 
 const FormField = (props) => {
@@ -34,6 +35,7 @@ FormField.propTypes = {
 const LobbyCreation = () => {
   const [userName, setUsername] = useState("");
   const navigate = useNavigate();
+  let [alert, setAlert] = useState(<div className="alertMsg"></div>);
 
   useEffect(() => {
     if (isConnected()) {
@@ -55,9 +57,7 @@ const LobbyCreation = () => {
         await addPlayer(lobbyId);
       });
     } catch (error) {
-      alert(
-        `Something went wrong when joining the lobby: \n${handleError(error)}`
-      );
+      setAlert(<AlertMessage error={`Something went wrong when creating the lobby: \n${handleError(error)}`} alert={setAlert}/>);
     }
   };
 
@@ -71,9 +71,7 @@ const LobbyCreation = () => {
       localStorage.setItem("userName", userName);
       navigate(`/lobbies/${lobbyId}`);
     } catch (error) {
-      alert(
-        `Something went wrong when joining the lobby: \n${handleError(error)}`
-      );
+      setAlert(<AlertMessage error={`Something went wrong when joining the lobby: \n${handleError(error)}`} alert={setAlert}/>);
     }
   };
 

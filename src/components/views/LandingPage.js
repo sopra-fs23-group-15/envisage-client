@@ -7,10 +7,12 @@ import { Button } from "components/ui/Button";
 import Slider from "components/ui/Slider";
 import { disconnect, isConnected } from "helpers/stomp";
 import "styles/views/Login.scss";
+import { AlertMessage } from "../ui/AlertMessage";
 import { ManifestoBanner } from "components/ui/ManifestoBanner";
 
 const NumberInput = (props) => {
   const [inputValue, setInputValue] = useState("");
+  const [alert, setAlert] = useState(<div className="alertMsg"></div>);
 
   const handleInputChange = (event) => {
     const regex = /^\d*\s*$/;
@@ -20,12 +22,14 @@ const NumberInput = (props) => {
       setInputValue(inputValue);
       props.onChange(inputValue);
     } else {
-      alert("Please enter only numbers");
+      setAlert(<AlertMessage error={"Please enter only numbers."} alert={setAlert} alert={setAlert}/>);
+      console.log(alert);
     }
   };
 
   return (
     <div className="login field">
+      {alert}
       <label className="login label">{props.label}</label>
       <input
         type="text"
@@ -63,6 +67,7 @@ const LandingPage = () => {
   const [userName, setUsername] = useState("");
   const [lobbyId, setLobbyId] = useState("");
   const navigate = useNavigate();
+  const [alert, setAlert] = useState(<div className="alertMsg"></div>);
 
   useEffect(() => {
     if (isConnected()) {
@@ -83,9 +88,7 @@ const LandingPage = () => {
       localStorage.setItem("lobbyId", parseInt(lobbyId));
       navigate(`/lobbies/${lobbyId}`);
     } catch (error) {
-      alert(
-        `Something went wrong when joining the lobby: \n${handleError(error)}`
-      );
+      setAlert(<AlertMessage error={`Something went wrong when trying to join the lobby: \n${handleError(error)}`} alert={setAlert}/>);
     }
   };
 
@@ -121,7 +124,7 @@ const LandingPage = () => {
           </Button>
         </div>
       </div>
-      <ManifestoBanner />
+      <ManifestoBanner/>
     </BaseContainer>
   );
 };

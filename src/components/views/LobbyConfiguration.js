@@ -7,6 +7,7 @@ import { api, handleError } from "helpers/api";
 import { useNavigate } from "react-router-dom";
 import Player from "models/Player";
 import Lobby from "models/Lobby";
+import {AlertMessage} from "../ui/AlertMessage";
 import { ManifestoBanner } from "components/ui/ManifestoBanner";
 
 const options_rounds = [
@@ -37,6 +38,7 @@ const LobbyConfiguration = () => {
   const navigate = useNavigate();
   const [currentCategory, setCurrentCategory] = useState(2);
   const [currentRounds, setCurrentRounds] = useState(2);
+  let [alert, setAlert] = useState(<div className="alertMsg"></div>);
 
   const createLobby = () => {
     localStorage.setItem("category", options_category[currentCategory]);
@@ -59,11 +61,8 @@ const LobbyConfiguration = () => {
         await addPlayer(lobbyId);
       });
     } catch (error) {
-      alert(
-        `Something went wrong when joining the lobby: \n${handleError(error)}`
-      );
-    }
-  };
+      setAlert(<AlertMessage error={"Something went wrong while creating the lobby."} alert={setAlert}/>);
+    };
 
   const addPlayer = async (lobbyId) => {
     try {
@@ -76,9 +75,7 @@ const LobbyConfiguration = () => {
 
       navigate(`/lobbies/${lobbyId}`);
     } catch (error) {
-      alert(
-        `Something went wrong when joining the lobby: \n${handleError(error)}`
-      );
+      setAlert(<AlertMessage error={`Something went wrong when joining the lobby: \n${handleError(error)}`} alert={setAlert}/>);}
     }
   };
 
@@ -179,5 +176,4 @@ const LobbyConfiguration = () => {
     </BaseContainer>
   );
 };
-
 export default LobbyConfiguration;

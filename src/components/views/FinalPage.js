@@ -13,15 +13,15 @@ import {
   unsubscribe,
 } from "helpers/stomp";
 import Challenge from "../../models/Challenge";
-import Alert from '@mui/material/Alert';
+import {AlertMessage} from "../ui/AlertMessage";
 
 const FinalPage = () => {
   const [playerScores, setPlayerScores] = useState(null);
   const [allvotes, setAllvotes] = useState(false);
   const { lobbyId } = useParams();
   const { state } = useLocation();
-
   const navigate = useNavigate();
+  let [alert, setAlert] = useState(<div className="alertMsg"></div>);
 
   useEffect(() => {
     if (!isConnected()) {
@@ -72,13 +72,12 @@ const FinalPage = () => {
         }
       } catch (error) {
         console.error(
-          `something went wrong while fetching the users: \n${handleError(
+          `Something went wrong while fetching the users: \n${handleError(
             error
           )}`
         );
         console.error("details:", error);
-
-        return (<Alert>Something went wrong while fetching the users! see the console for details.</Alert>);
+        setAlert(<AlertMessage error={`Something went wrong while fetching the users: \n${handleError(error)}`} alert={setAlert}/>);
       }
     }
     let interval;
@@ -106,7 +105,7 @@ const FinalPage = () => {
         `Something went wrong while leaving the game: \n${handleError(error)}`
       );
       console.error("Details:", error);
-      return (<Alert>Something went wrong while leaving the game.</Alert>);
+      setAlert(<AlertMessage error={`Something went wrong while leaving the game: \n${handleError(error)}`} alert={setAlert}/>);
     }
     localStorage.removeItem("curator");
     localStorage.removeItem("roundDuration");
@@ -133,12 +132,11 @@ const FinalPage = () => {
         )}`
       );
       console.error("Details:", error);
-      return (<Alert>Not enough players are left in your lobby to restart the game.
-        If you want to play again, create a new lobby.</Alert>);
+      setAlert(<AlertMessage error={`Something went wrong while restarting the game: \n${handleError(error)}`} alert={setAlert}/>);
     }
   };
 
-  let playersList = <LobbyContainer />;
+  let playersList = <LobbyContainer/>;
 
   if (playerScores) {
     playerScores.sort((a, b) => b.score - a.score);

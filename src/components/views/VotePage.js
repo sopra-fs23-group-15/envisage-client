@@ -6,6 +6,7 @@ import VoteBox from "components/ui/VoteBox";
 import { Spinner } from "components/ui/Spinner";
 import "styles/views/Vote.scss";
 import Lobby from "../../models/Lobby";
+import {AlertMessage} from "../ui/AlertMessage";
 
 const VotePage = () => {
   const [imgs, setImgs] = useState(null);
@@ -14,6 +15,7 @@ const VotePage = () => {
   const [renderBox, setRenderBox] = useState(false);
   const navigate = useNavigate();
   const { lobbyId, roundId } = useParams();
+  let [alert, setAlert] = useState(<div className="alertMsg"></div>);
 
   useEffect(() => {
     async function fetch() {
@@ -30,7 +32,6 @@ const VotePage = () => {
   }, [lobbyId, roundId]);
 
   const renderTrue = (image, index) => {
-    // console.log(image);
     setSelectedImage(image);
     setSelectedIndex(index);
     setRenderBox(true);
@@ -42,9 +43,6 @@ const VotePage = () => {
     setSelectedIndex(null);
   };
 
-  // const handleImageClick = () => {
-  //   setSelectedImage(true);//should be false or null NOT true
-  // };
 
   const getNumberRounds = async () => {
     try {
@@ -52,11 +50,7 @@ const VotePage = () => {
       const lobby = new Lobby(responseLobby.data);
       return lobby.numberOfRounds;
     } catch (error) {
-      alert(
-        `Something went wrong during fetching the lobby: \n${handleError(
-          error
-        )}`
-      );
+      setAlert(<AlertMessage error={`Something went wrong when fetching the lobby: \n${handleError(error)}`} alert={setAlert}/>);
     }
   };
 
@@ -86,9 +80,7 @@ const VotePage = () => {
           });
         }
       } catch (error) {
-        alert(
-          `Something went wrong during the update: \n${handleError(error)}`
-        );
+        setAlert(<AlertMessage error={`Something went wrong during the update: \n${handleError(error)}`} alert={setAlert}/>);
       }
     }
   };
@@ -131,7 +123,6 @@ const VotePage = () => {
                   <VoteBox
                     renderFalse={renderFalse}
                     handleVoteClick={handleVoteClick}
-                    // handleImageClick={handleImageClick}//remove selection around image
                     selectedImage={selectedImage}
                     playerName={image.player}
                     imageId={image.id}

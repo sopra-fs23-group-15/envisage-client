@@ -14,12 +14,14 @@ import {
 import Challenge from "models/Challenge";
 import { Notification } from "components/ui/Notification";
 import "styles/views/Player.scss";
+import {AlertMessage} from "../ui/AlertMessage";
 
 const Lobbies = () => {
   const navigate = useNavigate();
   const [players, setPlayers] = useState(null);
   const [curator, setCurator] = useState(null);
   const { lobbyId } = useParams();
+  let [alert, setAlert] = useState(<div className="alertMsg"></div>);
 
   useEffect(() => {
     console.log("Connected Lobbies: " + isConnected());
@@ -76,9 +78,7 @@ const Lobbies = () => {
         `Something went wrong while starting the game: \n${handleError(error)}`
       );
       console.error("Details:", error);
-      alert(
-        "Something went wrong while starting the game! See the console for details."
-      );
+      setAlert(<AlertMessage error={`Something went wrong while starting the game: \n${handleError(error)}`} alert={setAlert}/>);
     }
   };
 

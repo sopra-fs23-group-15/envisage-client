@@ -12,6 +12,7 @@ import {
 } from "helpers/stomp";
 import "styles/views/Player.scss";
 import Challenge from "../../models/Challenge";
+import {AlertMessage} from "../ui/AlertMessage";
 
 const LobbiesAfter = () => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const LobbiesAfter = () => {
   const { state } = useLocation();
   const [currentRound, setCurrentRound] = useState(null);
   const [allvotes, setAllvotes] = useState(false);
+  let [alert, setAlert] = useState(<div className="alertMsg"></div>);
 
   useEffect(() => {
     if (!isConnected()) {
@@ -79,15 +81,12 @@ const LobbiesAfter = () => {
         }
       } catch (error) {
         console.error(
-          `something went wrong while fetching the users: \n${handleError(
+          `Something went wrong while fetching the users: \n${handleError(
             error
           )}`
         );
         console.error("details:", error);
-
-        alert(
-          "something went wrong while fetching the users! see the console for details."
-        );
+        setAlert(<AlertMessage error={`Something went wrong while fetching the users: \n${handleError(error)}`} alert={setAlert}/>);
       }
     }
     let interval;
@@ -110,9 +109,7 @@ const LobbiesAfter = () => {
         )}`
       );
       console.error("Details:", error);
-      alert(
-        "Something went wrong while initiating the next round! See the console for details."
-      );
+      setAlert(<AlertMessage error={`Something went wrong while fetching the users: \n${handleError(error)}`} alert={setAlert}/>);
     }
   };
 
@@ -175,6 +172,7 @@ const LobbiesAfter = () => {
             >
               Start next round
             </Button>
+
             <div className="player special">
               {allvotes
                 ? winners.length === 1
@@ -191,6 +189,7 @@ const LobbiesAfter = () => {
                 src={winner}
                 alt=""
               />
+
             </div>
           </div>
         </div>

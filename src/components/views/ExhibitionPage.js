@@ -9,11 +9,13 @@ import "styles/views/Exhibition.scss";
 import {api, handleError} from "helpers/api";
 import {connect, isConnected, subscribe, unsubscribe} from "../../helpers/stomp";
 import Challenge from "../../models/Challenge";
+import {AlertMessage} from "../ui/AlertMessage";
 
 const ExhibitionPage = () => {
   const [imgs, setImgs] = useState([]);
   const navigate = useNavigate();
   const { state } = useLocation();
+  let [alert, setAlert] = useState(<div className="alertMsg"></div>);
 
   const goMain = () => {
     try{
@@ -23,9 +25,7 @@ const ExhibitionPage = () => {
           `Something went wrong while leaving the game: \n${handleError(error)}`
       );
       console.error("Details:", error);
-      alert(
-          "Something went wrong while leaving the game."
-      );
+      setAlert(<AlertMessage error={`Something went wrong while leaving the game: \n${handleError(error)}`} alert={setAlert}/>);
     }
     localStorage.removeItem("curator");
     localStorage.removeItem("roundDuration");
@@ -39,6 +39,7 @@ const ExhibitionPage = () => {
     unsubscribe(`/topic/lobbies/${lobbyId}`);
     navigate("landingPage");
   };
+
   const visitWinningImages = async () => {
     navigate(`/lobbies/${lobbyId}/winningimages`, {
       state: { currentRound: state.currentRound },
