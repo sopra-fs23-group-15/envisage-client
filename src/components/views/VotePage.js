@@ -50,7 +50,7 @@ const VotePage = () => {
       const lobby = new Lobby(responseLobby.data);
       return lobby.numberOfRounds;
     } catch (error) {
-      setAlert(<AlertMessage error={`Something went wrong when fetching the lobby: \n${handleError(error)}`}/>);
+      setAlert(<AlertMessage error={`Something went wrong when fetching the lobby: \n${handleError(error)}`} alert={setAlert}/>);
     }
   };
 
@@ -80,7 +80,7 @@ const VotePage = () => {
           });
         }
       } catch (error) {
-        setAlert(<AlertMessage error={`Something went wrong during the update: \n${handleError(error)}`}/>);
+        setAlert(<AlertMessage error={`Something went wrong during the update: \n${handleError(error)}`} alert={setAlert}/>);
       }
     }
   };

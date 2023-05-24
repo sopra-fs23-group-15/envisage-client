@@ -56,7 +56,7 @@ const LobbyCreation = () => {
         await addPlayer(lobbyId);
       });
     } catch (error) {
-      setAlert(<AlertMessage error={`Something went wrong when creating the lobby: \n${handleError(error)}`}/>);
+      setAlert(<AlertMessage error={`Something went wrong when creating the lobby: \n${handleError(error)}`} alert={setAlert}/>);
     }
   };
 
@@ -70,7 +70,7 @@ const LobbyCreation = () => {
       localStorage.setItem("userName", userName);
       navigate(`/lobbies/${lobbyId}`);
     } catch (error) {
-      setAlert(<AlertMessage error={`Something went wrong when joining the lobby: \n${handleError(error)}`}/>);
+      setAlert(<AlertMessage error={`Something went wrong when joining the lobby: \n${handleError(error)}`} alert={setAlert}/>);
     }
   };
 

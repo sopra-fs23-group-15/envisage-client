@@ -77,7 +77,7 @@ const FinalPage = () => {
           )}`
         );
         console.error("details:", error);
-        setAlert(<AlertMessage error={`Something went wrong while fetching the users: \n${handleError(error)}`}/>);
+        setAlert(<AlertMessage error={`Something went wrong while fetching the users: \n${handleError(error)}`} alert={setAlert}/>);
       }
     }
     let interval;
@@ -105,7 +105,7 @@ const FinalPage = () => {
         `Something went wrong while leaving the game: \n${handleError(error)}`
       );
       console.error("Details:", error);
-      setAlert(<AlertMessage error={`Something went wrong while leaving the game: \n${handleError(error)}`}/>);
+      setAlert(<AlertMessage error={`Something went wrong while leaving the game: \n${handleError(error)}`} alert={setAlert}/>);
     }
     localStorage.removeItem("curator");
     localStorage.removeItem("roundDuration");
@@ -132,7 +132,7 @@ const FinalPage = () => {
         )}`
       );
       console.error("Details:", error);
-      setAlert(<AlertMessage error={`Something went wrong while restarting the game: \n${handleError(error)}`}/>);
+      setAlert(<AlertMessage error={`Something went wrong while restarting the game: \n${handleError(error)}`} alert={setAlert}/>);
     }
   };
 

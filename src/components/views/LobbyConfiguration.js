@@ -60,7 +60,7 @@ const LobbyConfiguration = () => {
         await addPlayer(lobbyId);
       });
     } catch (error) {
-      setAlert(<AlertMessage error={"Something went wrong while creating the lobby."}/>);
+      setAlert(<AlertMessage error={"Something went wrong while creating the lobby."} alert={setAlert}/>);
     };
 
   const addPlayer = async (lobbyId) => {
@@ -74,7 +74,7 @@ const LobbyConfiguration = () => {
 
       navigate(`/lobbies/${lobbyId}`);
     } catch (error) {
-      setAlert(<AlertMessage error={`Something went wrong when joining the lobby: \n${handleError(error)}`}/>);}
+      setAlert(<AlertMessage error={`Something went wrong when joining the lobby: \n${handleError(error)}`} alert={setAlert}/>);}
     }
   };
 

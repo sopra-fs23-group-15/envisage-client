@@ -86,7 +86,7 @@ const LobbiesAfter = () => {
           )}`
         );
         console.error("details:", error);
-        setAlert(<AlertMessage error={`Something went wrong while fetching the users: \n${handleError(error)}`}/>);
+        setAlert(<AlertMessage error={`Something went wrong while fetching the users: \n${handleError(error)}`} alert={setAlert}/>);
       }
     }
     let interval;
@@ -109,7 +109,7 @@ const LobbiesAfter = () => {
         )}`
       );
       console.error("Details:", error);
-      setAlert(<AlertMessage error={`Something went wrong while fetching the users: \n${handleError(error)}`}/>);
+      setAlert(<AlertMessage error={`Something went wrong while fetching the users: \n${handleError(error)}`} alert={setAlert}/>);
     }
   };
 

@@ -25,7 +25,7 @@ const ExhibitionPage = () => {
           `Something went wrong while leaving the game: \n${handleError(error)}`
       );
       console.error("Details:", error);
-      setAlert(<AlertMessage error={`Something went wrong while leaving the game: \n${handleError(error)}`}/>);
+      setAlert(<AlertMessage error={`Something went wrong while leaving the game: \n${handleError(error)}`} alert={setAlert}/>);
     }
     localStorage.removeItem("curator");
     localStorage.removeItem("roundDuration");

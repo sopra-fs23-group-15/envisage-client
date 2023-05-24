@@ -21,9 +21,7 @@ const NumberInput = (props) => {
       setInputValue(inputValue);
       props.onChange(inputValue);
     } else {
-      setAlert(
-        <AlertMessage error={"Please enter only numbers."} alert={setAlert} />
-      );
+      setAlert(<AlertMessage error={"Please enter only numbers."} alert={setAlert} alert={setAlert}/>);
       console.log(alert);
     }
   };
@@ -89,14 +87,7 @@ const LandingPage = () => {
       localStorage.setItem("lobbyId", parseInt(lobbyId));
       navigate(`/lobbies/${lobbyId}`);
     } catch (error) {
-      setAlert(
-        <AlertMessage
-          error={`Something went wrong when trying to join the lobby: \n${handleError(
-            error
-          )}`}
-          alert={setAlert}
-        />
-      );
+      setAlert(<AlertMessage error={`Something went wrong when trying to join the lobby: \n${handleError(error)}`} alert={setAlert}/>);
     }
   };
 
