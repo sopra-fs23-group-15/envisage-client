@@ -175,22 +175,22 @@ const LobbiesAfter = () => {
             >
               Start next round
             </Button>
-            <div
-              className="player special"
-              style={
-                allvotes
-                  ? {
-                      // visibility: "visible",
-                      backgroundImage: "url(" + winner + ")",
-                    }
-                  : { backgroundImage: "none" }
-              }
-            >
+            <div className="player special">
               {allvotes
                 ? winners.length === 1
-                  ? `Behold the round winner!`
-                  : `It's a tie for the round winner! This is the lucky randomized winning image!`
+                  ? `This image gets the most votes!`
+                  : `We have a tie for the round winner... But this image gets the most votes!`
                 : `The round winner will come soon...`}
+              <img
+                className="player special img"
+                style={
+                  allvotes
+                    ? { visibility: "visible" }
+                    : { visibility: "hidden" }
+                }
+                src={winner}
+                alt=""
+              />
             </div>
           </div>
         </div>
