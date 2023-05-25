@@ -3,7 +3,7 @@ export const Notification = (props) => {
     return (
       <>
         <div
-          className="player special"
+          className="player notification"
           style={
             props.players.length > 2
               ? { visibility: "visible" }
@@ -19,7 +19,7 @@ export const Notification = (props) => {
     return (
       <>
         <div
-          className="player special"
+          className="player notification"
           style={
             props.players.length > 2
               ? { visibility: "visible" }
