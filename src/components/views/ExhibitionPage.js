@@ -25,7 +25,7 @@ const ExhibitionPage = () => {
           `Something went wrong while leaving the game: \n${handleError(error)}`
       );
       console.error("Details:", error);
-      setAlert(<AlertMessage error={`Something went wrong while leaving the game: \n${handleError(error)}`} alert={setAlert}/>);
+      setAlert(<AlertMessage error={error.response.data.message} alert={setAlert}/>);
     }
     localStorage.removeItem("curator");
     localStorage.removeItem("roundDuration");
@@ -98,7 +98,11 @@ const ExhibitionPage = () => {
       }
       fetch();
     } catch (error) {
-      return { error };
+      console.error(
+          `Something went wrong when fetching the winning images: \n${handleError(error)}`
+      );
+      console.error("Details:", error);
+      setAlert(<AlertMessage error={error.response.data.message} alert={setAlert}/>);
     }
   }, [lobbyId, userName, navigate]);
 
@@ -131,6 +135,7 @@ const ExhibitionPage = () => {
             Hello <span>{userName}</span>! Welcome to your solo exhibition
           </h3>
         </>
+        {alert}
         <Button className="E" onClick={() => visitWinningImages()}>
           See Winning Images
         </Button>

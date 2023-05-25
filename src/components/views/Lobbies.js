@@ -78,7 +78,7 @@ const Lobbies = () => {
         `Something went wrong while starting the game: \n${handleError(error)}`
       );
       console.error("Details:", error);
-      setAlert(<AlertMessage error={`Something went wrong while starting the game: \n${handleError(error)}`} alert={setAlert}/>);
+      setAlert(<AlertMessage error={error.response.data.message} alert={setAlert}/>);
     }
   };
 
@@ -136,6 +136,7 @@ const Lobbies = () => {
             >
               Start the game
             </Button>
+            <div>{alert}</div>
             <Notification players={players} />
           </div>
         </div>

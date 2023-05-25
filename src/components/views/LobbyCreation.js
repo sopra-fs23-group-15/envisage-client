@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { api, handleError } from "helpers/api";
+import {api, handleError} from "helpers/api";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import BaseContainer from "components/ui/BaseContainer";
@@ -57,7 +57,11 @@ const LobbyCreation = () => {
         await addPlayer(lobbyId);
       });
     } catch (error) {
-      setAlert(<AlertMessage error={`Something went wrong when creating the lobby: \n${handleError(error)}`} alert={setAlert}/>);
+      console.error(
+          `Something went wrong while creating the lobby: \n${handleError(error)}`
+      );
+      console.error("Details:", error);
+      setAlert(<AlertMessage error={error.response.data.message} alert={setAlert}/>);
     }
   };
 
@@ -71,7 +75,11 @@ const LobbyCreation = () => {
       localStorage.setItem("userName", userName);
       navigate(`/lobbies/${lobbyId}`);
     } catch (error) {
-      setAlert(<AlertMessage error={`Something went wrong when joining the lobby: \n${handleError(error)}`} alert={setAlert}/>);
+      console.error(
+          `Something went wrong while adding the player: \n${handleError(error)}`
+      );
+      console.error("Details:", error);
+      setAlert(<AlertMessage error={error.response.data.message} alert={setAlert}/>);
     }
   };
 
@@ -87,6 +95,7 @@ const LobbyCreation = () => {
         <div>Drawing is describing</div>
         <div>Join a game now</div>
         <div>
+          {alert}
           <FormField
             label="please enter a username"
             value={userName}
@@ -98,6 +107,7 @@ const LobbyCreation = () => {
           <Button disabled={!userName} onClick={() => configureLobby()}>
             Configure your lobby
           </Button>
+          {alert}
           <Button disabled={!userName} onClick={() => createLobby()}>
             Start a default game
           </Button>

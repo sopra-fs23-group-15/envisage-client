@@ -86,7 +86,7 @@ const LobbiesAfter = () => {
           )}`
         );
         console.error("details:", error);
-        setAlert(<AlertMessage error={`Something went wrong while fetching the users: \n${handleError(error)}`} alert={setAlert}/>);
+        setAlert(<AlertMessage error={error.response.data.message} alert={setAlert}/>);
       }
     }
     let interval;
@@ -109,7 +109,7 @@ const LobbiesAfter = () => {
         )}`
       );
       console.error("Details:", error);
-      setAlert(<AlertMessage error={`Something went wrong while fetching the users: \n${handleError(error)}`} alert={setAlert}/>);
+      setAlert(<AlertMessage error={error.response.data.message} alert={setAlert}/>);
     }
   };
 
@@ -172,7 +172,7 @@ const LobbiesAfter = () => {
             >
               Start next round
             </Button>
-
+            <div>{alert}</div>
             <div className="player special">
               {allvotes
                 ? winners.length === 1

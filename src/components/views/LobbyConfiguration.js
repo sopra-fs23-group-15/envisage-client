@@ -3,7 +3,7 @@ import "styles/views/Login.scss";
 import BaseContainer from "components/ui/BaseContainer";
 import Slider from "components/ui/Slider";
 import { Button } from "components/ui/Button";
-import { api, handleError } from "helpers/api";
+import {api, handleError} from "helpers/api";
 import { useNavigate } from "react-router-dom";
 import Player from "models/Player";
 import Lobby from "models/Lobby";
@@ -61,8 +61,12 @@ const LobbyConfiguration = () => {
         await addPlayer(lobbyId);
       });
     } catch (error) {
+      console.error(
+          `Something went wrong while creating the lobby: \n${handleError(error)}`
+      );
+      console.error("Details:", error);
       setAlert(<AlertMessage error={"Something went wrong while creating the lobby."} alert={setAlert}/>);
-    };
+    }
 
   const addPlayer = async (lobbyId) => {
     try {
@@ -75,7 +79,11 @@ const LobbyConfiguration = () => {
 
       navigate(`/lobbies/${lobbyId}`);
     } catch (error) {
-      setAlert(<AlertMessage error={`Something went wrong when joining the lobby: \n${handleError(error)}`} alert={setAlert}/>);}
+      console.error(
+          `Something went wrong while adding the player: \n${handleError(error)}`
+      );
+      console.error("Details:", error);
+      setAlert(<AlertMessage error={error.response.data.message} alert={setAlert}/>);}
     }
   };
 
@@ -108,7 +116,7 @@ const LobbyConfiguration = () => {
       <div className="login container">
         <div>Welcome to Envisage</div>
         <div>Drawing is describing</div>
-        <div>Join a game now</div>
+        <div>{alert}</div>
         <div className="login selectiontitle">
           please choose an image category
         </div>
@@ -167,7 +175,7 @@ const LobbyConfiguration = () => {
             +
           </Button>
         </div>
-        <Button disabled={!rounds} onClick={() => createLobby()}>
+          <Button disabled={!rounds} onClick={() => createLobby()}>
           Save and start a game
         </Button>
       </div>

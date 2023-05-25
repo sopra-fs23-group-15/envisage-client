@@ -25,7 +25,7 @@ const WinningImages = () => {
           `Something went wrong when leaving the game: \n${handleError(error)}`
       );
       console.error("Details:", error);
-      setAlert(<AlertMessage error={`Something went wrong when leaving the game: \n${handleError(error)}`} alert={setAlert}/>);
+      setAlert(<AlertMessage error={error.response.data.message} alert={setAlert}/>);
     }
     localStorage.removeItem("curator");
     localStorage.removeItem("roundDuration");
@@ -101,7 +101,7 @@ const WinningImages = () => {
           `Something went wrong when fetching the winning images: \n${handleError(error)}`
       );
       console.error("Details:", error);
-      setAlert(<AlertMessage error={`Something went wrong when fetching the winning images: \n${handleError(error)}`} alert={setAlert}/>);
+      setAlert(<AlertMessage error={error.response.data.message} alert={setAlert}/>);
     }
   }, [lobbyId, navigate]);
 
@@ -133,6 +133,7 @@ const WinningImages = () => {
             Hello <span>{userName}</span>! Welcome to the house of honors!
           </h3>
         </>
+        {alert}
         <Button className="E" onClick={() => goToExhibition()}>
           Visit Exhibition
         </Button>
