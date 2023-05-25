@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { api, handleError } from "helpers/api";
+import {api, handleError} from "helpers/api";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import BaseContainer from "components/ui/BaseContainer";
@@ -22,7 +22,7 @@ const NumberInput = (props) => {
       setInputValue(inputValue);
       props.onChange(inputValue);
     } else {
-      setAlert(<AlertMessage error={"Please enter only numbers."} alert={setAlert} alert={setAlert}/>);
+      setAlert(<AlertMessage error={"Please enter only numbers."} alert={setAlert}/>);
       console.log(alert);
     }
   };
@@ -88,7 +88,11 @@ const LandingPage = () => {
       localStorage.setItem("lobbyId", parseInt(lobbyId));
       navigate(`/lobbies/${lobbyId}`);
     } catch (error) {
-      setAlert(<AlertMessage error={`Something went wrong when trying to join the lobby: \n${handleError(error)}`} alert={setAlert}/>);
+      console.error(
+          `Something went wrong while adding the users: \n${handleError(error)}`
+      );
+      console.error("Details:", error);
+      setAlert(<AlertMessage error={error.response.data.message} alert={setAlert}/>);
     }
   };
 
@@ -114,6 +118,7 @@ const LandingPage = () => {
             onChange={(un) => setUsername(un)}
           />
         </div>
+        {alert}
         <div className="login button-container">
           <Button disabled={!userName || !lobbyId} onClick={() => addUser()}>
             Continue

@@ -72,12 +72,12 @@ const FinalPage = () => {
         }
       } catch (error) {
         console.error(
-          `Something went wrong while fetching the users: \n${handleError(
+          `Something went wrong while fetching the scores: \n${handleError(
             error
           )}`
         );
         console.error("details:", error);
-        setAlert(<AlertMessage error={`Something went wrong while fetching the users: \n${handleError(error)}`} alert={setAlert}/>);
+        setAlert(<AlertMessage error={error.response.data.message} alert={setAlert}/>);
       }
     }
     let interval;
@@ -105,7 +105,7 @@ const FinalPage = () => {
         `Something went wrong while leaving the game: \n${handleError(error)}`
       );
       console.error("Details:", error);
-      setAlert(<AlertMessage error={`Something went wrong while leaving the game: \n${handleError(error)}`} alert={setAlert}/>);
+      setAlert(<AlertMessage error={error.response.data.message} alert={setAlert}/>);
     }
     localStorage.removeItem("curator");
     localStorage.removeItem("roundDuration");
@@ -132,7 +132,8 @@ const FinalPage = () => {
         )}`
       );
       console.error("Details:", error);
-      setAlert(<AlertMessage error={`Something went wrong while restarting the game: \n${handleError(error)}`} alert={setAlert}/>);
+      setAlert(<AlertMessage error={ "Not enough players are left in your lobby to restart the game." +
+          "If you want to play again, create a new lobby."} alert={setAlert}/>);
     }
   };
 
@@ -212,6 +213,7 @@ const FinalPage = () => {
             <Button className="E" onClick={() => goMain()}>
               Logout
             </Button>
+            {alert}
           </div>
         </div>
       </div>

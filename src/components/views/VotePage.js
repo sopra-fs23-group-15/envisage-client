@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { api, handleError } from "helpers/api";
+import {api, handleError} from "helpers/api";
 import { useNavigate, useParams } from "react-router-dom";
 import ImageComponent from "./Image";
 import VoteBox from "components/ui/VoteBox";
@@ -50,7 +50,11 @@ const VotePage = () => {
       const lobby = new Lobby(responseLobby.data);
       return lobby.numberOfRounds;
     } catch (error) {
-      setAlert(<AlertMessage error={`Something went wrong when fetching the lobby: \n${handleError(error)}`} alert={setAlert}/>);
+      console.error(
+          `Something went wrong when fetching the lobby: \n${handleError(error)}`
+      );
+      console.error("Details:", error);
+      setAlert(<AlertMessage error={error.response.data.message} alert={setAlert}/>);
     }
   };
 
@@ -80,7 +84,11 @@ const VotePage = () => {
           });
         }
       } catch (error) {
-        setAlert(<AlertMessage error={`Something went wrong during the update: \n${handleError(error)}`} alert={setAlert}/>);
+        console.error(
+            `Something went wrong while placing your vote: \n${handleError(error)}`
+        );
+        console.error("Details:", error);
+        setAlert(<AlertMessage error={error.response.data.message} alert={setAlert}/>);
       }
     }
   };
@@ -130,7 +138,7 @@ const VotePage = () => {
                   />
                 )}
               </div>
-            ))}
+            ))}{alert}
           </div>
         </div>
       );
