@@ -3,27 +3,31 @@
 ![envisageAsBanner](src/img/docs/logoAsBanner.png)
 
 ## Introduction 
-In our game ENVISAGE, we wrap “prompt making” and “creative actions” into a fun process with the help of DALL-E, such that “drawing becomes describing.” Our game is an iterative and dynamic journey to witness the “evolution” of an original idea. An image (from the MET museum art collections) together with a style requirement (could be an influential artist’s name, or a famous art movement in history) are fed to the players as the starting point, and the players describe this image with keywords. This is where creativity and a little bit of artistic sense key in. Players can choose to describe the image with plain phrases or dazzle the description with imagination, which could potentially work the best with the style requirement to result in unexpected transformations from the original image. 
+In ENVISAGE, you and your friends can compete against each other over multiple rounds to create the best AI generated masterpieces. At the beginning of the first round, you are given a picture from the category you choose and an image style as a requirement. Your task is to generate an image as close as possible to the requirements. At the end of each round, you get to vote on your favorite picture (not your own!) and the best picture is given as the prompt for the next round with a different style requirement. The process continues till the final round is completed and a winner is declared based on the accumulated votes.
 
-Players form a maximum group of 5 and compete throughout the game for their best AI-generated masterpieces. After each round, players vote for one best drawing (not your own!), and this round winner will be fed as the reference for the next round with a different style requirement. The process continues till the final round is completed and a winner is declared based on the accumulated votes. Iterations after iterations, and imaginations on top of imaginations, the competitive mechanism of the game boosts the collective effort to realize creativity. Assisted by the capability of AI, a sequence of hilarious “evolutions” or might as well be the “deviations” to go wild from the original art piece is finally generated.
+You can play Envisage [here](https://sopra-fs23-group-15-client.oa.r.appspot.com/landingPage).
 
 ## Technologies
-* React, CSS, HTML
+* React
+* CSS
+* HTML
+* JavaScript
 * APIs: [DALL-E](https://platform.openai.com/docs/api-reference/introduction), [Met Collection API](https://metmuseum.github.io/)
 * Hosted on GCP
 
 
 ## High-level components
-### [Landing Page](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/LandingPage.js) [[Lobby creation](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/LobbyCreation.js), [Lobby configuration](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/LobbyConfiguration.js)]
-Where it all begins - you can choose to join or create a lobby (and even configure the game settings to your liking) and get some hints of the game before you start :)
-### [Lobby](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/Lobbies.js) [[Waiting Lobby](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/LobbiesAfter.js), [Final View](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/FinalPage.js)]
-Everything related to lobbies - As a player of ENVISAGE, you can create a default lobby and claim the "control" over the lobby - each round of the game will then be initiated by the lobby you. All other non-lobby-creators can see the updating status of the lobby (for example how many more people needed to start a game) and wait for the lobby creator to start the game. Further, during the waiting periods before and after voting, you are in a waiting lobby area, where the scoreboard is being refreshed dynamically. At the end of the game, the looby will present a final scoreboard, with the winners (or multiple winners) declared.
-### [Game](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/Games.js) [[Vote View](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/VotePage.js)]
-The most important component - Apart from generating images, you get to vote on the images of your co-players after each round, not your own ofc! ;) Make sure to accumulate votes to increase your score and potentially be the winner displayed at the very end on top of the scoreboard.
-### [Winning Images](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/WinningImages.js)
-The winners - A display of the winning images of each round
-### [Exhibition](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/ExhibitionPage.js) 
-Your gallery - A display of all your generated images :)
+### [Landing Page](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/LandingPage.js)
+Where it all begins - You can choose to either join an existing lobby or [create new lobby](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/LobbyCreation.js). On the [lobby configuration page](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/LobbyConfiguration.js) a lobby can be customized to your liking. An explanation of how the game works can be found on each of the three pages by clicking on the blue arrow beneath the slide show.
+
+### [Lobby](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/Lobbies.js)
+Everything related to lobbies - As a player of ENVISAGE, you can create a default lobby and claim the "control" over the lobby - each round of the game will then be started by you. All other non-lobby-creators can see the updating status of the lobby (for example how many more people needed to start a game) and wait for the lobby creator to start the game. Further, during the waiting periods before and after voting, you are in a [waiting lobby area](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/LobbiesAfter.js), where the scoreboard is being refreshed dynamically. At the end of the game, the looby will present a [final scoreboard](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/FinalPage.js), with the winners (or multiple winners) declared.
+
+### [Game](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/Games.js)
+The most important component - On the game page you can describe the given image taking the style requirement into account. After submitting your text, you will by navigated to the [voting page](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/VotePage.js). On the vote page you get to vote on the images of your co-players after each round, not your own ofc! Make sure to accumulate votes to increase your score and potentially be the winner displayed at the very end on top of the scoreboard.
+
+### [Exhibition](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/ExhibitionPage.js) and [Winning Images](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/src/components/views/WinningImages.js) 
+In the exhibition view at the end of the game, you can see all images which were generated with your inputs. In the winning image view, the winning image of each round is displayed.
 
 
 ## Launch & Deployment
@@ -39,6 +43,12 @@ For your local development environment, you will need [Node.js](https://nodejs.o
 ```bash
 npm install
 ```
+
+The following library needs to be installed as well:
+```bash
+npm install @mui/icons-material @mui/material @emotion/styled @emotion/react
+````
+
 
 Run this command before you start your application for the first time. Next, you can start the app with:
 
@@ -134,4 +144,4 @@ The following diagram shows the flow of our interfaces.
 We would like to thank our mentor Valentin Hollenstein - [v4lentin1879](https://github.com/v4lentin1879) for supporting us throughout the project.
 
 ## License
-This project is licensed under [Apache-2.0 license](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/LICENSE)
+This project is licensed under [Apache-2.0 license](https://github.com/sopra-fs23-group-15/envisage-client/blob/main/LICENSE).
