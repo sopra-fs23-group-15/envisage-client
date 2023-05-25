@@ -34,7 +34,7 @@ export const SliderBanner = () => {
         }
       >
         Step 2: Have a look at the <span>drawing style</span> we provided
-        {` (could be an artist's name such as)`} <span>David Hockney</span>
+        {` (could be an artist's name) such as`} <span>David Hockney</span>
       </p>
       <p
         className="slider label-after"

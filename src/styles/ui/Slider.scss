@@ -29,29 +29,31 @@
         opacity: 0.75;
     }
     &.label-before{
-        font-size: 1.125rem;
+        font-size: 1.75vw;
         font-style: oblique;
         padding: 0.75em;
-        top: 36.7vw;
-        height: 5.5vw;
+        top: 35.7vw;
+        height: 6.5vw;
         background-color: $primary;
         opacity: 0.75;
         @include landingLandscape {
-            top: 54.9vh;
-            height: 8.228vh;
+            font-size: 2.618vh;
+            top: 53.4vh;
+            height: 9.724vh;
         }
     }
     &.label-after{
-        font-size: 0.875rem;
+        font-size: 1vw;
         font-style: oblique;
-        padding: 0.875em;
-        top: 36.7vw;
-        height: 5.5vw;
+        padding: 1.5em;
+        top: 35.7vw;
+        height: 6.5vw;
         background-color: $primary;
         opacity: 0.75;
         @include landingLandscape {
-            top: 54.9vh;
-            height: 8.228vh;
+            font-size: 1.496vh;
+            top: 53.4vh;
+            height: 9.724vh;
         }
     }
     &.left-arrow{

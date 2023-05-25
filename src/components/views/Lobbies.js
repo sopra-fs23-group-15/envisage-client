@@ -14,7 +14,7 @@ import {
 import Challenge from "models/Challenge";
 import { Notification } from "components/ui/Notification";
 import "styles/views/Player.scss";
-import {AlertMessage} from "../ui/AlertMessage";
+import { AlertMessage } from "../ui/AlertMessage";
 
 const Lobbies = () => {
   const navigate = useNavigate();
@@ -78,7 +78,9 @@ const Lobbies = () => {
         `Something went wrong while starting the game: \n${handleError(error)}`
       );
       console.error("Details:", error);
-      setAlert(<AlertMessage error={error.response.data.message} alert={setAlert}/>);
+      setAlert(
+        <AlertMessage error={error.response.data.message} alert={setAlert} />
+      );
     }
   };
 
@@ -106,22 +108,8 @@ const Lobbies = () => {
           <div className="player left">
             {players.map((player) => (
               <div className="player row">
-                <div
-                  style={{
-                    color: "#666",
-                    fontSize: "1rem",
-                  }}
-                >
-                  {player.userName}
-                </div>
-                <div
-                  style={{
-                    color: "#666",
-                    fontSize: "1rem",
-                  }}
-                >
-                  0
-                </div>
+                <div>{player.userName}</div>
+                <div>0</div>
               </div>
             ))}
             {fillPlayers()}
